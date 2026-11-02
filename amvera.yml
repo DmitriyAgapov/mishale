@@ -1,0 +1,15 @@
+# Конфигурация Amvera (docs.amvera.ru/applications/environments/nodejs-server.html).
+# Amvera сам выполняет npm install, затем additionalCommands.
+# Переменные окружения на этапе сборки недоступны — всё нужное для сборки лежит в lib/site.ts.
+meta:
+  environment: node
+  toolchain:
+    name: npm
+    version: 22
+
+build:
+  additionalCommands: npm run build
+
+run:
+  command: npm run start
+  containerPort: 3000

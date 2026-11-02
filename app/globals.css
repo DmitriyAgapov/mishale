@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/*
+  Токены дизайна. Названия совпадают с будущими переменными Figma.
+  Фирменный цвет — из логотипа (силуэт дома, #894720).
+*/
+@theme {
+  /* Цвета */
+  --color-bg: #faf7f2;
+  --color-surface: #ffffff;
+  --color-ink: #1f1a16;
+  --color-ink-muted: #5c534b;
+  --color-line: #e7dfd4;
+  --color-brand: #894720;
+  --color-brand-hover: #6f3818;
+  --color-brand-soft: #f3e6dc;
+  --color-accent: #2f6b3a;
+  --color-whatsapp: #1f8f4e;
+  --color-success: #2f6b3a;
+  --color-danger: #b42318;
+
+  /* Шрифты */
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Размеры текста: мобильные значения, крупнее — через md: */
+  --text-h1: 2rem;
+  --text-h1--line-height: 1.15;
+  --text-h2: 1.625rem;
+  --text-h2--line-height: 1.2;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+
+  /* Радиусы и тени */
+  --radius-card: 1rem;
+  --radius-control: 0.75rem;
+  --shadow-card: 0 1px 2px rgb(31 26 22 / 0.06), 0 4px 16px rgb(31 26 22 / 0.06);
+
+  /* Ширина контента */
+  --container-site: 76rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}
