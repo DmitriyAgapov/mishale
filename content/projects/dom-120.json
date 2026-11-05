@@ -1,0 +1,71 @@
+{
+  "slug": "dom-120",
+  "title": "Модульный дом 120 м²",
+  "published": true,
+  "order": 8,
+  "category": "large",
+  "params": {
+    "area": 120,
+    "modules": 8,
+    "moduleSize": "2,5 × 6 м",
+    "ceiling": null,
+    "productionWeeks": null
+  },
+  "priceFrom": null,
+  "purposes": ["permanent"],
+  "summary": "Каркасный дом из 8 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
+  "photos": [
+    {
+      "src": "/images/projects/dom-120/fasad.jpg",
+      "alt": "Модульный дом 120 м², фасад",
+      "width": 1600,
+      "height": 758,
+      "render": true
+    }
+  ],
+  "plans": [
+    {
+      "src": "/images/projects/dom-120/plan.jpg",
+      "alt": "Планировка: модульный дом 120 м²",
+      "width": 647,
+      "height": 647,
+      "render": false,
+      "rooms": []
+    }
+  ],
+  "packages": [],
+  "included": [],
+  "extra": [],
+  "suitableFor": [
+    {
+      "title": "Дом для постоянного жилья",
+      "text": "Утеплённый дом для семьи на круглый год."
+    },
+    {
+      "title": "Семья с детьми",
+      "text": "Отдельные спальни и общая гостиная-кухня."
+    }
+  ],
+  "options": [],
+  "calcExample": null,
+  "specs": [],
+  "faq": [],
+  "similar": ["dom-105"],
+  "seo": {
+    "title": null,
+    "description": null
+  },
+  "banyaVariant": {
+    "published": false,
+    "title": "Модульный дом 120 м² с баней",
+    "photos": [],
+    "plans": [],
+    "packages": [],
+    "options": [],
+    "specs": [],
+    "seo": {
+      "title": null,
+      "description": null
+    }
+  }
+}

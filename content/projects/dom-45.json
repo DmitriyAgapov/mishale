@@ -1,0 +1,75 @@
+{
+  "slug": "dom-45",
+  "title": "Модульный дом 45 м²",
+  "published": true,
+  "order": 3,
+  "category": "medium",
+  "params": {
+    "area": 45,
+    "modules": 3,
+    "moduleSize": "2,5 × 6 м",
+    "ceiling": null,
+    "productionWeeks": null
+  },
+  "priceFrom": null,
+  "purposes": ["dacha", "permanent", "rent"],
+  "summary": "Каркасный дом из 3 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
+  "photos": [
+    {
+      "src": "/images/projects/dom-45/fasad.jpg",
+      "alt": "Модульный дом 45 м², фасад",
+      "width": 1600,
+      "height": 892,
+      "render": true
+    }
+  ],
+  "plans": [
+    {
+      "src": "/images/projects/dom-45/plan.jpg",
+      "alt": "Планировка: модульный дом 45 м²",
+      "width": 647,
+      "height": 647,
+      "render": false,
+      "rooms": []
+    }
+  ],
+  "packages": [],
+  "included": [],
+  "extra": [],
+  "suitableFor": [
+    {
+      "title": "Дача для всей семьи",
+      "text": "Просторный дом для отдыха с семьёй в любой сезон."
+    },
+    {
+      "title": "Дом для пары или семьи из трёх",
+      "text": "Утеплённый дом для постоянного проживания."
+    },
+    {
+      "title": "Для сдачи посуточно",
+      "text": "Дом для гостей базы отдыха или глэмпинга."
+    }
+  ],
+  "options": [],
+  "calcExample": null,
+  "specs": [],
+  "faq": [],
+  "similar": ["dom-35", "dom-60"],
+  "seo": {
+    "title": null,
+    "description": null
+  },
+  "banyaVariant": {
+    "published": false,
+    "title": "Модульный дом 45 м² с баней",
+    "photos": [],
+    "plans": [],
+    "packages": [],
+    "options": [],
+    "specs": [],
+    "seo": {
+      "title": null,
+      "description": null
+    }
+  }
+}

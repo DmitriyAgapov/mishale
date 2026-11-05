@@ -4,14 +4,14 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 
 ## Команды
 
-| Команда | Что делает |
-|---|---|
-| `npm run dev` | Разработка на http://localhost:3000 |
-| `npm run build` | Сборка |
-| `npm run start` | Запуск собранного сайта (так же запускает Amvera) |
-| `npm run check` | Линтер + типы + модульные тесты — перед каждым коммитом |
-| `npm run test:e2e` | Проверки на собранном сайте (сначала `npm run build`) |
-| `npm run format` | Prettier |
+| Команда            | Что делает                                              |
+| ------------------ | ------------------------------------------------------- |
+| `npm run dev`      | Разработка на http://localhost:3000                     |
+| `npm run build`    | Сборка                                                  |
+| `npm run start`    | Запуск собранного сайта (так же запускает Amvera)       |
+| `npm run check`    | Линтер + типы + модульные тесты — перед каждым коммитом |
+| `npm run test:e2e` | Проверки на собранном сайте (сначала `npm run build`)   |
+| `npm run format`   | Prettier                                                |
 
 ## Важно
 

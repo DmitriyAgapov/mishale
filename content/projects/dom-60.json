@@ -1,0 +1,66 @@
+{
+  "slug": "dom-60",
+  "title": "Модульный дом 60 м²",
+  "published": true,
+  "order": 4,
+  "category": "medium",
+  "params": {
+    "area": 60,
+    "modules": 4,
+    "moduleSize": "2,5 × 6 м",
+    "ceiling": null,
+    "productionWeeks": null
+  },
+  "priceFrom": null,
+  "purposes": ["dacha", "permanent", "rent"],
+  "summary": "Каркасный дом из 4 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
+  "photos": [
+    {
+      "src": "/images/projects/dom-60/fasad.jpg",
+      "alt": "Модульный дом 60 м², фасад",
+      "width": 1600,
+      "height": 832,
+      "render": true
+    }
+  ],
+  "plans": [],
+  "packages": [],
+  "included": [],
+  "extra": [],
+  "suitableFor": [
+    {
+      "title": "Дача для всей семьи",
+      "text": "Просторный дом для отдыха с семьёй в любой сезон."
+    },
+    {
+      "title": "Дом для пары или семьи из трёх",
+      "text": "Утеплённый дом для постоянного проживания."
+    },
+    {
+      "title": "Для сдачи посуточно",
+      "text": "Дом для гостей базы отдыха или глэмпинга."
+    }
+  ],
+  "options": [],
+  "calcExample": null,
+  "specs": [],
+  "faq": [],
+  "similar": ["dom-45", "dom-75"],
+  "seo": {
+    "title": null,
+    "description": null
+  },
+  "banyaVariant": {
+    "published": false,
+    "title": "Модульный дом 60 м² с баней",
+    "photos": [],
+    "plans": [],
+    "packages": [],
+    "options": [],
+    "specs": [],
+    "seo": {
+      "title": null,
+      "description": null
+    }
+  }
+}

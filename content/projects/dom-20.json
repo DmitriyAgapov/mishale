@@ -1,0 +1,62 @@
+{
+  "slug": "dom-20",
+  "title": "Модульный дом 20 м²",
+  "published": true,
+  "order": 1,
+  "category": "small",
+  "params": {
+    "area": 20,
+    "modules": 2,
+    "moduleSize": "2,5 × 6 м",
+    "ceiling": null,
+    "productionWeeks": null
+  },
+  "priceFrom": null,
+  "purposes": ["dacha", "guest", "rent"],
+  "summary": "Каркасный дом из 2 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
+  "photos": [
+    {
+      "src": "/images/projects/dom-20/fasad.jpg",
+      "alt": "Модульный дом 20 м², фасад",
+      "width": 1600,
+      "height": 982,
+      "render": true
+    }
+  ],
+  "plans": [
+    {
+      "src": "/images/projects/dom-20/plan.jpg",
+      "alt": "Планировка: модульный дом 20 м²",
+      "width": 647,
+      "height": 647,
+      "render": false,
+      "rooms": []
+    }
+  ],
+  "packages": [],
+  "included": [],
+  "extra": [],
+  "suitableFor": [
+    {
+      "title": "Дача на выходные",
+      "text": "Компактный дом для отдыха за городом: заехать в пятницу, уехать в воскресенье."
+    },
+    {
+      "title": "Гостевой дом",
+      "text": "Отдельный домик для родственников и гостей рядом с основным домом."
+    },
+    {
+      "title": "Для сдачи посуточно",
+      "text": "Небольшой утеплённый дом для глэмпинга или базы отдыха."
+    }
+  ],
+  "options": [],
+  "calcExample": null,
+  "specs": [],
+  "faq": [],
+  "similar": ["dom-35"],
+  "seo": {
+    "title": null,
+    "description": null
+  }
+}
