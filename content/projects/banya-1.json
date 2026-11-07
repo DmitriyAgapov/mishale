@@ -1,5 +1,4 @@
 {
-  "slug": "banya-1",
   "title": "Баня — вариант 1",
   "published": false,
   "order": 101,
@@ -7,11 +6,8 @@
   "params": {
     "area": 1,
     "modules": 1,
-    "moduleSize": "уточнить",
-    "ceiling": null,
-    "productionWeeks": null
+    "moduleSize": "уточнить"
   },
-  "priceFrom": null,
   "purposes": [],
   "summary": "Данные бани ждём от компании (05, раздел 12).",
   "photos": [],
@@ -21,13 +17,17 @@
   "extra": [],
   "suitableFor": [],
   "options": [],
-  "calcExample": null,
+  "calcExample": {
+    "discriminant": false
+  },
+  "stock": {
+    "available": false
+  },
   "specs": [],
   "faq": [],
   "similar": [],
-  "seo": {
-    "title": null,
-    "description": null
-  },
-  "banyaVariant": null
+  "seo": {},
+  "banyaVariant": {
+    "discriminant": false
+  }
 }

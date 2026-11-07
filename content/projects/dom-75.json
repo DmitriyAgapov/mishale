@@ -1,5 +1,4 @@
 {
-  "slug": "dom-75",
   "title": "Модульный дом 75 м²",
   "published": true,
   "order": 5,
@@ -7,28 +6,23 @@
   "params": {
     "area": 75,
     "modules": 5,
-    "moduleSize": "2,5 × 6 м",
-    "ceiling": null,
-    "productionWeeks": null
+    "moduleSize": "2,5 × 6 м"
   },
-  "priceFrom": null,
-  "purposes": ["permanent"],
+  "purposes": [
+    "permanent"
+  ],
   "summary": "Каркасный дом из 5 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
   "photos": [
     {
-      "src": "/images/projects/dom-75/fasad.jpg",
+      "src": "/images/projects/dom-75/photos/0/src.jpg",
       "alt": "Модульный дом 75 м², фасад",
-      "width": 1600,
-      "height": 838,
       "render": true
     }
   ],
   "plans": [
     {
-      "src": "/images/projects/dom-75/plan.jpg",
+      "src": "/images/projects/dom-75/plans/0/src.jpg",
       "alt": "Планировка: модульный дом 75 м²",
-      "width": 647,
-      "height": 647,
       "render": false,
       "rooms": []
     }
@@ -47,25 +41,30 @@
     }
   ],
   "options": [],
-  "calcExample": null,
+  "calcExample": {
+    "discriminant": false
+  },
+  "stock": {
+    "available": false
+  },
   "specs": [],
   "faq": [],
-  "similar": ["dom-60", "dom-90"],
-  "seo": {
-    "title": null,
-    "description": null
-  },
+  "similar": [
+    "dom-60",
+    "dom-90"
+  ],
+  "seo": {},
   "banyaVariant": {
-    "published": false,
-    "title": "Модульный дом 75 м² с баней",
-    "photos": [],
-    "plans": [],
-    "packages": [],
-    "options": [],
-    "specs": [],
-    "seo": {
-      "title": null,
-      "description": null
+    "discriminant": true,
+    "value": {
+      "published": false,
+      "title": "Модульный дом 75 м² с баней",
+      "photos": [],
+      "plans": [],
+      "packages": [],
+      "options": [],
+      "specs": [],
+      "seo": {}
     }
   }
 }

@@ -21,6 +21,10 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 - **Индексация** выключена (`site.indexable = false`) до дня запуска.
 - В `next.config.ts` включены `cacheComponents` и `partialPrefetching`: данные, читаемые из файлов, оборачиваются в `'use cache'`. Перед работой с API Next.js читайте документацию в `node_modules/next/dist/docs/` (см. `AGENTS.md`).
 
+## Админка
+
+`npm run dev` → http://localhost:3000/keystatic. Изменения сразу пишутся в `content/` и `public/images/projects/`; на сайт попадают после коммита и деплоя. На собранном сайте админка отдаёт 404 (режим `local` пишет файлы без авторизации). Файлы `content/` вручную лучше не править: формат — тот, что пишет Keystatic (см. `docs/STATUS.md`).
+
 ## Заявки
 
 `POST /api/lead` → проверка схемой (`lib/leads/schema.ts`) → защита от спама (`lib/leads/guard.ts`) → адаптер по `LEAD_TARGET`: YouGile (`lib/leads/yougile.ts`) или Битрикс24 (`lib/leads/bitrix.ts`), 3 попытки. Персональные данные в логи не пишутся.

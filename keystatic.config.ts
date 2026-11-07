@@ -1,0 +1,256 @@
+import { collection, config, fields, singleton } from "@keystatic/core";
+import { categories, categoryTitles, purposes, purposeTitles } from "./lib/content/schemas";
+
+// Админка Keystatic (ТЗ §10). Режим local: работает только у исполнителя в `npm run dev`,
+// на рабочем сайте /keystatic и /api/keystatic отдают 404 (proxy.ts и сами маршруты).
+// Поля повторяют lib/content/schemas.ts; форму, которую пишет Keystatic, к схеме сайта приводит lib/content/normalize.ts.
+
+const text = (label: string, description?: string) => fields.text({ label, description });
+const longText = (label: string) => fields.text({ label, multiline: true });
+const price = (label = "Цена, ₽") =>
+  fields.integer({ label, description: "Пусто — «по запросу»", validation: { min: 1 } });
+
+const projectImage = (label: string) =>
+  fields.object(
+    {
+      src: fields.image({
+        label: "Файл",
+        directory: "public/images/projects",
+        publicPath: "/images/projects",
+        validation: { isRequired: true },
+      }),
+      alt: text("Описание для поисковиков и незрячих (alt)", "Например: «Модульный дом 60 м², фасад»"),
+      caption: text("Подпись", "Например: «Миасс, 2026»"),
+      render: fields.checkbox({ label: "Это визуализация, а не фото готового дома", defaultValue: false }),
+    },
+    { label },
+  );
+
+const images = (label: string) =>
+  fields.array(projectImage("Изображение"), {
+    label,
+    itemLabel: (p) => p.fields.alt.value || "Изображение",
+  });
+
+const plans = fields.array(
+  fields.object(
+    {
+      ...projectImage("Планировка").fields,
+      rooms: fields.array(
+        fields.object({
+          name: text("Комната"),
+          area: fields.number({ label: "Площадь, м²", step: 0.01, validation: { isRequired: true } }),
+        }),
+        { label: "Комнаты", itemLabel: (p) => `${p.fields.name.value} — ${p.fields.area.value ?? ""} м²` },
+      ),
+    },
+    { label: "Планировка" },
+  ),
+  { label: "Планировки", itemLabel: (p) => p.fields.alt.value || "Планировка" },
+);
+
+const packages = fields.array(
+  fields.object({
+    name: text("Название", "Одинаковые названия для всех проектов"),
+    price: price(),
+    items: fields.array(text("Пункт"), { label: "Состав", itemLabel: (p) => p.value }),
+    priceDate: fields.date({ label: "Цена действует с" }),
+  }),
+  { label: "Комплектации", itemLabel: (p) => p.fields.name.value || "Комплектация" },
+);
+
+const options = fields.array(fields.object({ name: text("Опция"), price: price() }), {
+  label: "Опции",
+  itemLabel: (p) => p.fields.name.value || "Опция",
+});
+
+const specs = fields.array(fields.object({ name: text("Параметр"), value: text("Значение") }), {
+  label: "Технические характеристики",
+  itemLabel: (p) => `${p.fields.name.value}: ${p.fields.value.value}`,
+});
+
+const faq = (label: string) =>
+  fields.array(fields.object({ q: text("Вопрос"), a: longText("Ответ") }), {
+    label,
+    itemLabel: (p) => p.fields.q.value || "Вопрос",
+  });
+
+const seo = fields.object(
+  {
+    title: text("Title", "Пусто — по шаблону: «<название> под ключ — цена от …, Миасс»"),
+    description: longText("Description"),
+  },
+  { label: "SEO" },
+);
+
+const strings = (label: string, item: string) =>
+  fields.array(text(item), { label, itemLabel: (p) => p.value });
+
+export default config({
+  storage: { kind: "local" },
+  ui: { brand: { name: "МИШАЛЕ" } },
+  collections: {
+    projects: collection({
+      label: "Проекты",
+      path: "content/projects/*",
+      format: { data: "json" },
+      slugField: "title",
+      columns: ["title", "category", "published"],
+      schema: {
+        title: fields.slug({
+          name: { label: "Название", description: "Например: «Модульный дом 60 м²»" },
+          slug: {
+            label: "Адрес страницы",
+            description: "Латиница, например dom-60. После публикации не менять — сломаются ссылки",
+          },
+        }),
+        published: fields.checkbox({ label: "Опубликован", defaultValue: false }),
+        order: fields.integer({ label: "Порядок в каталоге", validation: { isRequired: true } }),
+        category: fields.select({
+          label: "Группа",
+          options: categories.map((c) => ({ label: categoryTitles[c], value: c })),
+          defaultValue: "medium",
+        }),
+        params: fields.object(
+          {
+            area: fields.number({ label: "Площадь, м²", step: 0.1, validation: { isRequired: true } }),
+            modules: fields.integer({ label: "Модулей", validation: { isRequired: true, min: 1 } }),
+            moduleSize: text("Размер модуля", "Например: 2,5 × 6 м"),
+            ceiling: fields.number({ label: "Высота потолков, м", step: 0.01 }),
+            productionWeeks: text("Срок производства, недель", "Пусто — общий срок из настроек"),
+          },
+          { label: "Параметры" },
+        ),
+        priceFrom: price("Цена «от», ₽ — если комплектаций нет"),
+        purposes: fields.multiselect({
+          label: "Кому подходит (фильтр)",
+          options: purposes.map((p) => ({ label: purposeTitles[p], value: p })),
+        }),
+        summary: longText("Короткое описание"),
+        photos: images("Фото (первое — на первом экране)"),
+        plans,
+        packages,
+        included: strings("Входит в цену", "Пункт"),
+        extra: strings("Оплачивается отдельно", "Пункт"),
+        suitableFor: fields.array(fields.object({ title: text("Сценарий"), text: longText("Пояснение") }), {
+          label: "Кому подходит",
+          itemLabel: (p) => p.fields.title.value || "Сценарий",
+        }),
+        options,
+        calcExample: fields.conditional(fields.checkbox({ label: "Есть пример расчёта под ключ" }), {
+          true: fields.object({
+            city: text("Город"),
+            date: fields.date({ label: "Дата расчёта", validation: { isRequired: true } }),
+            rows: fields.array(
+              fields.object({
+                name: text("Строка"),
+                sum: fields.integer({ label: "Сумма, ₽", validation: { isRequired: true } }),
+              }),
+              { label: "Строки", itemLabel: (p) => p.fields.name.value || "Строка" },
+            ),
+            total: fields.integer({ label: "Итого, ₽", validation: { isRequired: true } }),
+          }),
+          false: fields.empty(),
+        }),
+        stock: fields.object(
+          {
+            available: fields.checkbox({ label: "В наличии", defaultValue: false }),
+            deliveryWeeks: fields.integer({ label: "Поставка, недель" }),
+            salePrice: price("Цена со скидкой, ₽"),
+          },
+          { label: "Наличие" },
+        ),
+        specs,
+        faq: faq("Вопросы по проекту (пусто — общие)"),
+        similar: fields.array(fields.relationship({ label: "Проект", collection: "projects" }), {
+          label: "Похожие проекты",
+          itemLabel: (p) => p.value ?? "Проект",
+        }),
+        seo,
+        banyaVariant: fields.conditional(
+          fields.checkbox({ label: "Есть вариант с баней внутри (только средние и большие дома)" }),
+          {
+            true: fields.object({
+              published: fields.checkbox({ label: "Вариант опубликован", defaultValue: false }),
+              title: text("Название", "Например: «Модульный дом 60 м² с баней»"),
+              summary: longText("Короткое описание (пусто — как у дома)"),
+              area: fields.number({ label: "Площадь, м² (пусто — как у дома)", step: 0.1 }),
+              priceFrom: price("Цена «от», ₽ — если комплектаций нет"),
+              photos: images("Фото (пусто — фото дома)"),
+              plans,
+              packages,
+              options,
+              specs,
+              seo,
+            }),
+            false: fields.empty(),
+          },
+        ),
+      },
+    }),
+  },
+  singletons: {
+    settings: singleton({
+      label: "Настройки и контакты",
+      path: "content/settings",
+      format: { data: "json" },
+      schema: {
+        phone: fields.object(
+          {
+            display: text("Как показывать", "Например: 8 982 28-888-28"),
+            href: text("Ссылка", "tel:+79822888828"),
+          },
+          { label: "Телефон" },
+        ),
+        email: text("E-mail"),
+        whatsapp: text("WhatsApp", "https://wa.me/79822888828"),
+        telegram: text("Telegram", "https://t.me/…"),
+        vk: text("ВКонтакте"),
+        avito: text("Авито"),
+        address: fields.conditional(fields.checkbox({ label: "Указать адрес цеха" }), {
+          true: fields.object({
+            text: text("Адрес"),
+            lat: fields.number({ label: "Широта", step: 0.000001, validation: { isRequired: true } }),
+            lng: fields.number({ label: "Долгота", step: 0.000001, validation: { isRequired: true } }),
+          }),
+          false: fields.empty(),
+        }),
+        workHours: text("Режим работы"),
+        legal: fields.conditional(fields.checkbox({ label: "Указать реквизиты (оператор ПДн)" }), {
+          true: fields.object({ name: text("Юрлицо или ИП"), inn: text("ИНН"), ogrn: text("ОГРН / ОГРНИП") }),
+          false: fields.empty(),
+        }),
+        trust: fields.array(fields.object({ value: text("Цифра"), label: text("Подпись") }), {
+          label: "Цифры доверия",
+          itemLabel: (p) => `${p.fields.value.value} — ${p.fields.label.value}`,
+        }),
+        priceFromAll: price("Цена «от» на главной, ₽"),
+        warrantyYears: fields.integer({ label: "Гарантия, лет", validation: { isRequired: true, min: 1 } }),
+        productionWeeks: text("Срок производства, недель", "Например: 2–4"),
+        construction: fields.array(
+          fields.object({ title: text("Раздел"), items: strings("Пункты", "Пункт") }),
+          { label: "Из чего строим", itemLabel: (p) => p.fields.title.value },
+        ),
+        steps: fields.array(fields.object({ title: text("Этап"), text: longText("Описание") }), {
+          label: "Этапы строительства",
+          itemLabel: (p) => p.fields.title.value,
+        }),
+        delivery: strings("Доставка и монтаж", "Пункт"),
+        projectFaq: faq("Вопросы на страницах проектов"),
+        generalFaq: faq("Общие вопросы"),
+        workshopVsSite: fields.array(
+          fields.object({ topic: text("Тема"), workshop: text("Цех"), site: text("Стройка на участке") }),
+          { label: "Цех против стройки", itemLabel: (p) => p.fields.topic.value },
+        ),
+        excursion: fields.conditional(fields.checkbox({ label: "Показывать экскурсию в цех" }), {
+          true: fields.object({
+            schedule: text("Когда", "Например: по субботам в 11:00, по записи"),
+            online: fields.checkbox({ label: "Есть онлайн-экскурсия", defaultValue: false }),
+            gift: text("Подарок или скидка за визит"),
+          }),
+          false: fields.empty(),
+        }),
+      },
+    }),
+  },
+});

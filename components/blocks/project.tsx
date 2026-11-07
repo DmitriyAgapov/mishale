@@ -15,12 +15,11 @@ import { formatArea, formatPrice, keepUnits, pluralModules } from "@/lib/format"
 export function ProjectHero({ project, settings }: { project: Project; settings: Settings }) {
   const photo = project.photos[0];
   const price = projectPriceFrom(project);
-  const facts = [
-    ["Площадь", formatArea(project.params.area)],
-    ["Модули", pluralModules(project.params.modules)],
-    ["Размер модуля", project.params.moduleSize],
-    ["Производство", `${project.params.productionWeeks ?? settings.productionWeeks} недели`],
-  ];
+  const facts: Array<[string, string]> = [];
+  facts.push(["Площадь", formatArea(project.params.area)]);
+  facts.push(["Модули", pluralModules(project.params.modules)]);
+  if (project.params.moduleSize) facts.push(["Размер модуля", project.params.moduleSize]);
+  facts.push(["Производство", `${project.params.productionWeeks ?? settings.productionWeeks} недели`]);
   return (
     <section className="pt-4 pb-10 md:pb-14">
       <div className="mx-auto grid w-full max-w-(--container-site) gap-6 px-4 md:grid-cols-[1.4fr_1fr] md:items-center md:gap-10 md:px-6">

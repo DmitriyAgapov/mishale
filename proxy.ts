@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { NextResponse, type NextRequest } from "next/server";
+import { normalizeStored } from "./lib/content/normalize";
 
 // Настоящий код 404 для несуществующих проектов и неопубликованных вариантов с баней.
 // С частичным пререндером оболочка страницы уходит со статусом 200 раньше, чем сработает notFound(),
@@ -16,14 +17,15 @@ function publishedIndex(): Index {
   const banya = new Set<string>();
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json")) continue;
-    const data = JSON.parse(readFileSync(path.join(dir, f), "utf8")) as {
-      slug?: string;
+    // Файл в форме Keystatic: адрес — имя файла, вариант с баней — условный блок
+    const data = normalizeStored(JSON.parse(readFileSync(path.join(dir, f), "utf8"))) as {
       published?: boolean;
-      banyaVariant?: { published?: boolean } | null;
+      banyaVariant?: { published?: boolean };
     };
-    if (!data.published || !data.slug) continue;
-    projects.add(data.slug);
-    if (data.banyaVariant?.published) banya.add(data.slug);
+    const slug = f.replace(/\.json$/, "");
+    if (!data.published) continue;
+    projects.add(slug);
+    if (data.banyaVariant?.published) banya.add(slug);
   }
   index = { projects, banya };
   return index;
@@ -44,6 +46,13 @@ function withRobots(request: NextRequest, response: NextResponse): NextResponse 
 
 export function proxy(request: NextRequest) {
   const parts = request.nextUrl.pathname.split("/");
+  // Админка Keystatic в режиме local пишет файлы без авторизации — на рабочем сайте её нет
+  if (
+    process.env.NODE_ENV === "production" &&
+    (parts[1] === "keystatic" || (parts[1] === "api" && parts[2] === "keystatic"))
+  ) {
+    return withRobots(request, NextResponse.rewrite(new URL("/__not-found", request.url)));
+  }
   if (parts[1] === "proekty" && parts[2]) {
     const [, , slug, variant] = parts;
     const { projects, banya } = publishedIndex();

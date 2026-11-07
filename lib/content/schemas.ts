@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 // Схемы данных сайта (ТЗ §5). Битый JSON роняет сборку, а не сайт.
+// Файлы пишет админка Keystatic (keystatic.config.ts); перед проверкой их приводит к этой форме normalize.ts:
+// пустые значения превращаются в «нет значения», поэтому у необязательных полей есть значения по умолчанию.
 
 const image = z.object({
   src: z.string().startsWith("/"),
@@ -21,7 +23,7 @@ export const purposeTitles: Record<(typeof purposes)[number], string> = {
   rent: "Для сдачи",
 };
 
-const price = z.number().int().positive().nullable();
+const price = z.number().int().positive().nullable().default(null);
 
 // Линейка: 2 малых дома (2 модуля), 4 средних, 2 больших, 2 бани
 export const categories = ["small", "medium", "large", "banya"] as const;
@@ -43,7 +45,7 @@ const packageSchema = z.object({
   priceDate: z.string().optional(),
 });
 const seoSchema = z
-  .object({ title: z.string().nullable(), description: z.string().nullable() })
+  .object({ title: z.string().nullable().default(null), description: z.string().nullable().default(null) })
   .default({ title: null, description: null });
 
 // Вариант дома «с баней внутри» — своя страница /proekty/<slug>/s-banei.
@@ -53,7 +55,7 @@ const banyaVariantSchema = z.object({
   title: z.string().min(1),
   summary: z.string().optional(),
   area: z.number().positive().nullable().default(null),
-  priceFrom: price.default(null),
+  priceFrom: price,
   photos: z.array(image).default([]),
   plans: z.array(planImage).default([]),
   packages: z.array(packageSchema).default([]),
@@ -71,12 +73,12 @@ export const projectSchema = z.object({
   params: z.object({
     area: z.number().positive(),
     modules: z.number().int().positive(),
-    moduleSize: z.string(),
+    moduleSize: z.string().nullable().default(null),
     ceiling: z.number().positive().nullable().default(null),
     productionWeeks: z.string().nullable().default(null),
   }),
   // Цена «от» — минимальная цена комплектаций; если комплектаций нет — отдельное поле
-  priceFrom: price.default(null),
+  priceFrom: price,
   purposes: z.array(z.enum(purposes)).default([]),
   summary: z.string().optional(),
   photos: z.array(image).default([]),
@@ -96,7 +98,11 @@ export const projectSchema = z.object({
     .nullable()
     .default(null),
   stock: z
-    .object({ available: z.boolean(), deliveryWeeks: z.number().nullable(), salePrice: price })
+    .object({
+      available: z.boolean().default(false),
+      deliveryWeeks: z.number().nullable().default(null),
+      salePrice: price,
+    })
     .default({ available: false, deliveryWeeks: null, salePrice: null }),
   specs: z.array(z.object({ name: z.string(), value: z.string() })).default([]),
   faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
@@ -108,16 +114,16 @@ export type Project = z.output<typeof projectSchema>;
 
 export const settingsSchema = z.object({
   phone: z.object({ display: z.string(), href: z.string().startsWith("tel:") }),
-  email: z.string().email().nullable(),
-  whatsapp: z.string().url().nullable(),
-  telegram: z.string().url().nullable(),
-  vk: z.string().url().nullable(),
-  avito: z.string().url().nullable(),
-  address: z.object({ text: z.string(), lat: z.number(), lng: z.number() }).nullable(),
-  workHours: z.string().nullable(),
-  legal: z.object({ name: z.string(), inn: z.string(), ogrn: z.string() }).nullable(),
+  email: z.string().email().nullable().default(null),
+  whatsapp: z.string().url().nullable().default(null),
+  telegram: z.string().url().nullable().default(null),
+  vk: z.string().url().nullable().default(null),
+  avito: z.string().url().nullable().default(null),
+  address: z.object({ text: z.string(), lat: z.number(), lng: z.number() }).nullable().default(null),
+  workHours: z.string().nullable().default(null),
+  legal: z.object({ name: z.string(), inn: z.string(), ogrn: z.string() }).nullable().default(null),
   trust: z.array(z.object({ value: z.string(), label: z.string() })),
-  priceFromAll: z.number().int().positive().nullable(),
+  priceFromAll: z.number().int().positive().nullable().default(null),
   warrantyYears: z.number().int().positive(),
   productionWeeks: z.string(),
   // Общий состав конструкции — показывается на страницах проектов, пока у проекта нет своих характеристик
@@ -130,6 +136,13 @@ export const settingsSchema = z.object({
   // «Цех против стройки на участке» (02 §6.2) — только подтверждённые строки
   workshopVsSite: z.array(z.object({ topic: z.string(), workshop: z.string(), site: z.string() })),
   // Экскурсия в цех: блок и форма показываются, только когда компания подтвердит формат
-  excursion: z.object({ schedule: z.string(), online: z.boolean(), gift: z.string().nullable() }).nullable(),
+  excursion: z
+    .object({
+      schedule: z.string(),
+      online: z.boolean().default(false),
+      gift: z.string().nullable().default(null),
+    })
+    .nullable()
+    .default(null),
 });
 export type Settings = z.output<typeof settingsSchema>;

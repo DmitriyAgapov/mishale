@@ -1,13 +1,86 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { createReader } from "@keystatic/core/reader";
 import { describe, expect, it } from "vitest";
-import { asBanyaVariant, projectHref } from "./index";
-import { projectSchema, type Project } from "./schemas";
+import keystaticConfig from "../../keystatic.config";
+import { asBanyaVariant, parseProject, parseSettings, projectHref } from "./index";
+import { normalizeStored } from "./normalize";
+import type { Project } from "./schemas";
 
 const dir = path.join(process.cwd(), "content", "projects");
-const all: Project[] = readdirSync(dir)
-  .filter((f) => f.endsWith(".json"))
-  .map((f) => projectSchema.parse(JSON.parse(readFileSync(path.join(dir, f), "utf8"))));
+const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
+const all: Project[] = await Promise.all(
+  files.map((f) => parseProject(JSON.parse(readFileSync(path.join(dir, f), "utf8")), f)),
+);
+
+describe("файлы данных и админка", () => {
+  it("Keystatic открывает все проекты и настройки без ошибок", async () => {
+    const reader = createReader(process.cwd(), keystaticConfig);
+    const projects = await reader.collections.projects.all();
+    expect(projects.map((p) => p.slug).sort()).toEqual(files.map((f) => f.replace(".json", "")).sort());
+    expect(await reader.singletons.settings.read()).not.toBeNull();
+  });
+
+  it("настройки проходят схему сайта", async () => {
+    const s = await parseSettings(
+      JSON.parse(readFileSync(path.join(process.cwd(), "content", "settings.json"), "utf8")),
+    );
+    expect(s.phone.href).toMatch(/^tel:/);
+    expect(s.legal).toBeNull();
+  });
+
+  it("размеры картинок читаются из файлов", () => {
+    const p = all.find((x) => x.slug === "dom-45")!;
+    expect(p.photos[0].width).toBe(1600);
+    expect(p.photos[0].height).toBeGreaterThan(0);
+  });
+
+  it("форма Keystatic приводится к схеме сайта", () => {
+    expect(normalizeStored({ discriminant: false })).toBeUndefined();
+    expect(normalizeStored({ discriminant: true, value: { a: "" } })).toEqual({});
+    expect(normalizeStored({ seo: { title: "", description: "x" }, list: ["a", ""] })).toEqual({
+      seo: { description: "x" },
+      list: ["a"],
+    });
+  });
+
+  it("сохранённый из админки файл проекта читается сайтом", async () => {
+    // Так Keystatic пишет новый проект с минимумом полей
+    const stored = {
+      title: "Тест",
+      published: false,
+      order: 99,
+      category: "small",
+      params: { area: 30, modules: 2, moduleSize: "", ceiling: null, productionWeeks: "" },
+      priceFrom: null,
+      purposes: [],
+      summary: "",
+      photos: [],
+      plans: [],
+      packages: [{ name: "База", price: 1000000, items: ["Каркас"], priceDate: null }],
+      included: [],
+      extra: [],
+      suitableFor: [],
+      options: [{ name: "Терраса", price: null }],
+      calcExample: { discriminant: false },
+      stock: { available: false, deliveryWeeks: null, salePrice: null },
+      specs: [],
+      faq: [],
+      similar: [],
+      seo: { title: "", description: "" },
+      banyaVariant: { discriminant: false },
+    };
+    const p = await parseProject(stored, "test-dom.json");
+    expect(p.slug).toBe("test-dom");
+    expect(p.params.productionWeeks).toBeNull();
+    expect(p.params.moduleSize).toBeNull();
+    expect(p.packages[0].priceDate).toBeUndefined();
+    expect(p.options[0].price).toBeNull();
+    expect(p.calcExample).toBeNull();
+    expect(p.banyaVariant).toBeNull();
+    expect(p.seo.title).toBeNull();
+  });
+});
 
 describe("данные проектов", () => {
   it("линейка: 2 малых, 4 средних, 2 больших, 2 бани", () => {

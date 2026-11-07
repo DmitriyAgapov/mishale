@@ -1,6 +1,8 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { cacheLife } from "next/cache";
+import { fillImageSizes } from "./images";
+import { normalizeStored } from "./normalize";
 import { projectSchema, settingsSchema, type Project, type Settings } from "./schemas";
 
 const root = path.join(process.cwd(), "content");
@@ -9,12 +11,28 @@ async function readJson(file: string): Promise<unknown> {
   return JSON.parse(await readFile(file, "utf8"));
 }
 
+// Файл в форме Keystatic → проверенные данные сайта. Адрес проекта — имя файла.
+export async function parseSettings(raw: unknown): Promise<Settings> {
+  const data = normalizeStored(raw);
+  const parsed = settingsSchema.safeParse(data);
+  if (!parsed.success) throw new Error(`content/settings.json: ${parsed.error.message}`);
+  return parsed.data;
+}
+
+export async function parseProject(raw: unknown, file: string, publicDir?: string): Promise<Project> {
+  const data = normalizeStored(raw) as Record<string, unknown>;
+  data.slug = path.basename(file, ".json");
+  await fillImageSizes(data, publicDir);
+  const parsed = projectSchema.safeParse(data);
+  if (!parsed.success) throw new Error(`content/projects/${path.basename(file)}: ${parsed.error.message}`);
+  return parsed.data;
+}
+
 // Контент меняется только коммитом и пересборкой — кэшируем навсегда
 export async function getSettings(): Promise<Settings> {
   "use cache";
   cacheLife("max");
-  const data = await readJson(path.join(root, "settings.json"));
-  return settingsSchema.parse(data);
+  return parseSettings(await readJson(path.join(root, "settings.json")));
 }
 
 export async function getAllProjects(): Promise<Project[]> {
@@ -23,13 +41,7 @@ export async function getAllProjects(): Promise<Project[]> {
   const dir = path.join(root, "projects");
   const files = (await readdir(dir)).filter((f) => f.endsWith(".json")).sort();
   const projects = await Promise.all(
-    files.map(async (f) => {
-      const parsed = projectSchema.safeParse(await readJson(path.join(dir, f)));
-      if (!parsed.success) throw new Error(`content/projects/${f}: ${parsed.error.message}`);
-      if (parsed.data.slug !== f.replace(/\.json$/, ""))
-        throw new Error(`content/projects/${f}: slug не совпадает с именем файла`);
-      return parsed.data;
-    }),
+    files.map(async (f) => parseProject(await readJson(path.join(dir, f)), f)),
   );
   return projects.sort((a, b) => a.order - b.order);
 }

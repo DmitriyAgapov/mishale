@@ -5,12 +5,12 @@
   },
   "email": "mishale.karkas@gmail.com",
   "whatsapp": "https://wa.me/79822888828",
-  "telegram": null,
-  "vk": null,
-  "avito": null,
-  "address": null,
-  "workHours": null,
-  "legal": null,
+  "address": {
+    "discriminant": false
+  },
+  "legal": {
+    "discriminant": false
+  },
   "trust": [
     {
       "value": "3 000 м²",
@@ -62,7 +62,9 @@
     },
     {
       "title": "Окна",
-      "items": ["Трёхкамерные окна Veka с энергосберегающим напылением"]
+      "items": [
+        "Трёхкамерные окна Veka с энергосберегающим напылением"
+      ]
     },
     {
       "title": "Внутренняя отделка",
@@ -74,7 +76,9 @@
     },
     {
       "title": "Наружная отделка",
-      "items": ["Имитация бруса класса «А» на вентилируемом зазоре"]
+      "items": [
+        "Имитация бруса класса «А» на вентилируемом зазоре"
+      ]
     }
   ],
   "steps": [
@@ -167,5 +171,7 @@
       "site": "Месяцы стройки, техника, мусор, бытовки"
     }
   ],
-  "excursion": null
+  "excursion": {
+    "discriminant": false
+  }
 }

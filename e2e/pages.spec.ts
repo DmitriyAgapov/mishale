@@ -103,3 +103,10 @@ test("вне основного домена — X-Robots-Tag noindex, на mish
   const tech = await request.get("/", { headers: { "x-forwarded-host": "mishale.user.mia0.amvera.tech" } });
   expect(tech.headers()["x-robots-tag"]).toBe("noindex, nofollow");
 });
+
+test("админка закрыта на собранном сайте", async ({ request }) => {
+  expect((await request.get("/keystatic")).status()).toBe(404);
+  expect((await request.get("/keystatic/collection/projects")).status()).toBe(404);
+  expect((await request.post("/api/keystatic/update", { data: {} })).status()).toBe(404);
+  expect((await request.get("/api/keystatic/tree", { headers: { "no-cors": "1" } })).status()).toBe(404);
+});

@@ -4,7 +4,8 @@ import { projectPriceFrom } from "@/lib/content";
 import type { Project } from "@/lib/content/schemas";
 import { formatArea, formatPrice, keepUnits, pluralModules } from "@/lib/format";
 
-export function ProjectCard({ project }: { project: Project }) {
+// eager — карточка на первом экране: картинка грузится сразу, первая — с высоким приоритетом (главный кадр каталога)
+export function ProjectCard({ project, eager }: { project: Project; eager?: "first" | "visible" }) {
   const photo = project.photos[0];
   const price = projectPriceFrom(project);
   return (
@@ -21,6 +22,8 @@ export function ProjectCard({ project }: { project: Project }) {
             alt={photo.alt}
             fill
             sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager === "first" ? "high" : undefined}
             className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         )}

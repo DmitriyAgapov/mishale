@@ -1,5 +1,4 @@
 {
-  "slug": "dom-35",
   "title": "Модульный дом 35 м²",
   "published": true,
   "order": 2,
@@ -7,19 +6,18 @@
   "params": {
     "area": 35,
     "modules": 2,
-    "moduleSize": "2,5 × 6 м",
-    "ceiling": null,
-    "productionWeeks": null
+    "moduleSize": "2,5 × 6 м"
   },
-  "priceFrom": null,
-  "purposes": ["dacha", "guest", "rent"],
+  "purposes": [
+    "dacha",
+    "guest",
+    "rent"
+  ],
   "summary": "Каркасный дом из 2 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
   "photos": [
     {
-      "src": "/images/projects/dom-35/fasad.jpg",
+      "src": "/images/projects/dom-35/photos/0/src.jpg",
       "alt": "Модульный дом 35 м², фасад",
-      "width": 1600,
-      "height": 832,
       "render": true
     }
   ],
@@ -42,12 +40,20 @@
     }
   ],
   "options": [],
-  "calcExample": null,
+  "calcExample": {
+    "discriminant": false
+  },
+  "stock": {
+    "available": false
+  },
   "specs": [],
   "faq": [],
-  "similar": ["dom-20", "dom-45"],
-  "seo": {
-    "title": null,
-    "description": null
+  "similar": [
+    "dom-20",
+    "dom-45"
+  ],
+  "seo": {},
+  "banyaVariant": {
+    "discriminant": false
   }
 }
