@@ -39,6 +39,8 @@ type Props = {
   project?: string;
   packages?: string[];
   options?: string[];
+  // Ответы квиза — уходят в заявку как «вопрос: ответ»
+  answers?: Record<string, string>;
   submitLabel?: string;
   phone: { display: string; href: string };
   className?: string;
@@ -51,6 +53,7 @@ export function LeadForm({
   project,
   packages = [],
   options = [],
+  answers,
   submitLabel = "Получить расчёт",
   phone,
   className,
@@ -94,6 +97,7 @@ export function LeadForm({
           project,
           package: v.package || undefined,
           options: v.options?.length ? v.options : undefined,
+          answers,
           comment: v.comment || undefined,
           consent: v.consent,
           website: v.website,
@@ -240,9 +244,13 @@ export function LeadForm({
         <label className="flex items-start gap-3 text-sm">
           <input type="checkbox" className="accent-brand mt-0.5 size-5 shrink-0" {...register("consent")} />
           <span>
-            Согласен(на) на обработку персональных данных по{" "}
+            Даю{" "}
+            <Link href="/soglasie" className="text-brand underline" target="_blank">
+              согласие на обработку персональных данных
+            </Link>{" "}
+            и принимаю{" "}
             <Link href="/politika" className="text-brand underline" target="_blank">
-              политике
+              политику
             </Link>
           </span>
         </label>

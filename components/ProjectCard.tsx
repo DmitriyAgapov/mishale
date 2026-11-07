@@ -10,6 +10,8 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/proekty/${project.slug}`}
+      data-card
+      data-p={project.purposes.join(" ")}
       className="group rounded-card bg-surface shadow-card flex flex-col overflow-hidden transition-shadow hover:shadow-lg"
     >
       <div className="bg-brand-soft relative aspect-[4/3]">

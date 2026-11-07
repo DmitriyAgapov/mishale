@@ -25,6 +25,9 @@ export async function Footer() {
           <Link href="/politika" className="text-ink-muted hover:text-brand">
             Политика обработки персональных данных
           </Link>
+          <Link href="/soglasie" className="text-ink-muted hover:text-brand">
+            Согласие на обработку персональных данных
+          </Link>
         </nav>
 
         <address className="flex flex-col gap-2 not-italic">

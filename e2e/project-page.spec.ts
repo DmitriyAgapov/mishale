@@ -41,7 +41,7 @@ test.describe("форма заявки", () => {
     const phone = form.getByLabel("Телефон");
     await phone.pressSequentially("89123456789");
     await expect(phone).toHaveValue("+7 (912) 345-67-89");
-    await form.getByText("Согласен(на)").click();
+    await form.getByRole("checkbox", { name: /Даю согласие/ }).check();
     // Защита от спама отсеивает отправку быстрее 3 секунд
     await page.waitForTimeout(3100);
     await form.getByRole("button", { name: "Получить смету" }).click();

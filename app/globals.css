@@ -55,3 +55,30 @@
     outline-offset: 2px;
   }
 }
+
+/* Подбор по назначению (components/PurposeFilter.tsx): карточка с data-p, группа с data-group */
+@layer components {
+  [data-filter="dacha"] [data-card]:not([data-p~="dacha"]),
+  [data-filter="permanent"] [data-card]:not([data-p~="permanent"]),
+  [data-filter="guest"] [data-card]:not([data-p~="guest"]),
+  [data-filter="rent"] [data-card]:not([data-p~="rent"]),
+  [data-filter="dacha"] [data-group]:not(:has([data-p~="dacha"])),
+  [data-filter="permanent"] [data-group]:not(:has([data-p~="permanent"])),
+  [data-filter="guest"] [data-group]:not(:has([data-p~="guest"])),
+  [data-filter="rent"] [data-group]:not(:has([data-p~="rent"])) {
+    display: none;
+  }
+}
+
+/* Юридические тексты: политика и согласие */
+@layer components {
+  .prose-legal h2 {
+    margin-top: 1rem;
+    font-size: var(--text-h3);
+    font-weight: 800;
+  }
+  .prose-legal ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+  }
+}

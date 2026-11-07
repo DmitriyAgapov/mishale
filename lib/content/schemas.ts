@@ -125,5 +125,11 @@ export const settingsSchema = z.object({
   steps: z.array(z.object({ title: z.string(), text: z.string() })),
   delivery: z.array(z.string()),
   projectFaq: z.array(z.object({ q: z.string(), a: z.string() })),
+  // Вопросы на главной и в «Производстве»: общие + вопросы по проекту
+  generalFaq: z.array(z.object({ q: z.string(), a: z.string() })),
+  // «Цех против стройки на участке» (02 §6.2) — только подтверждённые строки
+  workshopVsSite: z.array(z.object({ topic: z.string(), workshop: z.string(), site: z.string() })),
+  // Экскурсия в цех: блок и форма показываются, только когда компания подтвердит формат
+  excursion: z.object({ schedule: z.string(), online: z.boolean(), gift: z.string().nullable() }).nullable(),
 });
 export type Settings = z.output<typeof settingsSchema>;

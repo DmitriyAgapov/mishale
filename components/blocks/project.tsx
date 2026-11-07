@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Minus } from "lucide-react";
+import type { FAQPage } from "schema-dts";
+import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
 import { LEAD_ANCHOR } from "@/components/layout/nav";
@@ -300,6 +302,10 @@ export function Specs({ project, settings }: { project: Project; settings: Setti
     );
   }
   // Пока у проекта нет своих характеристик — общий состав конструкции
+  return <Construction settings={settings} />;
+}
+
+export function Construction({ settings }: { settings: Settings }) {
   return (
     <Section title="Из чего строим" lead="Базовая комплектация, одинаковая для всех проектов.">
       <div className="grid gap-4 md:grid-cols-3">
@@ -379,6 +385,17 @@ export function Faq({
           </details>
         ))}
       </div>
+      <JsonLd<FAQPage>
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: items.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }}
+      />
     </Section>
   );
 }

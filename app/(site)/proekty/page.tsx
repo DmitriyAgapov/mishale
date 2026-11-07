@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { LeadSection } from "@/components/blocks/common";
+import { Faq } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectGroups } from "@/components/ProjectGroups";
 import { Section } from "@/components/ui/Section";
-import { getProjects } from "@/lib/content";
-import { categories, categoryTitles } from "@/lib/content/schemas";
+import { getProjects, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Проекты модульных домов и бань — цены и планировки",
@@ -12,33 +13,26 @@ export const metadata: Metadata = {
   alternates: { canonical: "/proekty" },
 };
 
-// Каталог по группам: малые, средние, большие дома, бани. Пустая группа не выводится.
-// Подбор по назначению — этап 3.
+// Каталог (ТЗ §7.3): группы и подбор по назначению, форма заявки, вопросы
 export default async function ProjectsPage() {
-  const projects = await getProjects();
-  const groups = categories
-    .map((c) => ({ c, items: projects.filter((p) => p.category === c) }))
-    .filter((g) => g.items.length);
+  const [projects, settings] = await Promise.all([getProjects(), getSettings()]);
   return (
     <>
       <Breadcrumbs items={[{ href: "/proekty", label: "Проекты и цены" }]} />
       <Section className="pt-6 md:pt-8">
         <h1 className="text-h1 font-extrabold md:text-5xl">Проекты модульных домов</h1>
-        <p className="text-ink-muted mt-3 max-w-2xl text-lg">
+        <p className="text-ink-muted mt-3 mb-8 max-w-2xl text-lg">
           Дома от 20 до 120 м², у средних и больших — вариант с баней внутри. Все дома собираются в нашем цеху
           в Миассе и приезжают на участок готовыми.
         </p>
-        {groups.map(({ c, items }) => (
-          <div key={c} className="mt-10">
-            <h2 className="text-h2 font-extrabold">{categoryTitles[c]}</h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((p) => (
-                <ProjectCard key={p.slug} project={p} />
-              ))}
-            </div>
-          </div>
-        ))}
+        <ProjectGroups projects={projects} />
       </Section>
+      <Faq items={settings.generalFaq} />
+      <LeadSection
+        settings={settings}
+        title="Не нашли подходящий проект?"
+        text="Расскажите, какой дом нужен, — подберём проект или адаптируем планировку и посчитаем стоимость под ключ."
+      />
     </>
   );
 }

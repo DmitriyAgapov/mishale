@@ -9,7 +9,10 @@ export type Goal =
   | "lead_submit_quiz"
   | "lead_submit_catalog"
   | "lead_submit_excursion"
-  | "lead_error";
+  | "lead_error"
+  | "filter_purpose"
+  | "quiz_start"
+  | "quiz_step";
 
 type Ym = (id: number, method: string, ...args: unknown[]) => void;
 
