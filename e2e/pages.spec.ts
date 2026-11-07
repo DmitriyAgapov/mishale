@@ -92,3 +92,14 @@ test("sitemap содержит опубликованные страницы и 
   expect(xml).not.toContain("banya-1");
   expect(xml).not.toContain("s-banei");
 });
+
+test("вне основного домена — X-Robots-Tag noindex, на mishale74.ru — нет", async ({ request }) => {
+  const local = await request.get("/proekty");
+  expect(local.headers()["x-robots-tag"]).toBe("noindex, nofollow");
+  for (const host of ["mishale74.ru", "www.mishale74.ru"]) {
+    const res = await request.get("/proekty", { headers: { "x-forwarded-host": host } });
+    expect(res.headers()["x-robots-tag"], host).toBeUndefined();
+  }
+  const tech = await request.get("/", { headers: { "x-forwarded-host": "mishale.user.mia0.amvera.tech" } });
+  expect(tech.headers()["x-robots-tag"]).toBe("noindex, nofollow");
+});

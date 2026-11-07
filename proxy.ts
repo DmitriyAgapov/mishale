@@ -29,17 +29,34 @@ function publishedIndex(): Index {
   return index;
 }
 
+// Любой адрес, кроме основного домена (технический *.amvera.tech, localhost), закрыт от индексации,
+// чтобы после запуска в поиске не было дубля сайта. Здесь, а не в headers() next.config:
+// в Next 16.4.2 заголовки из конфига попадают в манифест, но не отдаются (проверено 07.11.2026).
+const PRODUCTION_HOST = /^(www\.)?mishale74\.ru$/;
+
+function withRobots(request: NextRequest, response: NextResponse): NextResponse {
+  // За обратным прокси Amvera публичный домен может прийти в x-forwarded-host
+  const raw = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  const host = raw.split(",")[0].trim().split(":")[0].toLowerCase();
+  if (!PRODUCTION_HOST.test(host)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
+}
+
 export function proxy(request: NextRequest) {
-  const [, , slug, variant] = request.nextUrl.pathname.split("/");
-  const { projects, banya } = publishedIndex();
-  const ok = variant === "s-banei" ? banya.has(slug) : projects.has(slug);
-  if (slug && !ok) {
-    // Путь без маршрута: Next.js отдаёт not-found со статусом 404
-    return NextResponse.rewrite(new URL("/__not-found", request.url));
+  const parts = request.nextUrl.pathname.split("/");
+  if (parts[1] === "proekty" && parts[2]) {
+    const [, , slug, variant] = parts;
+    const { projects, banya } = publishedIndex();
+    const ok = variant === "s-banei" ? banya.has(slug) : variant === undefined && projects.has(slug);
+    if (!ok) {
+      // Путь без маршрута: Next.js отдаёт not-found со статусом 404
+      return withRobots(request, NextResponse.rewrite(new URL("/__not-found", request.url)));
+    }
   }
-  return NextResponse.next();
+  return withRobots(request, NextResponse.next());
 }
 
 export const config = {
-  matcher: ["/proekty/:slug", "/proekty/:slug/s-banei"],
+  // Все адреса, кроме статики Next и картинок
+  matcher: ["/((?!_next/static|_next/image|images/|logo.svg).*)"],
 };
