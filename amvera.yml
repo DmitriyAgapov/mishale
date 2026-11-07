@@ -1,16 +1,20 @@
-# Конфигурация Amvera (docs.amvera.ru/applications/environments/nodejs-server.html).
-# Amvera сам выполняет npm install, затем additionalCommands.
-# Переменные окружения на этапе сборки недоступны — всё нужное для сборки лежит в lib/site.ts.
+---
 meta:
-  environment: node
+  environment: nodejs
   toolchain:
-    name: npm
-    version: 22
-
+    name: pnpm
+    version: 20
 build:
-  additionalCommands: npm run build
-
+  skip: false
+  additionalCommands: null
+  artifacts:
+    '*': /
 run:
-  # Порт задан явно: Amvera выставляет PORT=80, а next start слушает PORT — без -p порт разойдётся с containerPort
-  command: npm run start -- -p 3000
-  containerPort: 3000
+  scriptName: null
+  scriptArguments: null
+  nodeArguments: null
+  command: pnpm run start
+  persistenceMount: /data
+  containerPort: 80
+  singleton: true
+  zeroDowntime: false
