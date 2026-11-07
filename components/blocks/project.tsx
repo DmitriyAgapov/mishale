@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Minus } from "lucide-react";
 import type { FAQPage } from "schema-dts";
+import { DemoBadge } from "@/components/demo/Demo";
 import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
@@ -61,6 +62,7 @@ export function ProjectHero({ project, settings }: { project: Project; settings:
           </dl>
           <p className="mt-6 text-2xl font-extrabold">
             {price ? `от ${formatPrice(price)}` : "Цена — по запросу"}
+            <DemoBadge note={project.demo.packages ?? project.demo.priceFrom} />
           </p>
           {!price && <p className="text-ink-muted">Рассчитаем стоимость под ваш участок и комплектацию.</p>}
           <div className="mt-6 flex flex-col gap-3">
@@ -365,9 +367,12 @@ export function Delivery({ settings }: { settings: Settings }) {
 export function Faq({
   items,
   title = "Вопросы и ответы",
+  jsonLd = true,
 }: {
   items: { q: string; a: string }[];
   title?: string;
+  // false — если на странице несколько блоков вопросов: разметка FAQPage одна на страницу (faqJsonLd)
+  jsonLd?: boolean;
 }) {
   if (!items.length) return null;
   return (
@@ -385,17 +390,7 @@ export function Faq({
           </details>
         ))}
       </div>
-      <JsonLd<FAQPage>
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: items.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: { "@type": "Answer", text: f.a },
-          })),
-        }}
-      />
+      {jsonLd && <FaqJsonLd items={items} />}
     </Section>
   );
 }
@@ -424,5 +419,21 @@ export function ProjectPager({ prev, next }: { prev?: Project; next?: Project })
         </Link>
       )}
     </div>
+  );
+}
+
+export function FaqJsonLd({ items }: { items: { q: string; a: string }[] }) {
+  return (
+    <JsonLd<FAQPage>
+      data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: items.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }}
+    />
   );
 }

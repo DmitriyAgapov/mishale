@@ -16,6 +16,9 @@ import {
   Steps,
   SuitableFor,
 } from "@/components/blocks/project";
+import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
+import { Excursion } from "@/components/blocks/common";
+import { BanyaVariantHint } from "@/components/SoonCard";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { JsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -23,6 +26,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { Section } from "@/components/ui/Section";
 import { projectHref, projectPriceFrom } from "@/lib/content";
 import type { Project, Settings } from "@/lib/content/schemas";
+import type { DemoSlot } from "@/lib/demo";
 import { cn } from "@/lib/cn";
 import { formatArea, formatPrice, pluralModules } from "@/lib/format";
 import { site } from "@/lib/site";
@@ -76,9 +80,10 @@ type Props = {
   withBanya: boolean;
   settings: Settings;
   all: Project[];
+  slots: Record<string, DemoSlot>;
 };
 
-export function ProjectView({ base, project, withBanya, settings, all }: Props) {
+export function ProjectView({ base, project, withBanya, settings, all, slots }: Props) {
   const href = projectHref(base, withBanya);
   const houses = all.filter((p) => p.category !== "banya");
   const idx = houses.findIndex((p) => p.slug === base.slug);
@@ -86,6 +91,7 @@ export function ProjectView({ base, project, withBanya, settings, all }: Props) 
     .map((s) => all.find((p) => p.slug === s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
   const price = projectPriceFrom(project);
+  const d = project.demo;
 
   return (
     <>
@@ -97,17 +103,45 @@ export function ProjectView({ base, project, withBanya, settings, all }: Props) 
         ]}
       />
       {base.banyaVariant?.published && <VariantSwitch base={base} withBanya={withBanya} />}
-      <ProjectHero project={project} settings={settings} />
-      <SuitableFor project={project} />
-      <Gallery project={project} />
-      <FloorPlans project={project} />
-      <Packages project={project} />
-      <Options project={project} />
-      <IncludedExtra project={project} />
-      <CalcExample project={project} />
-      <Specs project={project} settings={settings} />
+      <DemoFrame note={d.params ?? d.title}>
+        <ProjectHero project={project} settings={settings} />
+      </DemoFrame>
+      {/* Вариант с баней ещё не опубликован — предлагаем узнать цену (средние и большие дома) */}
+      {!withBanya && base.banyaVariant && !base.banyaVariant.published && (
+        <BanyaVariantHint project={base} phone={settings.phone} />
+      )}
+      <DemoFrame note={d.suitableFor}>
+        <SuitableFor project={project} />
+      </DemoFrame>
+      <DemoFrame note={d.photos}>
+        <Gallery project={project} />
+      </DemoFrame>
+      <DemoFrame note={d.plans}>
+        <FloorPlans project={project} />
+      </DemoFrame>
+      <DemoFrame note={d.packages}>
+        <Packages project={project} />
+      </DemoFrame>
+      <DemoFrame note={d.options}>
+        <Options project={project} />
+      </DemoFrame>
+      <DemoFrame note={d.included ?? d.extra}>
+        <IncludedExtra project={project} />
+      </DemoFrame>
+      <DemoFrame note={d.calcExample}>
+        <CalcExample project={project} />
+      </DemoFrame>
+      <DemoSlotBlock slot={slots.financing} />
+      <DemoFrame note={d.specs}>
+        <Specs project={project} settings={settings} />
+      </DemoFrame>
       <Steps settings={settings} />
+      <DemoSlotBlock slot={slots.offer} />
       <Delivery settings={settings} />
+      <DemoSlotBlock slot={slots.cases} />
+      <DemoFrame note={settings.demo.excursion}>
+        <Excursion settings={settings} />
+      </DemoFrame>
       <Faq items={project.faq.length ? project.faq : settings.projectFaq} title="Вопросы по проекту" />
 
       {similar.length > 0 && (

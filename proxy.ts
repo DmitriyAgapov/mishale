@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { NextResponse, type NextRequest } from "next/server";
 import { normalizeStored } from "./lib/content/normalize";
+import { demoMode } from "./lib/demo";
 
 // Настоящий код 404 для несуществующих проектов и неопубликованных вариантов с баней.
 // С частичным пререндером оболочка страницы уходит со статусом 200 раньше, чем сработает notFound(),
@@ -9,6 +10,20 @@ import { normalizeStored } from "./lib/content/normalize";
 
 type Index = { projects: Set<string>; banya: Set<string> };
 let index: Index | null = null;
+
+type DemoPublish = {
+  override?: { published?: boolean };
+  banyaVariant?: { override?: { published?: boolean } };
+};
+function readDemoLayer(slug: string): DemoPublish | null {
+  try {
+    return JSON.parse(
+      readFileSync(path.join(process.cwd(), "content", "demo", "projects", `${slug}.json`), "utf8"),
+    ) as DemoPublish;
+  } catch {
+    return null;
+  }
+}
 
 function publishedIndex(): Index {
   if (index) return index;
@@ -23,6 +38,12 @@ function publishedIndex(): Index {
       banyaVariant?: { published?: boolean };
     };
     const slug = f.replace(/\.json$/, "");
+    // Тестовый адрес: заготовки, которые демо-слой публикует с примерами (lib/demo.ts)
+    if (demoMode) {
+      const demo = readDemoLayer(slug);
+      if (demo?.override?.published) data.published = true;
+      if (demo?.banyaVariant?.override?.published && data.banyaVariant) data.banyaVariant.published = true;
+    }
     if (!data.published) continue;
     projects.add(slug);
     if (data.banyaVariant?.published) banya.add(slug);
@@ -51,6 +72,10 @@ export function proxy(request: NextRequest) {
     process.env.NODE_ENV === "production" &&
     (parts[1] === "keystatic" || (parts[1] === "api" && parts[2] === "keystatic"))
   ) {
+    return withRobots(request, NextResponse.rewrite(new URL("/__not-found", request.url)));
+  }
+  // Сводка «Чего не хватает» есть только на тестовом адресе (lib/demo.ts)
+  if (parts[1] === "chego-ne-hvataet" && !demoMode) {
     return withRobots(request, NextResponse.rewrite(new URL("/__not-found", request.url)));
   }
   if (parts[1] === "proekty" && parts[2]) {

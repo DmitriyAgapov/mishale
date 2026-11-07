@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { cacheLife } from "next/cache";
+import { applyDemoLayer, demoMode, demoSlotSchema, mergeLayers, type DemoLayer, type DemoSlot } from "@/lib/demo";
 import { fillImageSizes } from "./images";
 import { normalizeStored } from "./normalize";
 import { projectSchema, settingsSchema, type Project, type Settings } from "./schemas";
@@ -11,17 +12,42 @@ async function readJson(file: string): Promise<unknown> {
   return JSON.parse(await readFile(file, "utf8"));
 }
 
+// Примеры для тестового адреса (lib/demo.ts). Без DEMO_CONTENT=1 не читаются вовсе.
+type DemoFile = { projects?: DemoLayer; settings?: DemoLayer; slots?: Record<string, unknown> };
+async function readDemo(): Promise<DemoFile> {
+  return (await readJson(path.join(root, "demo", "common.json"))) as DemoFile;
+}
+async function readDemoProject(slug: string): Promise<DemoLayer | undefined> {
+  return (await readJson(path.join(root, "demo", "projects", `${slug}.json`)).catch(() => undefined)) as
+    | DemoLayer
+    | undefined;
+}
+
 // Файл в форме Keystatic → проверенные данные сайта. Адрес проекта — имя файла.
-export async function parseSettings(raw: unknown): Promise<Settings> {
-  const data = normalizeStored(raw);
+export async function parseSettings(raw: unknown, demo?: DemoLayer): Promise<Settings> {
+  const data = normalizeStored(raw) as Record<string, unknown>;
+  applyDemoLayer(data, demo);
   const parsed = settingsSchema.safeParse(data);
   if (!parsed.success) throw new Error(`content/settings.json: ${parsed.error.message}`);
   return parsed.data;
 }
 
-export async function parseProject(raw: unknown, file: string, publicDir?: string): Promise<Project> {
+export async function parseProject(
+  raw: unknown,
+  file: string,
+  publicDir?: string,
+  demo?: DemoLayer,
+): Promise<Project> {
   const data = normalizeStored(raw) as Record<string, unknown>;
   data.slug = path.basename(file, ".json");
+  if (demo) {
+    applyDemoLayer(data, demo);
+    // Вариант с баней — свой слой внутри слоя проекта
+    const variant = demo.banyaVariant as DemoLayer | undefined;
+    if (variant && data.banyaVariant && typeof data.banyaVariant === "object") {
+      applyDemoLayer(data.banyaVariant as Record<string, unknown>, variant);
+    }
+  }
   await fillImageSizes(data, publicDir);
   const parsed = projectSchema.safeParse(data);
   if (!parsed.success) throw new Error(`content/projects/${path.basename(file)}: ${parsed.error.message}`);
@@ -32,7 +58,17 @@ export async function parseProject(raw: unknown, file: string, publicDir?: strin
 export async function getSettings(): Promise<Settings> {
   "use cache";
   cacheLife("max");
-  return parseSettings(await readJson(path.join(root, "settings.json")));
+  const demo = demoMode ? (await readDemo()).settings : undefined;
+  return parseSettings(await readJson(path.join(root, "settings.json")), demo);
+}
+
+// Блоки, которых на сайте пока нет, — показываются заглушками только в демо-режиме
+export async function getDemoSlots(): Promise<Record<string, DemoSlot>> {
+  "use cache";
+  cacheLife("max");
+  if (!demoMode) return {};
+  const slots = (await readDemo()).slots ?? {};
+  return Object.fromEntries(Object.entries(slots).map(([k, v]) => [k, demoSlotSchema.parse(v)]));
 }
 
 export async function getAllProjects(): Promise<Project[]> {
@@ -40,14 +76,23 @@ export async function getAllProjects(): Promise<Project[]> {
   cacheLife("max");
   const dir = path.join(root, "projects");
   const files = (await readdir(dir)).filter((f) => f.endsWith(".json")).sort();
+  const common = demoMode ? (await readDemo()).projects : undefined;
   const projects = await Promise.all(
-    files.map(async (f) => parseProject(await readJson(path.join(dir, f)), f)),
+    files.map(async (f) => {
+      const demo = demoMode ? mergeLayers(common, await readDemoProject(path.basename(f, ".json"))) : undefined;
+      return parseProject(await readJson(path.join(dir, f)), f, undefined, demo);
+    }),
   );
   return projects.sort((a, b) => a.order - b.order);
 }
 
 export async function getProjects(): Promise<Project[]> {
   return (await getAllProjects()).filter((p) => p.published);
+}
+
+// Для каталога: опубликованные проекты и заготовки — карточкой «Скоро» с формой «Узнать цену» (ТЗ §0)
+export async function getCatalogProjects(): Promise<Project[]> {
+  return getAllProjects();
 }
 
 export async function getProject(slug: string): Promise<Project | null> {
@@ -88,5 +133,7 @@ export function asBanyaVariant(p: Project): Project | null {
     specs: v.specs,
     calcExample: null,
     seo: v.seo,
+    // Пометки демо-режима: свои у варианта; пометка фото — от основного проекта, если фото взяты оттуда
+    demo: { ...(v.photos.length || !p.demo.photos ? {} : { photos: p.demo.photos }), ...v.demo },
   };
 }

@@ -83,7 +83,52 @@ test.describe("варианты и бани", () => {
     await expect(page.getByRole("heading", { name: "Небольшие дома — 2 модуля" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Средние дома" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Большие дома", exact: true })).toBeVisible();
-    // Бани без данных не показываются
-    await expect(page.getByRole("heading", { name: "Бани", exact: true })).toHaveCount(0);
+    // Бани без данных — карточки «Скоро» с формой «Узнать цену» (ТЗ §0)
+    await expect(page.getByRole("heading", { name: "Бани", exact: true })).toBeVisible();
+    await expect(page.getByText("Скоро", { exact: true })).toHaveCount(2);
+  });
+
+  test("карточка «Скоро» открывает форму «Узнать цену»", async ({ page }) => {
+    await page.goto("/proekty");
+    await page.getByRole("button", { name: "Узнать цену" }).first().click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Узнать цену" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+  });
+
+  test("фильтр по площади оставляет одну группу", async ({ page }) => {
+    await page.goto("/proekty");
+    await page.getByRole("group", { name: "Площадь" }).getByRole("button", { name: "Бани" }).click();
+    await expect(page.getByRole("heading", { name: "Средние дома" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Бани", exact: true })).toBeVisible();
+  });
+
+  test("на среднем доме — предложение варианта с баней", async ({ page }) => {
+    await page.goto("/proekty/dom-60");
+    await expect(page.getByText("Есть вариант с баней внутри")).toBeVisible();
+  });
+});
+
+test.describe("новые страницы", () => {
+  test("вопросы: страница, одна разметка FAQPage", async ({ page }) => {
+    await page.goto("/voprosy");
+    await expect(page.getByRole("heading", { level: 1, name: "Вопросы и ответы" })).toBeVisible();
+    const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
+    expect(ld.filter((t) => t.includes('"FAQPage"'))).toHaveLength(1);
+  });
+
+  test("404 показывает проекты и телефон", async ({ page }) => {
+    await page.goto("/net-takoi-stranicy");
+    await expect(page.getByRole("navigation", { name: "Проекты" }).getByRole("link")).not.toHaveCount(0);
+    await expect(page.getByRole("main").getByRole("link", { name: "8 982 28-888-28" })).toBeVisible();
+  });
+
+  test("без демо-режима нет пометок и сводки", async ({ page, request }) => {
+    expect((await request.get("/chego-ne-hvataet")).status()).toBe(404);
+    await page.goto("/");
+    await expect(page.locator("[data-demo]")).toHaveCount(0);
+    await expect(page.getByText("Тестовая версия сайта")).toHaveCount(0);
   });
 });

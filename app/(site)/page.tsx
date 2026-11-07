@@ -11,14 +11,15 @@ import {
   TreePine,
 } from "lucide-react";
 import type { HomeAndConstructionBusiness } from "schema-dts";
-import { LeadSection, TrustNumbers, WorkshopVsSite } from "@/components/blocks/common";
+import { LeadSection, TrustNumbers, Warranty, WorkshopVsSite } from "@/components/blocks/common";
+import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { Faq, Steps } from "@/components/blocks/project";
 import { Quiz } from "@/components/forms/Quiz";
 import { JsonLd } from "@/components/JsonLd";
 import { ProjectGroups } from "@/components/ProjectGroups";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
-import { getProjects, getSettings } from "@/lib/content";
+import { getCatalogProjects, getDemoSlots, getSettings } from "@/lib/content";
 import { formatPrice } from "@/lib/format";
 import { site } from "@/lib/site";
 
@@ -40,9 +41,13 @@ const icons: Record<string, typeof Frame> = {
 };
 
 // Главная (ТЗ §7.2). Блоки без данных компании (сезонное предложение, каталог PDF, кейсы,
-// для бизнеса, экскурсия) появятся, когда будут данные.
+// для бизнеса, видео) появятся, когда будут данные; на тестовом сайте на их месте — заглушки (lib/demo.ts).
 export default async function Home() {
-  const [projects, settings] = await Promise.all([getProjects(), getSettings()]);
+  const [projects, settings, slots] = await Promise.all([
+    getCatalogProjects(),
+    getSettings(),
+    getDemoSlots(),
+  ]);
   const hero = projects.find((p) => p.slug === "dom-45")?.photos[0] ?? projects[0]?.photos[0];
 
   return (
@@ -110,13 +115,14 @@ export default async function Home() {
       </section>
 
       <TrustNumbers settings={settings} />
+      <DemoSlotBlock slot={slots.offer} />
 
       <Section
         id="proekty"
         title="Проекты и цены"
         lead="Выберите, для чего нужен дом, — покажем подходящие проекты."
       >
-        <ProjectGroups projects={projects} headingLevel={3} />
+        <ProjectGroups projects={projects} phone={settings.phone} headingLevel={3} />
         <Link href="/proekty" className="hover:text-brand mt-8 inline-flex items-center gap-2 font-semibold">
           Все проекты на одной странице
           <ArrowRight className="size-4" aria-hidden />
@@ -133,6 +139,8 @@ export default async function Home() {
           <Quiz phone={settings.phone} />
         </div>
       </Section>
+
+      <DemoSlotBlock slot={slots.catalog} />
 
       <WorkshopVsSite settings={settings} />
       <div className="mx-auto -mt-6 w-full max-w-(--container-site) px-4 pb-6 md:px-6">
@@ -168,7 +176,13 @@ export default async function Home() {
         </Link>
       </Section>
 
+      <DemoSlotBlock slot={slots.video} />
+      <DemoSlotBlock slot={slots.cases} />
+      <DemoSlotBlock slot={slots.business} />
       <Steps settings={settings} />
+      <DemoFrame note={settings.demo.warrantyItems}>
+        <Warranty settings={settings} />
+      </DemoFrame>
       <Faq items={[...settings.generalFaq, ...settings.projectFaq]} />
       <LeadSection settings={settings} />
 

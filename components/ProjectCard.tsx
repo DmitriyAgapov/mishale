@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { DemoBadge } from "@/components/demo/Demo";
 import { projectPriceFrom } from "@/lib/content";
 import type { Project } from "@/lib/content/schemas";
 import { formatArea, formatPrice, keepUnits, pluralModules } from "@/lib/format";
@@ -47,6 +48,7 @@ export function ProjectCard({ project, eager }: { project: Project; eager?: "fir
         </p>
         <p className="mt-auto pt-3 text-lg font-extrabold">
           {price ? `от ${formatPrice(price)}` : "Цена по запросу"}
+          <DemoBadge note={project.demo.packages ?? project.demo.priceFrom} />
         </p>
       </div>
     </Link>

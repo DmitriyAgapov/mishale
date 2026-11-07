@@ -18,6 +18,11 @@
   --color-whatsapp: #17773f;
   --color-success: #2f6b3a;
   --color-danger: #b42318;
+  /* Демо-режим (lib/demo.ts): пометки примеров на тестовом сайте */
+  --color-demo: #b45309;
+  --color-demo-soft: #fff7e0;
+  --color-demo-ink: #7c2d12;
+  --color-demo-on: #ffffff;
 
   /* Шрифты */
   --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -56,7 +61,7 @@
   }
 }
 
-/* Подбор по назначению (components/PurposeFilter.tsx): карточка с data-p, группа с data-group */
+/* Подбор по назначению и площади (components/PurposeFilter.tsx): карточка с data-p, группа с data-group */
 @layer components {
   [data-filter="dacha"] [data-card]:not([data-p~="dacha"]),
   [data-filter="permanent"] [data-card]:not([data-p~="permanent"]),
@@ -65,7 +70,11 @@
   [data-filter="dacha"] [data-group]:not(:has([data-p~="dacha"])),
   [data-filter="permanent"] [data-group]:not(:has([data-p~="permanent"])),
   [data-filter="guest"] [data-group]:not(:has([data-p~="guest"])),
-  [data-filter="rent"] [data-group]:not(:has([data-p~="rent"])) {
+  [data-filter="rent"] [data-group]:not(:has([data-p~="rent"])),
+  [data-area="small"] [data-group]:not([data-group="small"]),
+  [data-area="medium"] [data-group]:not([data-group="medium"]),
+  [data-area="large"] [data-group]:not([data-group="large"]),
+  [data-area="banya"] [data-group]:not([data-group="banya"]) {
     display: none;
   }
 }

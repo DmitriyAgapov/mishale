@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { demoNotesSchema } from "@/lib/demo";
 
 // Схемы данных сайта (ТЗ §5). Битый JSON роняет сборку, а не сайт.
 // Файлы пишет админка Keystatic (keystatic.config.ts); перед проверкой их приводит к этой форме normalize.ts:
@@ -62,6 +63,8 @@ const banyaVariantSchema = z.object({
   options: z.array(z.object({ name: z.string(), price })).default([]),
   specs: z.array(z.object({ name: z.string(), value: z.string() })).default([]),
   seo: seoSchema,
+  // Пояснения к полям, заполненным примерами (только в демо-режиме, lib/demo.ts)
+  demo: demoNotesSchema,
 });
 
 export const projectSchema = z.object({
@@ -109,6 +112,7 @@ export const projectSchema = z.object({
   similar: z.array(z.string()).default([]),
   seo: seoSchema,
   banyaVariant: banyaVariantSchema.nullable().default(null),
+  demo: demoNotesSchema,
 });
 export type Project = z.output<typeof projectSchema>;
 
@@ -125,6 +129,8 @@ export const settingsSchema = z.object({
   trust: z.array(z.object({ value: z.string(), label: z.string() })),
   priceFromAll: z.number().int().positive().nullable().default(null),
   warrantyYears: z.number().int().positive(),
+  // Что покрывает гарантия — блок «Гарантия» на главной и в «Производстве»
+  warrantyItems: z.array(z.string()).default([]),
   productionWeeks: z.string(),
   // Общий состав конструкции — показывается на страницах проектов, пока у проекта нет своих характеристик
   construction: z.array(z.object({ title: z.string(), items: z.array(z.string()) })),
@@ -144,5 +150,6 @@ export const settingsSchema = z.object({
     })
     .nullable()
     .default(null),
+  demo: demoNotesSchema,
 });
 export type Settings = z.output<typeof settingsSchema>;

@@ -12,7 +12,8 @@ export type Goal =
   | "lead_error"
   | "filter_purpose"
   | "quiz_start"
-  | "quiz_step";
+  | "quiz_step"
+  | "open_price_form";
 
 type Ym = (id: number, method: string, ...args: unknown[]) => void;
 

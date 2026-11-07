@@ -1,3 +1,4 @@
+import { DemoBadge } from "@/components/demo/Demo";
 import type { Settings } from "@/lib/content/schemas";
 
 // Реквизиты оператора персональных данных. Пока компания их не прислала — заметное предупреждение:
@@ -16,6 +17,7 @@ export function Operator({ settings }: { settings: Settings }) {
       {l.name}, ИНН {l.inn}, ОГРН {l.ogrn}
       {settings.address ? `, адрес: ${settings.address.text}` : ""}
       {settings.email ? `, e-mail: ${settings.email}` : ""}.
+      <DemoBadge note={settings.demo.legal} label="пример реквизитов" />
     </p>
   );
 }

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { LeadSection } from "@/components/blocks/common";
+import { Quiz } from "@/components/forms/Quiz";
 import { Faq } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ProjectGroups } from "@/components/ProjectGroups";
 import { Section } from "@/components/ui/Section";
-import { getProjects, getSettings } from "@/lib/content";
+import { button } from "@/components/ui/button";
+import { getCatalogProjects, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Проекты модульных домов и бань — цены и планировки",
@@ -13,9 +15,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/proekty" },
 };
 
-// Каталог (ТЗ §7.3): группы и подбор по назначению, форма заявки, вопросы
+// Каталог (ТЗ §7.3): группы, подбор по назначению и площади, карточки «Скоро», квиз кнопкой, вопросы, форма
 export default async function ProjectsPage() {
-  const [projects, settings] = await Promise.all([getProjects(), getSettings()]);
+  const [projects, settings] = await Promise.all([getCatalogProjects(), getSettings()]);
   return (
     <>
       <Breadcrumbs items={[{ href: "/proekty", label: "Проекты и цены" }]} />
@@ -25,7 +27,26 @@ export default async function ProjectsPage() {
           Дома от 20 до 120 м², у средних и больших — вариант с баней внутри. Все дома собираются в нашем цеху
           в Миассе и приезжают на участок готовыми.
         </p>
-        <ProjectGroups projects={projects} eagerCount={3} />
+        <ProjectGroups projects={projects} phone={settings.phone} eagerCount={3} />
+      </Section>
+      {/* Квиз кнопкой (ТЗ §7.3): <details> раскрывается без JavaScript */}
+      <Section tone="brand">
+        <details className="group">
+          <summary className="flex cursor-pointer list-none flex-col gap-4 md:flex-row md:items-center md:justify-between [&::-webkit-details-marker]:hidden">
+            <span>
+              <span className="text-h2 block font-extrabold md:text-3xl">
+                Не знаете, какой проект выбрать?
+              </span>
+              <span className="text-ink-muted mt-2 block text-lg">
+                Ответьте на 4 вопроса — подберём проект и посчитаем стоимость под ключ.
+              </span>
+            </span>
+            <span className={button({ size: "lg" }) + " group-open:hidden"}>Рассчитать за 1 минуту</span>
+          </summary>
+          <div className="mt-8 max-w-3xl">
+            <Quiz phone={settings.phone} />
+          </div>
+        </details>
       </Section>
       <Faq items={settings.generalFaq} />
       <LeadSection

@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { Check, ShieldCheck, X } from "lucide-react";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { Section } from "@/components/ui/Section";
 import type { Settings } from "@/lib/content/schemas";
@@ -123,6 +123,34 @@ export function Excursion({ settings }: { settings: Settings }) {
           {settings.address && <p className="text-ink-muted mt-3">{settings.address.text}</p>}
         </div>
         <LeadForm form="excursion" phone={settings.phone} submitLabel="Записаться на экскурсию" />
+      </div>
+    </Section>
+  );
+}
+
+// Гарантия (ТЗ §7.2 блок 13, §7.5). Срок — из настроек; что покрывает — список, когда компания его даст
+export function Warranty({ settings }: { settings: Settings }) {
+  return (
+    <Section title={`Гарантия ${settings.warrantyYears} лет по договору`}>
+      <div className="flex max-w-3xl gap-4">
+        <ShieldCheck className="text-brand size-10 shrink-0" aria-hidden />
+        <div className="text-lg">
+          {settings.warrantyItems.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {settings.warrantyItems.map((i) => (
+                <li key={i} className="flex gap-2">
+                  <Check className="text-success mt-1 size-5 shrink-0" aria-hidden />
+                  {i}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>
+              Гарантийный срок прописан в договоре. Менеджер до подписания расскажет, на что действует
+              гарантия и как к ней обратиться.
+            </p>
+          )}
+        </div>
       </div>
     </Section>
   );

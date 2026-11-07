@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Excursion, LeadSection, TrustNumbers, WorkshopVsSite } from "@/components/blocks/common";
+import { Excursion, LeadSection, TrustNumbers, Warranty, WorkshopVsSite } from "@/components/blocks/common";
+import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { Construction, Delivery, Faq, Steps } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
-import { getSettings } from "@/lib/content";
+import { getDemoSlots, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Производство модульных домов в Миассе — собственный цех 3 000 м²",
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 // «Производство», короткая версия на запуск (ТЗ §0, §7.5). Видео, фото цеха, люди, контроль качества
 // и документы — когда компания пришлёт материалы.
 export default async function ProductionPage() {
-  const settings = await getSettings();
+  const [settings, slots] = await Promise.all([getSettings(), getDemoSlots()]);
   return (
     <>
       <Breadcrumbs items={[{ href: "/proizvodstvo", label: "Производство" }]} />
@@ -43,9 +44,16 @@ export default async function ProductionPage() {
       <TrustNumbers settings={settings} />
       <WorkshopVsSite settings={settings} title="Цех против стройки на участке" />
       <Construction settings={settings} />
+      <DemoSlotBlock slot={slots.video} />
       <Steps settings={settings} />
+      <DemoSlotBlock slot={slots.production} />
       <Delivery settings={settings} />
-      <Excursion settings={settings} />
+      <DemoFrame note={settings.demo.warrantyItems}>
+        <Warranty settings={settings} />
+      </DemoFrame>
+      <DemoFrame note={settings.demo.excursion}>
+        <Excursion settings={settings} />
+      </DemoFrame>
       <Faq items={settings.generalFaq} />
       <LeadSection settings={settings} />
     </>

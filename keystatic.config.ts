@@ -226,6 +226,7 @@ export default config({
         }),
         priceFromAll: price("Цена «от» на главной, ₽"),
         warrantyYears: fields.integer({ label: "Гарантия, лет", validation: { isRequired: true, min: 1 } }),
+        warrantyItems: strings("Что покрывает гарантия", "Пункт"),
         productionWeeks: text("Срок производства, недель", "Например: 2–4"),
         construction: fields.array(
           fields.object({ title: text("Раздел"), items: strings("Пункты", "Пункт") }),

@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProjectView, projectMetadata } from "@/components/ProjectView";
-import { asBanyaVariant, getProject, getProjects, getSettings, projectHref } from "@/lib/content";
+import {
+  asBanyaVariant,
+  getDemoSlots,
+  getProject,
+  getProjects,
+  getSettings,
+  projectHref,
+} from "@/lib/content";
 
 // Вариант дома с баней внутри: /proekty/<slug>/s-banei
 // С Cache Components список параметров не может быть пустым, поэтому собираем все проекты,
@@ -19,8 +26,13 @@ export async function generateMetadata({ params }: PageProps<"/proekty/[slug]/s-
 
 export default async function BanyaVariantPage({ params }: PageProps<"/proekty/[slug]/s-banei">) {
   const { slug } = await params;
-  const [base, settings, all] = await Promise.all([getProject(slug), getSettings(), getProjects()]);
+  const [base, settings, all, slots] = await Promise.all([
+    getProject(slug),
+    getSettings(),
+    getProjects(),
+    getDemoSlots(),
+  ]);
   const variant = base && asBanyaVariant(base);
   if (!base || !variant) notFound();
-  return <ProjectView base={base} project={variant} withBanya settings={settings} all={all} />;
+  return <ProjectView base={base} project={variant} withBanya settings={settings} all={all} slots={slots} />;
 }

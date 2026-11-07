@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Excursion, LeadSection } from "@/components/blocks/common";
+import { DemoBadge, DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
-import { getSettings } from "@/lib/content";
+import { getDemoSlots, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Контакты — производство модульных домов в Миассе",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 
 // Контакты (ТЗ §7.10). Адрес, карта, режим работы и реквизиты выводятся, когда компания их пришлёт.
 export default async function ContactsPage() {
-  const s = await getSettings();
+  const [s, slots] = await Promise.all([getSettings(), getDemoSlots()]);
   const mapUrl = s.address ? `https://yandex.ru/maps/?pt=${s.address.lng},${s.address.lat}&z=16&l=map` : null;
   return (
     <>
@@ -44,7 +45,10 @@ export default async function ContactsPage() {
             {s.workHours && (
               <div>
                 <p className="text-ink-muted text-sm">Режим работы</p>
-                <p className="text-lg font-semibold">{s.workHours}</p>
+                <p className="text-lg font-semibold">
+                  {s.workHours}
+                  <DemoBadge note={s.demo.workHours} />
+                </p>
               </div>
             )}
             <div className="flex flex-wrap gap-3">
@@ -82,6 +86,7 @@ export default async function ContactsPage() {
               <p className="text-ink-muted text-sm">Производство</p>
               <p className="text-lg font-semibold">
                 {s.address ? s.address.text : "Собственный цех в Миассе"}
+                <DemoBadge note={s.demo.address} />
               </p>
             </div>
             {mapUrl && (
@@ -91,7 +96,10 @@ export default async function ContactsPage() {
             )}
             {s.legal && (
               <div className="text-ink-muted text-sm">
-                <p>{s.legal.name}</p>
+                <p>
+                  {s.legal.name}
+                  <DemoBadge note={s.demo.legal} />
+                </p>
                 <p>ИНН {s.legal.inn}</p>
                 <p>ОГРН {s.legal.ogrn}</p>
               </div>
@@ -99,7 +107,10 @@ export default async function ContactsPage() {
           </div>
         </div>
       </Section>
-      <Excursion settings={s} />
+      <DemoSlotBlock slot={slots.map} />
+      <DemoFrame note={s.demo.excursion}>
+        <Excursion settings={s} />
+      </DemoFrame>
       <LeadSection settings={s} title="Оставьте заявку" />
     </>
   );

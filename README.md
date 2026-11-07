@@ -29,6 +29,10 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 
 `POST /api/lead` → проверка схемой (`lib/leads/schema.ts`) → защита от спама (`lib/leads/guard.ts`) → адаптер по `LEAD_TARGET`: YouGile (`lib/leads/yougile.ts`) или Битрикс24 (`lib/leads/bitrix.ts`), 3 попытки. Персональные данные в логи не пишутся.
 
+## Демо-режим (тестовый сайт)
+
+`DEMO_CONTENT=1 npm run build` — недостающие данные заполняются примерами из `content/demo/` с жёлтыми пометками «нужно / зачем», сводка — `/chego-ne-hvataet`. Только для тестового адреса: на рабочем сайте переменную не задавать (подробности — `lib/demo.ts`, `docs/STATUS.md`).
+
 ## Деплой
 
 `amvera.yml`: окружение node 22, Amvera выполняет `npm install` и `npm run build`, запускает `npm run start` на порту 3000. Сборка — при пуше в `master` репозитория Amvera или через вебхук GitHub.

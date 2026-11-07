@@ -1,3 +1,4 @@
+import { DemoBanner } from "@/components/demo/Demo";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileBar } from "@/components/layout/MobileBar";
@@ -13,6 +14,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       >
         Перейти к содержимому
       </a>
+      <DemoBanner />
       <Header />
       <main id="main" className="flex-1">
         {children}
