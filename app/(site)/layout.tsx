@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileBar } from "@/components/layout/MobileBar";
+import { Metrika } from "@/components/Metrika";
 import { Tracking } from "@/components/Tracking";
 
 export default function SiteLayout({ children }: LayoutProps<"/">) {
@@ -19,6 +20,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       <Footer />
       <MobileBar />
       <Tracking />
+      <Metrika />
     </>
   );
 }

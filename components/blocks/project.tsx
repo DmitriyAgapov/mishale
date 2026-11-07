@@ -31,7 +31,8 @@ export function ProjectHero({ project, settings }: { project: Project; settings:
               alt={photo.alt}
               width={photo.width}
               height={photo.height}
-              priority
+              fetchPriority="high"
+              loading="eager"
               sizes="(min-width: 768px) 60vw, 100vw"
               className="h-auto w-full"
             />

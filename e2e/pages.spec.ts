@@ -67,3 +67,28 @@ test("микроразметка организации и вопросов на
   expect(ld).toContain('"@type":"HomeAndConstructionBusiness"');
   expect(ld).toContain('"@type":"FAQPage"');
 });
+
+test("старые адреса перенаправляются на новые (301)", async ({ request }) => {
+  const cases: Array<[string, string]> = [
+    ["/project", "/proekty"],
+    ["/page111403266.html", "/proekty"],
+    ["/60", "/proekty/dom-60"],
+    ["/page112807856.html", "/proekty/dom-60"],
+    ["/120", "/proekty/dom-120"],
+    ["/personal", "/soglasie"],
+    ["/politic", "/politika"],
+  ];
+  for (const [from, to] of cases) {
+    const res = await request.get(from, { maxRedirects: 0 });
+    expect(res.status(), from).toBe(301);
+    expect(new URL(res.headers()["location"], "http://x").pathname, from).toBe(to);
+  }
+});
+
+test("sitemap содержит опубликованные страницы и не содержит скрытых", async ({ request }) => {
+  const xml = await (await request.get("/sitemap.xml")).text();
+  expect(xml).toContain("https://mishale74.ru/proekty/dom-45</loc>");
+  expect(xml).toContain("https://mishale74.ru/proizvodstvo</loc>");
+  expect(xml).not.toContain("banya-1");
+  expect(xml).not.toContain("s-banei");
+});

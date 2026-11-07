@@ -11,5 +11,6 @@ build:
   additionalCommands: npm run build
 
 run:
-  command: npm run start
+  # Порт задан явно: Amvera выставляет PORT=80, а next start слушает PORT — без -p порт разойдётся с containerPort
+  command: npm run start -- -p 3000
   containerPort: 3000

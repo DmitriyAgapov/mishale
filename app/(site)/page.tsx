@@ -94,7 +94,8 @@ export default async function Home() {
                 alt={hero.alt}
                 width={hero.width}
                 height={hero.height}
-                priority
+                fetchPriority="high"
+                loading="eager"
                 sizes="(min-width: 768px) 55vw, 100vw"
                 className="h-auto w-full"
               />
