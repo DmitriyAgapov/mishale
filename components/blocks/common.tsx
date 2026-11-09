@@ -225,7 +225,11 @@ export function Cases({
                       src={main.src}
                       alt={main.alt}
                       fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      sizes={
+                        items.length > 2
+                          ? "(min-width: 1440px) 421px, (min-width: 1216px) 373px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                          : "(min-width: 1440px) 656px, (min-width: 768px) 50vw, 100vw"
+                      }
                       className="object-cover"
                     />
                   </div>
@@ -234,7 +238,13 @@ export function Cases({
                   <div className="grid grid-cols-3 gap-1 p-1">
                     {rest.slice(0, 3).map((p) => (
                       <div key={p.src} className="relative aspect-[4/3] overflow-hidden rounded">
-                        <Image src={p.src} alt={p.alt} fill sizes="15vw" className="object-cover" />
+                        <Image
+                          src={p.src}
+                          alt={p.alt}
+                          fill
+                          sizes="(min-width: 1440px) 220px, (min-width: 768px) 15vw, 33vw"
+                          className="object-cover"
+                        />
                       </div>
                     ))}
                   </div>

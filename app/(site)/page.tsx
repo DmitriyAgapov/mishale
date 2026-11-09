@@ -111,7 +111,7 @@ export default async function Home() {
                 height={hero.height}
                 fetchPriority="high"
                 loading="eager"
-                sizes="(min-width: 768px) 55vw, 100vw"
+                sizes="(min-width: 1440px) 670px, (min-width: 1216px) 595px, (min-width: 768px) 52vw, 100vw"
                 className="h-auto w-full"
               />
               {hero.render && (

@@ -40,11 +40,18 @@
   --radius-control: 0.75rem;
   --shadow-card: 0 1px 2px rgb(31 26 22 / 0.06), 0 4px 16px rgb(31 26 22 / 0.06);
 
-  /* Ширина контента */
+  /* Ширина контента: 76rem до 1440 px, с 1440 px — 85rem (задаётся в @layer base) и дальше не растёт */
   --container-site: 76rem;
+  --breakpoint-2xl: 90rem;
 }
 
 @layer base {
+  :root {
+    @variant 2xl {
+      --container-site: 85rem;
+    }
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
   }

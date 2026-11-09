@@ -23,7 +23,8 @@ export async function Header() {
           />
         </Link>
 
-        <nav aria-label="Основное меню" className="ml-6 hidden gap-6 md:flex">
+        {/* Полное меню — с lg: на меньших ширинах вместе с телефоном и кнопкой оно не помещается */}
+        <nav aria-label="Основное меню" className="ml-6 hidden gap-6 lg:flex">
           {nav.map((i) => (
             <Link key={i.href} href={i.href} className="text-ink hover:text-brand font-semibold">
               {i.label}
@@ -45,7 +46,7 @@ export async function Header() {
           </a>
         </div>
 
-        <MobileMenu className="group ml-auto md:hidden">
+        <MobileMenu className="group ml-auto md:ml-0 lg:hidden">
           <summary
             className="rounded-control border-line flex size-11 cursor-pointer list-none items-center justify-center border [&::-webkit-details-marker]:hidden"
             aria-label="Меню"
@@ -53,7 +54,7 @@ export async function Header() {
             <Menu className="size-6 group-open:hidden" aria-hidden />
             <X className="hidden size-6 group-open:block" aria-hidden />
           </summary>
-          <div className="border-line bg-bg shadow-card absolute inset-x-0 top-16 border-b px-4 pb-6">
+          <div className="border-line bg-bg shadow-card absolute inset-x-0 top-16 border-b px-4 pb-6 md:top-20 md:px-6">
             <nav aria-label="Меню на телефоне" className="flex flex-col">
               {nav.map((i) => (
                 <Link key={i.href} href={i.href} className="border-line border-b py-4 text-lg font-semibold">

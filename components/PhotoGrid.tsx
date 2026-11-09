@@ -13,6 +13,8 @@ export function PhotoGrid({
   className?: string;
 }) {
   if (!photos.length) return null;
+  // Ширина фото при контенте заданной ширины: промежутки между колонками — 12 px (gap-3)
+  const photoWidth = (content: number) => Math.ceil((content - 12 * (cols - 1)) / cols);
   return (
     <div
       className={cn(
@@ -29,7 +31,7 @@ export function PhotoGrid({
             alt={p.alt}
             width={p.width}
             height={p.height}
-            sizes={`(min-width: 768px) ${Math.round(100 / cols)}vw, 50vw`}
+            sizes={`(min-width: 1440px) ${photoWidth(1312)}px, (min-width: 1216px) ${photoWidth(1168)}px, (min-width: 768px) ${Math.round(100 / cols)}vw, 50vw`}
             className="h-full w-full object-cover"
           />
           {p.render && (

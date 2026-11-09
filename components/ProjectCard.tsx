@@ -22,7 +22,7 @@ export function ProjectCard({ project, eager }: { project: Project; eager?: "fir
             src={photo.src}
             alt={photo.alt}
             fill
-            sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 1440px) 421px, (min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
             loading={eager ? "eager" : "lazy"}
             fetchPriority={eager === "first" ? "high" : undefined}
             className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"

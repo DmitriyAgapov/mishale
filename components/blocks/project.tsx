@@ -35,7 +35,7 @@ export function ProjectHero({ project, settings }: { project: Project; settings:
               height={photo.height}
               fetchPriority="high"
               loading="eager"
-              sizes="(min-width: 768px) 60vw, 100vw"
+              sizes="(min-width: 1440px) 742px, (min-width: 1216px) 658px, (min-width: 768px) 55vw, 100vw"
               className="h-auto w-full"
             />
           )}
@@ -119,7 +119,11 @@ export function FloorPlans({ project }: { project: Project }) {
                 alt={p.alt}
                 width={p.width}
                 height={p.height}
-                sizes="(min-width: 768px) 50vw, 100vw"
+                sizes={
+                  project.plans.length > 1
+                    ? "(min-width: 1440px) 612px, (min-width: 768px) 50vw, 100vw"
+                    : "(min-width: 1024px) 864px, 100vw"
+                }
                 className="h-auto w-full"
               />
             </a>
