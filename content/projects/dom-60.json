@@ -81,8 +81,9 @@
   "banyaVariant": {
     "discriminant": true,
     "value": {
-      "published": false,
+      "published": true,
       "title": "Модульный дом 60 м² с баней",
+      "summary": "Тот же дом 60 м², но с парной внутри и террасой: баня без отдельной постройки на участке. Такой дом уже стоит в Теренкуле.",
       "photos": [
         {
           "src": "/images/projects/dom-60/real/shine-15-b9c39f.jpg",

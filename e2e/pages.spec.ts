@@ -90,7 +90,8 @@ test("sitemap содержит опубликованные страницы и 
   expect(xml).toContain("https://mishale74.ru/proekty/dom-45</loc>");
   expect(xml).toContain("https://mishale74.ru/proizvodstvo</loc>");
   expect(xml).not.toContain("banya-1");
-  expect(xml).not.toContain("s-banei");
+  expect(xml).toContain("https://mishale74.ru/proekty/dom-60/s-banei</loc>");
+  expect(xml).not.toContain("dom-45/s-banei");
 });
 
 test("вне основного домена — X-Robots-Tag noindex, на mishale74.ru — нет", async ({ request }) => {

@@ -73,7 +73,7 @@ test.describe("телефон", () => {
 
 test.describe("варианты и бани", () => {
   test("неопубликованный вариант с баней и баня без данных — 404", async ({ request }) => {
-    expect((await request.get("/proekty/dom-60/s-banei")).status()).toBe(404);
+    expect((await request.get("/proekty/dom-45/s-banei")).status()).toBe(404);
     expect((await request.get("/proekty/dom-20/s-banei")).status()).toBe(404);
     expect((await request.get("/proekty/banya-1")).status()).toBe(404);
   });
@@ -106,8 +106,20 @@ test.describe("варианты и бани", () => {
   });
 
   test("на среднем доме — предложение варианта с баней", async ({ page }) => {
-    await page.goto("/proekty/dom-60");
+    await page.goto("/proekty/dom-45");
     await expect(page.getByText("Есть вариант с баней внутри")).toBeVisible();
+  });
+
+  test("опубликованный вариант 60 м² с баней: переключатель, цены, построенный дом", async ({ page }) => {
+    await page.goto("/proekty/dom-60");
+    await page
+      .getByRole("navigation", { name: "Вариант дома" })
+      .getByRole("link", { name: "С баней внутри" })
+      .click();
+    await expect(page).toHaveURL(/\/proekty\/dom-60\/s-banei$/);
+    await expect(page.getByRole("heading", { level: 1, name: "Модульный дом 60 м² с баней" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Комфорт+", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Дом 60 м² с баней внутри" })).toBeVisible();
   });
 });
 

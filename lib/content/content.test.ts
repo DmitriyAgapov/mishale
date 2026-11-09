@@ -106,7 +106,7 @@ describe("данные проектов", () => {
 });
 
 describe("вариант с баней", () => {
-  const base = all.find((p) => p.slug === "dom-60")!;
+  const base = all.find((p) => p.slug === "dom-45")!;
 
   it("неопубликованный вариант не собирается", () => {
     expect(asBanyaVariant(base)).toBeNull();
@@ -117,11 +117,18 @@ describe("вариант с баней", () => {
       ...base,
       banyaVariant: { ...base.banyaVariant!, published: true, area: 66, priceFrom: 3_000_000, photos: [] },
     })!;
-    expect(v.title).toBe("Модульный дом 60 м² с баней");
+    expect(v.title).toBe("Модульный дом 45 м² с баней");
     expect(v.params.area).toBe(66);
     expect(v.priceFrom).toBe(3_000_000);
     expect(v.plans).toEqual([]);
     expect(v.photos).toEqual(base.photos);
-    expect(projectHref(base, true)).toBe("/proekty/dom-60/s-banei");
+    expect(projectHref(base, true)).toBe("/proekty/dom-45/s-banei");
+  });
+
+  it("вариант 60 м² с баней опубликован: свои фото, площадь — от основного проекта", () => {
+    const v = asBanyaVariant(all.find((p) => p.slug === "dom-60")!)!;
+    expect(v).not.toBeNull();
+    expect(v.params.area).toBe(60);
+    expect(v.photos[0].src).toContain("/real/");
   });
 });
