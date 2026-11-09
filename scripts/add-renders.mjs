@@ -4,13 +4,15 @@
 // проекта (content/projects/<slug>.json) с отметкой render: true — на сайте подпись «Визуализация».
 // Повторный запуск обновляет картинки и не дублирует записи. Порядок фото можно поменять в админке.
 import { existsSync } from "node:fs";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { angles, houses } from "./renders/data.mjs";
 
 const root = process.cwd();
-const inbox = path.join(root, "assets", "renders");
+// По умолчанию assets/renders/<slug>/; можно указать папку пакетов: node scripts/add-renders.mjs ../site-assets/render-pack
+// — тогда картинки берутся из <slug>/results/
+const inbox = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root, "assets", "renders");
 const exts = [".jpg", ".jpeg", ".png", ".webp"];
 
 if (!existsSync(inbox)) {
@@ -20,9 +22,12 @@ if (!existsSync(inbox)) {
 
 let added = 0;
 let updated = 0;
+let removed = 0;
 for (const slug of await readdir(inbox)) {
   const house = houses[slug];
-  const dir = path.join(inbox, slug);
+  const base = path.join(inbox, slug);
+  if (!(await stat(base)).isDirectory()) continue;
+  const dir = existsSync(path.join(base, "results")) ? path.join(base, "results") : base;
   if (!house) {
     console.warn(`Пропуск ${slug}: нет такого проекта в scripts/renders/data.mjs`);
     continue;
@@ -64,6 +69,17 @@ for (const slug of await readdir(inbox)) {
     }
     console.log(src);
   }
+  // Новый главный фасад заменяет старые визуализации со старого сайта (решение пользователя от 09.11.2026):
+  // убираются записи render: true не из этого скрипта и их файлы; настоящие фото не трогаются
+  if (files.some((f) => path.parse(f).name === "front")) {
+    const old = data.photos.filter((p) => p.render && !p.src.includes("/photos/render-"));
+    for (const p of old) {
+      await rm(path.join(root, "public", path.dirname(p.src)), { recursive: true, force: true });
+      console.log(`Убрана старая визуализация ${p.src}`);
+      removed++;
+    }
+    data.photos = data.photos.filter((p) => !old.includes(p));
+  }
   await writeFile(jsonFile, JSON.stringify(data, null, 2) + "\n");
 }
-console.log(`Добавлено ${added}, обновлено ${updated}`);
+console.log(`Добавлено ${added}, обновлено ${updated}, убрано старых ${removed}`);
