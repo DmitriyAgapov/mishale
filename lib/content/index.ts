@@ -4,6 +4,7 @@ import { cacheLife } from "next/cache";
 import { applyDemoLayer, demoMode, demoSlotSchema, mergeLayers, type DemoLayer, type DemoSlot } from "@/lib/demo";
 import { fillImageSizes } from "./images";
 import { normalizeStored } from "./normalize";
+import { withTierPackages } from "./prices";
 import { projectSchema, settingsSchema, type Project, type Settings } from "./schemas";
 
 const root = path.join(process.cwd(), "content");
@@ -27,6 +28,7 @@ async function readDemoProject(slug: string): Promise<DemoLayer | undefined> {
 export async function parseSettings(raw: unknown, demo?: DemoLayer): Promise<Settings> {
   const data = normalizeStored(raw) as Record<string, unknown>;
   applyDemoLayer(data, demo);
+  await fillImageSizes(data);
   const parsed = settingsSchema.safeParse(data);
   if (!parsed.success) throw new Error(`content/settings.json: ${parsed.error.message}`);
   return parsed.data;
@@ -77,10 +79,12 @@ export async function getAllProjects(): Promise<Project[]> {
   const dir = path.join(root, "projects");
   const files = (await readdir(dir)).filter((f) => f.endsWith(".json")).sort();
   const common = demoMode ? (await readDemo()).projects : undefined;
+  const settings = await getSettings();
   const projects = await Promise.all(
     files.map(async (f) => {
       const demo = demoMode ? mergeLayers(common, await readDemoProject(path.basename(f, ".json"))) : undefined;
-      return parseProject(await readJson(path.join(dir, f)), f, undefined, demo);
+      const p = await parseProject(await readJson(path.join(dir, f)), f, undefined, demo);
+      return withTierPackages(p, settings);
     }),
   );
   return projects.sort((a, b) => a.order - b.order);
@@ -104,6 +108,16 @@ export function projectPriceFrom(p: Project): number | null {
   const prices = p.packages.map((x) => x.price).filter((x): x is number => x !== null);
   if (prices.length) return Math.min(...prices);
   return p.priceFrom;
+}
+
+// Цена «от» на главной: из настроек, иначе — минимальная цена опубликованных домов
+export function siteMinPrice(settings: Settings, projects: Project[]): number | null {
+  if (settings.priceFromAll) return settings.priceFromAll;
+  const prices = projects
+    .filter((p) => p.published)
+    .map(projectPriceFrom)
+    .filter((x): x is number => x !== null);
+  return prices.length ? Math.min(...prices) : null;
 }
 
 // Проекты, у которых опубликован вариант с баней внутри

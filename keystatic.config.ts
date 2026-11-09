@@ -224,7 +224,29 @@ export default config({
           label: "Цифры доверия",
           itemLabel: (p) => `${p.fields.value.value} — ${p.fields.label.value}`,
         }),
-        priceFromAll: price("Цена «от» на главной, ₽"),
+        priceFromAll: fields.integer({
+          label: "Цена «от» на главной, ₽",
+          description: "Пусто — минимальная цена опубликованных домов",
+          validation: { min: 1 },
+        }),
+        priceTiers: fields.array(
+          fields.object({
+            name: text("Название", "Например: Комфорт"),
+            pricePerM2: fields.integer({
+              label: "Цена за м² дома, ₽",
+              validation: { isRequired: true, min: 1 },
+            }),
+            items: strings("Состав", "Пункт"),
+            priceDate: fields.date({ label: "Цена действует с" }),
+          }),
+          {
+            label: "Комплектации для всех домов",
+            description:
+              "Цена = площадь дома × цена за м² + терраса и крыльцо с планировки. Свои комплектации в проекте важнее",
+            itemLabel: (p) => `${p.fields.name.value} — ${p.fields.pricePerM2.value ?? "?"} ₽/м²`,
+          },
+        ),
+        terracePricePerM2: price("Терраса и крыльцо, ₽ за м²"),
         warrantyYears: fields.integer({ label: "Гарантия, лет", validation: { isRequired: true, min: 1 } }),
         warrantyItems: strings("Что покрывает гарантия", "Пункт"),
         productionWeeks: text("Срок производства, недель", "Например: 2–4"),
@@ -251,6 +273,45 @@ export default config({
           }),
           false: fields.empty(),
         }),
+        directions: longText("Как доехать до цеха"),
+        offer: fields.conditional(fields.checkbox({ label: "Показывать сезонное предложение" }), {
+          true: fields.object({
+            title: text("Заголовок"),
+            text: longText("Условия"),
+            until: fields.date({ label: "Действует до" }),
+          }),
+          false: fields.empty(),
+        }),
+        cases: fields.array(
+          fields.object({
+            title: text("Что построили", "Например: Дом 45 м² «Комфорт»"),
+            city: text("Город"),
+            date: text("Когда сдали", "Например: сентябрь 2026"),
+            text: longText("Коротко об объекте"),
+            review: longText("Отзыв владельца"),
+            author: text("Автор отзыва", "Только с согласия на публикацию"),
+            photo: fields.conditional(fields.checkbox({ label: "Есть фото" }), {
+              true: projectImage("Фото"),
+              false: fields.empty(),
+            }),
+          }),
+          {
+            label: "Построенные дома и отзывы",
+            itemLabel: (p) => `${p.fields.title.value}, ${p.fields.city.value}`,
+          },
+        ),
+        business: fields.conditional(fields.checkbox({ label: "Показывать блок «Для бизнеса»" }), {
+          true: fields.object({ text: longText("Вступление"), items: strings("Условия", "Пункт") }),
+          false: fields.empty(),
+        }),
+        financing: fields.array(fields.object({ title: text("Способ"), text: longText("Условия") }), {
+          label: "Ипотека и рассрочка",
+          itemLabel: (p) => p.fields.title.value,
+        }),
+        productionDetails: fields.array(
+          fields.object({ title: text("Раздел"), items: strings("Пункты", "Пункт") }),
+          { label: "Производство подробно", itemLabel: (p) => p.fields.title.value },
+        ),
       },
     }),
   },

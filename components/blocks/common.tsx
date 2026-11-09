@@ -1,6 +1,8 @@
-import { Check, ShieldCheck, X } from "lucide-react";
+import Image from "next/image";
+import { Building2, Check, MapPin, Quote, ShieldCheck, Wallet, X } from "lucide-react";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { Section } from "@/components/ui/Section";
+import { button } from "@/components/ui/button";
 import type { Settings } from "@/lib/content/schemas";
 
 // Блоки, общие для главной, «Производства» и контактов (ТЗ §7.1)
@@ -149,6 +151,170 @@ export function Warranty({ settings }: { settings: Settings }) {
               Гарантийный срок прописан в договоре. Менеджер до подписания расскажет, на что действует
               гарантия и как к ней обратиться.
             </p>
+          )}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+// Сезонное предложение (02 §6.4): главная и страницы проектов
+export function Offer({ settings }: { settings: Settings }) {
+  const o = settings.offer;
+  if (!o) return null;
+  return (
+    <Section tone="brand">
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="max-w-3xl">
+          <p className="text-brand text-sm font-bold tracking-wide uppercase">Предложение сезона</p>
+          <h2 className="text-h2 mt-1 font-extrabold md:text-4xl">{o.title}</h2>
+          <p className="text-ink-muted mt-3 text-lg">{o.text}</p>
+          {o.until && (
+            <p className="mt-3 font-semibold">
+              Действует до {new Date(o.until).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })}
+            </p>
+          )}
+        </div>
+        <a href="#zayavka" className={button({ size: "lg" })}>
+          Забронировать место
+        </a>
+      </div>
+    </Section>
+  );
+}
+
+// Построенные дома и отзывы (02 §6.6)
+export function Cases({ settings }: { settings: Settings }) {
+  if (!settings.cases.length) return null;
+  return (
+    <Section title="Построенные дома" lead="Дома, которые мы уже собрали и поставили, и отзывы владельцев.">
+      <div className="grid gap-6 md:grid-cols-3">
+        {settings.cases.map((c) => (
+          <article
+            key={`${c.title}-${c.city}`}
+            className="rounded-card bg-surface shadow-card overflow-hidden"
+          >
+            {c.photo && (
+              <Image
+                src={c.photo.src}
+                alt={c.photo.alt}
+                width={c.photo.width}
+                height={c.photo.height}
+                sizes="(min-width: 768px) 33vw, 100vw"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            )}
+            <div className="p-5">
+              <h3 className="text-h3 font-extrabold">{c.title}</h3>
+              <p className="text-ink-muted mt-1 flex items-center gap-1 text-sm">
+                <MapPin className="size-4" aria-hidden />
+                {c.city}, {c.date}
+              </p>
+              <p className="mt-3">{c.text}</p>
+              {c.review && (
+                <blockquote className="border-brand mt-4 border-l-4 pl-4 italic">
+                  <Quote className="text-brand mb-1 size-5" aria-hidden />
+                  {c.review}
+                  {c.author && (
+                    <footer className="text-ink-muted mt-2 text-sm not-italic">— {c.author}</footer>
+                  )}
+                </blockquote>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// Для бизнеса: базы отдыха, глэмпинги, предприятия (02 §6.7)
+export function Business({ settings }: { settings: Settings }) {
+  const b = settings.business;
+  if (!b) return null;
+  return (
+    <Section title="Для бизнеса" tone="surface">
+      <div className="grid gap-8 md:grid-cols-2 md:items-start">
+        <div className="flex gap-4">
+          <Building2 className="text-brand size-10 shrink-0" aria-hidden />
+          <p className="text-lg">{b.text}</p>
+        </div>
+        <ul className="flex flex-col gap-2 text-lg">
+          {b.items.map((i) => (
+            <li key={i} className="flex gap-2">
+              <Check className="text-accent mt-1 size-5 shrink-0" aria-hidden />
+              {i}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <a href="#zayavka" className={`${button({ variant: "secondary" })} mt-8`}>
+        Обсудить заказ партии
+      </a>
+    </Section>
+  );
+}
+
+// Ипотека и рассрочка — страницы проектов
+export function Financing({ settings }: { settings: Settings }) {
+  if (!settings.financing.length) return null;
+  return (
+    <Section title="Ипотека и рассрочка">
+      <div className="grid gap-4 md:grid-cols-3">
+        {settings.financing.map((f) => (
+          <article key={f.title} className="rounded-card border-line border p-5">
+            <Wallet className="text-brand size-8" aria-hidden />
+            <h3 className="text-h3 mt-3 font-extrabold">{f.title}</h3>
+            <p className="text-ink-muted mt-2">{f.text}</p>
+          </article>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// «Производство» подробно: материалы, контроль качества, команда
+export function ProductionDetails({ settings }: { settings: Settings }) {
+  if (!settings.productionDetails.length) return null;
+  return (
+    <Section title="Материалы, контроль и люди" tone="surface">
+      <div className="grid gap-6 md:grid-cols-3">
+        {settings.productionDetails.map((g) => (
+          <div key={g.title}>
+            <h3 className="text-h3 font-extrabold">{g.title}</h3>
+            <ul className="mt-3 flex flex-col gap-2">
+              {g.items.map((i) => (
+                <li key={i} className="flex gap-2">
+                  <Check className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
+                  {i}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// Карта и как доехать — контакты. Виджет Яндекс Карт без ключа
+export function MapBlock({ settings }: { settings: Settings }) {
+  const a = settings.address;
+  if (!a) return null;
+  const point = `${a.lng},${a.lat}`;
+  return (
+    <Section title="Как доехать">
+      <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
+        <iframe
+          title={`Карта: ${a.text}`}
+          src={`https://yandex.ru/map-widget/v1/?ll=${point}&z=15&pt=${point},pm2rdm`}
+          loading="lazy"
+          className="rounded-card border-line h-80 w-full border md:h-96"
+        />
+        <div className="text-lg">
+          <p className="font-semibold">{a.text}</p>
+          {settings.directions && (
+            <p className="text-ink-muted mt-3 whitespace-pre-line">{settings.directions}</p>
           )}
         </div>
       </div>

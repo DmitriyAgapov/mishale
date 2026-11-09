@@ -16,8 +16,8 @@ import {
   Steps,
   SuitableFor,
 } from "@/components/blocks/project";
-import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
-import { Excursion } from "@/components/blocks/common";
+import { DemoFrame } from "@/components/demo/Demo";
+import { Cases, Excursion, Financing, Offer } from "@/components/blocks/common";
 import { BanyaVariantHint } from "@/components/SoonCard";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { JsonLd } from "@/components/JsonLd";
@@ -26,7 +26,6 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { Section } from "@/components/ui/Section";
 import { projectHref, projectPriceFrom } from "@/lib/content";
 import type { Project, Settings } from "@/lib/content/schemas";
-import type { DemoSlot } from "@/lib/demo";
 import { cn } from "@/lib/cn";
 import { formatArea, formatPrice, pluralModules } from "@/lib/format";
 import { site } from "@/lib/site";
@@ -80,10 +79,9 @@ type Props = {
   withBanya: boolean;
   settings: Settings;
   all: Project[];
-  slots: Record<string, DemoSlot>;
 };
 
-export function ProjectView({ base, project, withBanya, settings, all, slots }: Props) {
+export function ProjectView({ base, project, withBanya, settings, all }: Props) {
   const href = projectHref(base, withBanya);
   const houses = all.filter((p) => p.category !== "banya");
   const idx = houses.findIndex((p) => p.slug === base.slug);
@@ -131,14 +129,20 @@ export function ProjectView({ base, project, withBanya, settings, all, slots }: 
       <DemoFrame note={d.calcExample}>
         <CalcExample project={project} />
       </DemoFrame>
-      <DemoSlotBlock slot={slots.financing} />
+      <DemoFrame note={settings.demo.financing}>
+        <Financing settings={settings} />
+      </DemoFrame>
       <DemoFrame note={d.specs}>
         <Specs project={project} settings={settings} />
       </DemoFrame>
       <Steps settings={settings} />
-      <DemoSlotBlock slot={slots.offer} />
+      <DemoFrame note={settings.demo.offer}>
+        <Offer settings={settings} />
+      </DemoFrame>
       <Delivery settings={settings} />
-      <DemoSlotBlock slot={slots.cases} />
+      <DemoFrame note={settings.demo.cases}>
+        <Cases settings={settings} />
+      </DemoFrame>
       <DemoFrame note={settings.demo.excursion}>
         <Excursion settings={settings} />
       </DemoFrame>

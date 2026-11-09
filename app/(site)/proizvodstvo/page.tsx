@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Excursion, LeadSection, TrustNumbers, Warranty, WorkshopVsSite } from "@/components/blocks/common";
+import {
+  Excursion,
+  LeadSection,
+  ProductionDetails,
+  TrustNumbers,
+  Warranty,
+  WorkshopVsSite,
+} from "@/components/blocks/common";
 import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { Construction, Delivery, Faq, Steps } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -46,7 +53,9 @@ export default async function ProductionPage() {
       <Construction settings={settings} />
       <DemoSlotBlock slot={slots.video} />
       <Steps settings={settings} />
-      <DemoSlotBlock slot={slots.production} />
+      <DemoFrame note={settings.demo.productionDetails}>
+        <ProductionDetails settings={settings} />
+      </DemoFrame>
       <Delivery settings={settings} />
       <DemoFrame note={settings.demo.warrantyItems}>
         <Warranty settings={settings} />

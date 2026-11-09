@@ -127,7 +127,20 @@ export const settingsSchema = z.object({
   workHours: z.string().nullable().default(null),
   legal: z.object({ name: z.string(), inn: z.string(), ogrn: z.string() }).nullable().default(null),
   trust: z.array(z.object({ value: z.string(), label: z.string() })),
+  // Пусто — считается сама: минимальная цена опубликованных домов
   priceFromAll: z.number().int().positive().nullable().default(null),
+  // Комплектации по ставке за м² для всех домов (lib/content/prices.ts)
+  priceTiers: z
+    .array(
+      z.object({
+        name: z.string(),
+        pricePerM2: z.number().int().positive(),
+        items: z.array(z.string()).default([]),
+        priceDate: z.string().optional(),
+      }),
+    )
+    .default([]),
+  terracePricePerM2: price,
   warrantyYears: z.number().int().positive(),
   // Что покрывает гарантия — блок «Гарантия» на главной и в «Производстве»
   warrantyItems: z.array(z.string()).default([]),
@@ -150,6 +163,36 @@ export const settingsSchema = z.object({
     })
     .nullable()
     .default(null),
+  // Как доехать до цеха — под картой на странице контактов
+  directions: z.string().nullable().default(null),
+  // Сезонное предложение — главная и страницы проектов
+  offer: z
+    .object({ title: z.string(), text: z.string(), until: z.string().nullable().default(null) })
+    .nullable()
+    .default(null),
+  // Построенные дома и отзывы
+  cases: z
+    .array(
+      z.object({
+        title: z.string(),
+        city: z.string(),
+        date: z.string(),
+        text: z.string(),
+        review: z.string().nullable().default(null),
+        author: z.string().nullable().default(null),
+        photo: image.nullable().default(null),
+      }),
+    )
+    .default([]),
+  // Для бизнеса: глэмпинги, базы отдыха, предприятия
+  business: z
+    .object({ text: z.string(), items: z.array(z.string()).default([]) })
+    .nullable()
+    .default(null),
+  // Ипотека и рассрочка — страницы проектов
+  financing: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
+  // «Производство» подробно: материалы, контроль качества, команда
+  productionDetails: z.array(z.object({ title: z.string(), items: z.array(z.string()) })).default([]),
   demo: demoNotesSchema,
 });
 export type Settings = z.output<typeof settingsSchema>;

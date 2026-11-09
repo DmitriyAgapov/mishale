@@ -1,7 +1,8 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { asBanyaVariant, parseProject, parseSettings } from "./content/index";
+import { withTierPackages } from "./content/prices";
 import { applyDemoLayer, demoSlotSchema, mergeLayers, type DemoLayer } from "./demo";
 
 const root = path.join(process.cwd(), "content");
@@ -44,6 +45,11 @@ describe("слой примеров", () => {
 
 describe("файлы примеров", () => {
   const files = readdirSync(path.join(root, "projects")).filter((f) => f.endsWith(".json"));
+  const settingsPromise = parseSettings(read("settings.json"), common.settings);
+  let settings: Awaited<typeof settingsPromise>;
+  beforeAll(async () => {
+    settings = await settingsPromise;
+  });
 
   it("с примерами каждый проект проходит схему, бани и варианты с баней публикуются", async () => {
     for (const f of files) {
@@ -55,10 +61,15 @@ describe("файлы примеров", () => {
           return undefined;
         }
       })();
-      const p = await parseProject(read("projects", f), f, undefined, mergeLayers(common.projects, own));
+      const p = withTierPackages(
+        await parseProject(read("projects", f), f, undefined, mergeLayers(common.projects, own)),
+        settings,
+      );
       expect(p.published, slug).toBe(true);
       expect(p.packages.length, slug).toBeGreaterThan(0);
-      expect(p.demo.packages, slug).toBeDefined();
+      // Цены домов — настоящие (ставки за м²), примеры — только у бань
+      if (p.category === "banya") expect(p.demo.packages, slug).toBeDefined();
+      else expect(p.demo.packages, slug).toBeUndefined();
       if (p.category === "medium" || p.category === "large") {
         const v = asBanyaVariant(p);
         expect(v, slug).not.toBeNull();
@@ -77,6 +88,10 @@ describe("файлы примеров", () => {
     const s = await parseSettings(read("settings.json"), common.settings);
     expect(s.legal?.name).toContain("Пример");
     expect(s.demo.legal).toBeDefined();
+    // Блоки, закрытые примерами: предложение, кейсы, для бизнеса, рассрочка, производство, как доехать
+    for (const k of ["offer", "cases", "business", "financing", "productionDetails", "directions"])
+      expect(s.demo[k], k).toBeDefined();
+    expect(s.cases[0].photo?.width).toBeGreaterThan(0);
     for (const slot of Object.values(common.slots)) expect(() => demoSlotSchema.parse(slot)).not.toThrow();
   });
 });

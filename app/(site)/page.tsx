@@ -11,7 +11,15 @@ import {
   TreePine,
 } from "lucide-react";
 import type { HomeAndConstructionBusiness } from "schema-dts";
-import { LeadSection, TrustNumbers, Warranty, WorkshopVsSite } from "@/components/blocks/common";
+import {
+  Business,
+  Cases,
+  LeadSection,
+  Offer,
+  TrustNumbers,
+  Warranty,
+  WorkshopVsSite,
+} from "@/components/blocks/common";
 import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { Faq, Steps } from "@/components/blocks/project";
 import { Quiz } from "@/components/forms/Quiz";
@@ -19,7 +27,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { ProjectGroups } from "@/components/ProjectGroups";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
-import { getCatalogProjects, getDemoSlots, getSettings } from "@/lib/content";
+import { getCatalogProjects, getDemoSlots, getSettings, siteMinPrice } from "@/lib/content";
 import { formatPrice } from "@/lib/format";
 import { site } from "@/lib/site";
 
@@ -40,14 +48,15 @@ const icons: Record<string, typeof Frame> = {
   "Наружная отделка": TreePine,
 };
 
-// Главная (ТЗ §7.2). Блоки без данных компании (сезонное предложение, каталог PDF, кейсы,
-// для бизнеса, видео) появятся, когда будут данные; на тестовом сайте на их месте — заглушки (lib/demo.ts).
+// Главная (ТЗ §7.2). Блоки без данных компании не выводятся; на тестовом сайте в них примеры (lib/demo.ts),
+// а для каталога PDF и видео — заглушки.
 export default async function Home() {
   const [projects, settings, slots] = await Promise.all([
     getCatalogProjects(),
     getSettings(),
     getDemoSlots(),
   ]);
+  const minPrice = siteMinPrice(settings, projects);
   const hero = projects.find((p) => p.slug === "dom-45")?.photos[0] ?? projects[0]?.photos[0];
 
   return (
@@ -63,9 +72,9 @@ export default async function Home() {
               Доставка и монтаж по горнозаводской зоне и всей Челябинской области.
             </p>
             <ul className="mt-6 flex flex-col gap-2 text-lg">
-              {settings.priceFromAll && (
+              {minPrice && (
                 <li>
-                  Цена <strong>от {formatPrice(settings.priceFromAll)}</strong>
+                  Цена <strong>от {formatPrice(minPrice)}</strong>
                 </li>
               )}
               <li>
@@ -115,7 +124,9 @@ export default async function Home() {
       </section>
 
       <TrustNumbers settings={settings} />
-      <DemoSlotBlock slot={slots.offer} />
+      <DemoFrame note={settings.demo.offer}>
+        <Offer settings={settings} />
+      </DemoFrame>
 
       <Section
         id="proekty"
@@ -177,8 +188,12 @@ export default async function Home() {
       </Section>
 
       <DemoSlotBlock slot={slots.video} />
-      <DemoSlotBlock slot={slots.cases} />
-      <DemoSlotBlock slot={slots.business} />
+      <DemoFrame note={settings.demo.cases}>
+        <Cases settings={settings} />
+      </DemoFrame>
+      <DemoFrame note={settings.demo.business}>
+        <Business settings={settings} />
+      </DemoFrame>
       <Steps settings={settings} />
       <DemoFrame note={settings.demo.warrantyItems}>
         <Warranty settings={settings} />

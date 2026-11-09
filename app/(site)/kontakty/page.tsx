@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Excursion, LeadSection } from "@/components/blocks/common";
-import { DemoBadge, DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
+import { Excursion, LeadSection, MapBlock } from "@/components/blocks/common";
+import { DemoBadge, DemoFrame } from "@/components/demo/Demo";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
-import { getDemoSlots, getSettings } from "@/lib/content";
+import { getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Контакты — производство модульных домов в Миассе",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 // Контакты (ТЗ §7.10). Адрес, карта, режим работы и реквизиты выводятся, когда компания их пришлёт.
 export default async function ContactsPage() {
-  const [s, slots] = await Promise.all([getSettings(), getDemoSlots()]);
+  const s = await getSettings();
   const mapUrl = s.address ? `https://yandex.ru/maps/?pt=${s.address.lng},${s.address.lat}&z=16&l=map` : null;
   return (
     <>
@@ -107,7 +107,9 @@ export default async function ContactsPage() {
           </div>
         </div>
       </Section>
-      <DemoSlotBlock slot={slots.map} />
+      <DemoFrame note={s.demo.address ?? s.demo.directions}>
+        <MapBlock settings={s} />
+      </DemoFrame>
       <DemoFrame note={s.demo.excursion}>
         <Excursion settings={s} />
       </DemoFrame>

@@ -10,6 +10,7 @@ import { LEAD_ANCHOR } from "@/components/layout/nav";
 import { projectPriceFrom } from "@/lib/content";
 import type { Project, Settings } from "@/lib/content/schemas";
 import { formatArea, formatPrice, keepUnits, pluralModules } from "@/lib/format";
+import { cn } from "@/lib/cn";
 
 // Блоки страницы проекта (ТЗ §7.4). Блок без данных не выводится.
 
@@ -169,6 +170,7 @@ export function Gallery({ project }: { project: Project }) {
 
 export function Packages({ project }: { project: Project }) {
   if (!project.packages.length) return null;
+  const wide = project.packages.length % 3 === 0;
   return (
     <Section id="komplektacii" title="Комплектации и цены" tone="surface">
       <div className="grid gap-4 md:grid-cols-3">
@@ -196,10 +198,18 @@ export function Packages({ project }: { project: Project }) {
             </div>
           </article>
         ))}
-        <article className="rounded-card border-brand flex flex-col border border-dashed p-5">
-          <h3 className="text-h3 font-extrabold">Своя комплектация</h3>
-          <p className="text-ink-muted mt-2">Соберём состав под ваши задачи и бюджет.</p>
-          <div className="mt-auto pt-6">
+        {/* При трёх комплектациях «Своя» — строкой под ними, а не одна во втором ряду */}
+        <article
+          className={cn(
+            "rounded-card border-brand flex flex-col border border-dashed p-5",
+            wide && "md:col-span-3 md:flex-row md:items-center md:justify-between md:gap-6",
+          )}
+        >
+          <div>
+            <h3 className="text-h3 font-extrabold">Своя комплектация</h3>
+            <p className="text-ink-muted mt-2">Соберём состав под ваши задачи и бюджет.</p>
+          </div>
+          <div className={cn("mt-auto pt-6", wide && "md:mt-0 md:w-72 md:shrink-0 md:pt-0")}>
             <a href={LEAD_ANCHOR} className={button({ variant: "primary", full: true })}>
               Обсудить с менеджером
             </a>
