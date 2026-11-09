@@ -4,14 +4,17 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 
 ## Команды
 
-| Команда            | Что делает                                              |
-| ------------------ | ------------------------------------------------------- |
-| `npm run dev`      | Разработка на http://localhost:3000                     |
-| `npm run build`    | Сборка                                                  |
-| `npm run start`    | Запуск собранного сайта (так же запускает Amvera)       |
-| `npm run check`    | Линтер + типы + модульные тесты — перед каждым коммитом |
-| `npm run test:e2e` | Проверки на собранном сайте (сначала `npm run build`)   |
-| `npm run format`   | Prettier                                                |
+| Команда                  | Что делает                                              |
+| ------------------------ | ------------------------------------------------------- |
+| `npm run dev`            | Разработка на http://localhost:3000                     |
+| `npm run build`          | Сборка                                                  |
+| `npm run start`          | Запуск собранного сайта (так же запускает Amvera)       |
+| `npm run check`          | Линтер + типы + модульные тесты — перед каждым коммитом |
+| `npm run test:e2e`       | Проверки на собранном сайте (сначала `npm run build`)   |
+| `npm run format`         | Prettier                                                |
+| `npm run plans`          | Перерисовать планировки из `scripts/plans/data.mjs`     |
+| `npm run renders`        | Подключить визуализации из `assets/renders/`            |
+| `npm run render-prompts` | Собрать `docs/RENDER-PROMPTS.md`                        |
 
 ## Важно
 
@@ -31,7 +34,7 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 
 ## Демо-режим (тестовый сайт)
 
-`DEMO_CONTENT=1 npm run build` — недостающие данные заполняются примерами из `content/demo/` с жёлтыми пометками «нужно / зачем», сводка — `/chego-ne-hvataet`. Только для тестового адреса: на рабочем сайте переменную не задавать (подробности — `lib/demo.ts`, `docs/STATUS.md`).
+`DEMO_CONTENT=1 npm run build` и `DEMO_CONTENT=1 npm run start` (переменная нужна и при запуске) — недостающие данные заполняются примерами из `content/demo/` с жёлтыми пометками «нужно / зачем», сводка — `/chego-ne-hvataet`. Только для тестового адреса: на рабочем сайте переменную не задавать (подробности — `lib/demo.ts`, `docs/STATUS.md`).
 
 ## Деплой
 

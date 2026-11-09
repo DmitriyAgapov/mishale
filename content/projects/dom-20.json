@@ -23,10 +23,27 @@
   ],
   "plans": [
     {
-      "src": "/images/projects/dom-20/plans/0/src.jpg",
+      "src": "/images/projects/dom-20/plans/0/src.png",
       "alt": "Планировка: модульный дом 20 м²",
       "render": false,
-      "rooms": []
+      "rooms": [
+        {
+          "name": "Кухня-гостиная",
+          "area": 8.06
+        },
+        {
+          "name": "Спальня",
+          "area": 6.93
+        },
+        {
+          "name": "Санузел",
+          "area": 3.38
+        },
+        {
+          "name": "Терраса",
+          "area": 10.71
+        }
+      ]
     }
   ],
   "packages": [],

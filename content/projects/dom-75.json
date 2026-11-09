@@ -21,10 +21,43 @@
   ],
   "plans": [
     {
-      "src": "/images/projects/dom-75/plans/0/src.jpg",
+      "src": "/images/projects/dom-75/plans/0/src.png",
       "alt": "Планировка: модульный дом 75 м²",
       "render": false,
-      "rooms": []
+      "rooms": [
+        {
+          "name": "Кухня",
+          "area": 11.4
+        },
+        {
+          "name": "Гостиная",
+          "area": 22.02
+        },
+        {
+          "name": "Спальня",
+          "area": 15.18
+        },
+        {
+          "name": "Санузел",
+          "area": 6.67
+        },
+        {
+          "name": "Топочная",
+          "area": 3.04
+        },
+        {
+          "name": "Тамбур",
+          "area": 5.91
+        },
+        {
+          "name": "Терраса",
+          "area": 13.25
+        },
+        {
+          "name": "Крыльцо",
+          "area": 4.96
+        }
+      ]
     }
   ],
   "packages": [],

@@ -21,10 +21,51 @@
   ],
   "plans": [
     {
-      "src": "/images/projects/dom-120/plans/0/src.jpg",
+      "src": "/images/projects/dom-120/plans/0/src.png",
       "alt": "Планировка: модульный дом 120 м²",
       "render": false,
-      "rooms": []
+      "rooms": [
+        {
+          "name": "Кухня-столовая",
+          "area": 27.34
+        },
+        {
+          "name": "Гостиная",
+          "area": 26.8
+        },
+        {
+          "name": "Спальня",
+          "area": 12.43
+        },
+        {
+          "name": "Спальня",
+          "area": 12.43
+        },
+        {
+          "name": "Санузел",
+          "area": 7.84
+        },
+        {
+          "name": "Гардеробная",
+          "area": 4.71
+        },
+        {
+          "name": "Холл",
+          "area": 10.82
+        },
+        {
+          "name": "Тамбур",
+          "area": 4.71
+        },
+        {
+          "name": "Терраса",
+          "area": 23.92
+        },
+        {
+          "name": "Крыльцо",
+          "area": 3.45
+        }
+      ]
     }
   ],
   "packages": [],

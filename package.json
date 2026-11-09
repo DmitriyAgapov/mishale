@@ -12,7 +12,10 @@
     "test:e2e": "playwright test",
     "format": "prettier --write .",
     "check": "npm run lint && npm run typecheck && npm run test",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "plans": "node scripts/draw-plans.mjs",
+    "renders": "node scripts/add-renders.mjs",
+    "render-prompts": "node scripts/render-prompts.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.2",

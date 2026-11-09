@@ -24,10 +24,27 @@
     ],
     "plans": [
       {
-        "src": "/images/demo/banya-plan.jpg",
-        "alt": "Пример: планировка бани",
+        "src": "/images/demo/plans/banya-1.png",
+        "alt": "Пример планировки: модульная баня 18 м²",
         "render": false,
-        "rooms": []
+        "rooms": [
+          {
+            "name": "Парная",
+            "area": 5.6
+          },
+          {
+            "name": "Моечная",
+            "area": 3.9
+          },
+          {
+            "name": "Комната отдыха",
+            "area": 7.4
+          },
+          {
+            "name": "Крыльцо",
+            "area": 3.1
+          }
+        ]
       }
     ],
     "packages": [

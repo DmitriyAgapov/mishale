@@ -107,7 +107,8 @@ export function FloorPlans({ project }: { project: Project }) {
   if (!project.plans.length) return null;
   return (
     <Section title="Планировка">
-      <div className="grid gap-6 md:grid-cols-2">
+      {/* Одна планировка — крупно, на всю ширину блока; несколько — в две колонки */}
+      <div className={project.plans.length > 1 ? "grid gap-6 md:grid-cols-2" : "max-w-4xl"}>
         {project.plans.map((p) => (
           <figure key={p.src} className="rounded-card bg-surface shadow-card p-4">
             <a href={p.src} target="_blank" rel="noopener" title="Открыть в полном размере">
@@ -122,8 +123,8 @@ export function FloorPlans({ project }: { project: Project }) {
             </a>
             {p.rooms.length > 0 && (
               <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                {p.rooms.map((r) => (
-                  <li key={r.name} className="border-line flex justify-between border-b py-1">
+                {p.rooms.map((r, i) => (
+                  <li key={i} className="border-line flex justify-between border-b py-1">
                     <span>{r.name}</span>
                     <span className="font-semibold">{formatArea(r.area)}</span>
                   </li>

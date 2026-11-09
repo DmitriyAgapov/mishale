@@ -21,10 +21,51 @@
   ],
   "plans": [
     {
-      "src": "/images/projects/dom-90/plans/0/src.jpg",
+      "src": "/images/projects/dom-90/plans/0/src.png",
       "alt": "Планировка: модульный дом 90 м²",
       "render": false,
-      "rooms": []
+      "rooms": [
+        {
+          "name": "Кухня-гостиная",
+          "area": 38.34
+        },
+        {
+          "name": "Гардеробная",
+          "area": 4.99
+        },
+        {
+          "name": "Спальня",
+          "area": 7.59
+        },
+        {
+          "name": "Санузел",
+          "area": 4.06
+        },
+        {
+          "name": "Кладовая",
+          "area": 4.86
+        },
+        {
+          "name": "Гардеробная",
+          "area": 4.99
+        },
+        {
+          "name": "Спальня",
+          "area": 7.59
+        },
+        {
+          "name": "Санузел",
+          "area": 4.06
+        },
+        {
+          "name": "Веранда",
+          "area": 10
+        },
+        {
+          "name": "Терраса",
+          "area": 29.31
+        }
+      ]
     }
   ],
   "packages": [],

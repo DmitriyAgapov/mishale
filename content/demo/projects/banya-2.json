@@ -24,10 +24,35 @@
     ],
     "plans": [
       {
-        "src": "/images/demo/banya-plan.jpg",
-        "alt": "Пример: планировка бани",
+        "src": "/images/demo/plans/banya-2.png",
+        "alt": "Пример планировки: модульная баня 30 м²",
         "render": false,
-        "rooms": []
+        "rooms": [
+          {
+            "name": "Парная",
+            "area": 6.1
+          },
+          {
+            "name": "Моечная",
+            "area": 5.7
+          },
+          {
+            "name": "Санузел",
+            "area": 2.8
+          },
+          {
+            "name": "Тамбур",
+            "area": 3.6
+          },
+          {
+            "name": "Комната отдыха",
+            "area": 10
+          },
+          {
+            "name": "Терраса",
+            "area": 5
+          }
+        ]
       }
     ],
     "packages": [

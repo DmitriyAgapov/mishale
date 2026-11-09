@@ -21,10 +21,51 @@
   ],
   "plans": [
     {
-      "src": "/images/projects/dom-105/plans/0/src.jpg",
+      "src": "/images/projects/dom-105/plans/0/src.png",
       "alt": "Планировка: модульный дом 105 м²",
       "render": false,
-      "rooms": []
+      "rooms": [
+        {
+          "name": "Кухня",
+          "area": 11.67
+        },
+        {
+          "name": "Гостиная",
+          "area": 22.3
+        },
+        {
+          "name": "Спальня",
+          "area": 13.34
+        },
+        {
+          "name": "Спальня",
+          "area": 13.04
+        },
+        {
+          "name": "Спальня",
+          "area": 15.41
+        },
+        {
+          "name": "Санузел",
+          "area": 6.67
+        },
+        {
+          "name": "Топочная",
+          "area": 3.19
+        },
+        {
+          "name": "Тамбур",
+          "area": 5.91
+        },
+        {
+          "name": "Веранда",
+          "area": 23.94
+        },
+        {
+          "name": "Веранда",
+          "area": 14.68
+        }
+      ]
     }
   ],
   "packages": [],
