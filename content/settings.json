@@ -215,5 +215,149 @@
   ],
   "excursion": {
     "discriminant": false
+  },
+  "cases": [
+    {
+      "title": "Дом 60 м² с баней внутри",
+      "city": "Теренкуль",
+      "date": "сентябрь 2026",
+      "text": "Дом с парной, санузлом и террасой вдоль фасада. Собран в цеху и привезён на участок готовыми модулями.",
+      "project": "dom-60",
+      "withBanya": true,
+      "photos": [
+        {
+          "src": "/images/real/shine-15-b9c39f.jpg",
+          "alt": "Дом 60 м² с баней в Теренкуле",
+          "render": false
+        },
+        {
+          "src": "/images/real/shine-106-6210a4.jpg",
+          "alt": "Кухня-гостиная, дом 60 м² с баней",
+          "render": false
+        },
+        {
+          "src": "/images/real/shine-42-64e057.jpg",
+          "alt": "Парная, дом 60 м² с баней",
+          "render": false
+        }
+      ]
+    },
+    {
+      "title": "Дом 60 м²",
+      "city": "Теренкуль",
+      "date": "сентябрь 2026",
+      "text": "Та же планировка, но без бани и без террасы: кухня, гостиная со столовой у окна, спальня.",
+      "project": "dom-60",
+      "withBanya": false,
+      "photos": [
+        {
+          "src": "/images/real/shine-89-18f3ad.jpg",
+          "alt": "Дом 60 м² в Теренкуле",
+          "render": false
+        },
+        {
+          "src": "/images/real/shine-82-fc6265.jpg",
+          "alt": "Кухня, дом 60 м²",
+          "render": false
+        },
+        {
+          "src": "/images/real/shine-76-7a6e67.jpg",
+          "alt": "Гостиная, дом 60 м²",
+          "render": false
+        }
+      ]
+    },
+    {
+      "title": "Баня 22 м² из двух модулей",
+      "city": "«Динамо»",
+      "date": "октябрь 2026",
+      "text": "Баня с парной, комнатой отдыха и верандой. Печь с баком для воды, освещение и отделка — из цеха.",
+      "project": "banya-1",
+      "withBanya": false,
+      "photos": [
+        {
+          "src": "/images/real/img-0279-f6b98b.jpg",
+          "alt": "Баня 22 м² с верандой",
+          "render": false
+        },
+        {
+          "src": "/images/real/lv-0-20261009092447-08bd17.jpg",
+          "alt": "Парная бани 22 м²",
+          "render": false
+        }
+      ]
+    }
+  ],
+  "productionPhotos": [
+    {
+      "src": "/images/real/shine-3-d445bc.jpg",
+      "alt": "Сборка модулей в крытом цеху МИШАЛЕ",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-8-ed8d7e.jpg",
+      "alt": "Готовый модуль у ворот цеха",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-6-7914b8.jpg",
+      "alt": "Заготовка бруса для каркаса",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-13-eb69b9.jpg",
+      "alt": "Мастер на участке комплектации",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-11-76c448.jpg",
+      "alt": "Завод домов МИШАЛЕ в Миассе",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-29-23ed6c.jpg",
+      "alt": "Финишные работы на модуле у цеха",
+      "render": false
+    }
+  ],
+  "deliveryPhotos": [
+    {
+      "src": "/images/real/shine-19-456966.jpg",
+      "alt": "Погрузка модуля краном у цеха",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-25-548125.jpg",
+      "alt": "Модуль с террасой на манипуляторе",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-33-95c2ac.jpg",
+      "alt": "Модуль выезжает с завода",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-37-44b885.jpg",
+      "alt": "Выгрузка модуля на участке",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-41-8ef241.jpg",
+      "alt": "Установка модуля краном",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-43-8ab019.jpg",
+      "alt": "Модуль встаёт на фундамент",
+      "render": false
+    }
+  ],
+  "heroPhoto": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/real/shine-15-b9c39f.jpg",
+      "alt": "Модульный дом МИШАЛЕ с террасой на участке",
+      "render": false
+    }
   }
 }

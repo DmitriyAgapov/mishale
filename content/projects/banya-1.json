@@ -1,16 +1,41 @@
 {
-  "title": "Баня — вариант 1",
+  "title": "Модульная баня 22 м²",
   "published": false,
   "order": 101,
   "category": "banya",
   "params": {
-    "area": 1,
-    "modules": 1,
-    "moduleSize": "уточнить"
+    "area": 22,
+    "modules": 2
   },
   "purposes": [],
-  "summary": "Данные бани ждём от компании (05, раздел 12).",
-  "photos": [],
+  "summary": "Баня из двух модулей: парная с печью, комната отдыха и веранда. Собирается в цеху и приезжает на участок готовой.",
+  "photos": [
+    {
+      "src": "/images/projects/banya-1/real/img-0279-f6b98b.jpg",
+      "alt": "Модульная баня 22 м² с верандой",
+      "render": false
+    },
+    {
+      "src": "/images/projects/banya-1/real/img-0277-eb2d74.jpg",
+      "alt": "Баня 22 м²: веранда с перилами",
+      "render": false
+    },
+    {
+      "src": "/images/projects/banya-1/real/lv-0-20261009092447-08bd17.jpg",
+      "alt": "Парная с печью в модульной бане",
+      "render": false
+    },
+    {
+      "src": "/images/projects/banya-1/real/img-0271-f39b65.jpg",
+      "alt": "Комната отдыха в бане 22 м²",
+      "render": false
+    },
+    {
+      "src": "/images/projects/banya-1/real/img-0281-6e8ed4.jpg",
+      "alt": "Баня 22 м² на участке",
+      "render": false
+    }
+  ],
   "plans": [],
   "packages": [],
   "included": [],

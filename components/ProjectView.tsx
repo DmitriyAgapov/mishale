@@ -139,9 +139,16 @@ export function ProjectView({ base, project, withBanya, settings, all }: Props) 
       <DemoFrame note={settings.demo.offer}>
         <Offer settings={settings} />
       </DemoFrame>
-      <Delivery settings={settings} />
+      <DemoFrame note={settings.demo.deliveryPhotos}>
+        <Delivery settings={settings} />
+      </DemoFrame>
       <DemoFrame note={settings.demo.cases}>
-        <Cases settings={settings} />
+        <Cases
+          settings={settings}
+          items={settings.cases.filter((c) => c.project === base.slug && c.withBanya === withBanya)}
+          title="Этот проект уже построен"
+          lead="Дома по этому проекту, которые мы собрали и поставили."
+        />
       </DemoFrame>
       <DemoFrame note={settings.demo.excursion}>
         <Excursion settings={settings} />

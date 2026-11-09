@@ -15,7 +15,8 @@
     "smoke": "node scripts/smoke.mjs",
     "plans": "node scripts/draw-plans.mjs",
     "renders": "node scripts/add-renders.mjs",
-    "render-prompts": "node scripts/render-prompts.mjs"
+    "render-prompts": "node scripts/render-prompts.mjs",
+    "photos": "node scripts/add-photos.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.2",

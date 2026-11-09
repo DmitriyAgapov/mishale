@@ -16,6 +16,31 @@
   "summary": "Каркасный дом из 4 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
   "photos": [
     {
+      "src": "/images/projects/dom-60/real/shine-89-18f3ad.jpg",
+      "alt": "Модульный дом 60 м² в Теренкуле: фасад и вход",
+      "render": false
+    },
+    {
+      "src": "/images/projects/dom-60/real/shine-82-fc6265.jpg",
+      "alt": "Кухня в модульном доме 60 м²",
+      "render": false
+    },
+    {
+      "src": "/images/projects/dom-60/real/shine-76-7a6e67.jpg",
+      "alt": "Гостиная с окном в пол, дом 60 м²",
+      "render": false
+    },
+    {
+      "src": "/images/projects/dom-60/real/shine-79-4ff723.jpg",
+      "alt": "Обеденная зона у окна, дом 60 м²",
+      "render": false
+    },
+    {
+      "src": "/images/projects/dom-60/real/shine-75-0c454d.jpg",
+      "alt": "Интерьер дома 60 м²: отделка имитацией бруса",
+      "render": false
+    },
+    {
       "src": "/images/projects/dom-60/photos/0/src.jpg",
       "alt": "Модульный дом 60 м², фасад",
       "render": true
@@ -58,7 +83,58 @@
     "value": {
       "published": false,
       "title": "Модульный дом 60 м² с баней",
-      "photos": [],
+      "photos": [
+        {
+          "src": "/images/projects/dom-60/real/shine-15-b9c39f.jpg",
+          "alt": "Модульный дом 60 м² с баней и террасой в Теренкуле",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-115-09b899.jpg",
+          "alt": "Терраса вечером, дом 60 м² с баней",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-3-d351ee.jpg",
+          "alt": "Терраса с видом на лес, дом 60 м²",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-106-6210a4.jpg",
+          "alt": "Кухня-гостиная в доме 60 м² с баней",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-92-44bc11.jpg",
+          "alt": "Кухня в доме 60 м² с баней",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-30-5ff55b.jpg",
+          "alt": "Спальня в доме 60 м²",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-57-9d8935.jpg",
+          "alt": "Санузел в доме 60 м²",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-42-64e057.jpg",
+          "alt": "Парная внутри дома 60 м²",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-46-8f5d5d.jpg",
+          "alt": "Печь в парной",
+          "render": false
+        },
+        {
+          "src": "/images/projects/dom-60/real/shine-96-93392b.jpg",
+          "alt": "Уголок для отдыха у окна",
+          "render": false
+        }
+      ],
       "plans": [],
       "packages": [],
       "options": [],

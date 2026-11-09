@@ -170,7 +170,8 @@ export const settingsSchema = z.object({
     .object({ title: z.string(), text: z.string(), until: z.string().nullable().default(null) })
     .nullable()
     .default(null),
-  // Построенные дома и отзывы
+  // Построенные дома и отзывы. project + withBanya — к какому проекту относится дом:
+  // на странице проекта (или его варианта с баней) показываются только его дома
   cases: z
     .array(
       z.object({
@@ -178,12 +179,20 @@ export const settingsSchema = z.object({
         city: z.string(),
         date: z.string(),
         text: z.string(),
+        project: z.string().nullable().default(null),
+        withBanya: z.boolean().default(false),
         review: z.string().nullable().default(null),
         author: z.string().nullable().default(null),
-        photo: image.nullable().default(null),
+        photos: z.array(image).default([]),
       }),
     )
     .default([]),
+  // Главное фото первого экрана; пусто — фото проекта 45 м²
+  heroPhoto: image.nullable().default(null),
+  // Фото цеха — «Производство»
+  productionPhotos: z.array(image).default([]),
+  // Фото доставки и монтажа — блок «Доставка и монтаж»
+  deliveryPhotos: z.array(image).default([]),
   // Для бизнеса: глэмпинги, базы отдыха, предприятия
   business: z
     .object({ text: z.string(), items: z.array(z.string()).default([]) })
@@ -196,3 +205,4 @@ export const settingsSchema = z.object({
   demo: demoNotesSchema,
 });
 export type Settings = z.output<typeof settingsSchema>;
+export type Case = Settings["cases"][number];

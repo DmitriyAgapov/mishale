@@ -10,13 +10,14 @@ const longText = (label: string) => fields.text({ label, multiline: true });
 const price = (label = "Цена, ₽") =>
   fields.integer({ label, description: "Пусто — «по запросу»", validation: { min: 1 } });
 
-const projectImage = (label: string) =>
+// dir — папка в public/images: projects (из админки) или real (фото от компании, npm run photos)
+const projectImage = (label: string, dir = "projects") =>
   fields.object(
     {
       src: fields.image({
         label: "Файл",
-        directory: "public/images/projects",
-        publicPath: "/images/projects",
+        directory: `public/images/${dir}`,
+        publicPath: `/images/${dir}`,
         validation: { isRequired: true },
       }),
       alt: text("Описание для поисковиков и незрячих (alt)", "Например: «Модульный дом 60 м², фасад»"),
@@ -290,9 +291,15 @@ export default config({
             text: longText("Коротко об объекте"),
             review: longText("Отзыв владельца"),
             author: text("Автор отзыва", "Только с согласия на публикацию"),
-            photo: fields.conditional(fields.checkbox({ label: "Есть фото" }), {
-              true: projectImage("Фото"),
-              false: fields.empty(),
+            project: fields.relationship({
+              label: "Проект",
+              collection: "projects",
+              description: "Пусто — дом не по проекту: показывается только на главной",
+            }),
+            withBanya: fields.checkbox({ label: "Это вариант с баней внутри", defaultValue: false }),
+            photos: fields.array(projectImage("Фото", "real"), {
+              label: "Фото",
+              itemLabel: (p) => p.fields.alt.value,
             }),
           }),
           {
@@ -300,6 +307,18 @@ export default config({
             itemLabel: (p) => `${p.fields.title.value}, ${p.fields.city.value}`,
           },
         ),
+        heroPhoto: fields.conditional(fields.checkbox({ label: "Своё фото на первом экране главной" }), {
+          true: projectImage("Фото", "real"),
+          false: fields.empty(),
+        }),
+        productionPhotos: fields.array(projectImage("Фото", "real"), {
+          label: "Фото цеха",
+          itemLabel: (p) => p.fields.alt.value,
+        }),
+        deliveryPhotos: fields.array(projectImage("Фото", "real"), {
+          label: "Фото доставки и монтажа",
+          itemLabel: (p) => p.fields.alt.value,
+        }),
         business: fields.conditional(fields.checkbox({ label: "Показывать блок «Для бизнеса»" }), {
           true: fields.object({ text: longText("Вступление"), items: strings("Условия", "Пункт") }),
           false: fields.empty(),

@@ -4,6 +4,7 @@ import {
   Excursion,
   LeadSection,
   ProductionDetails,
+  ProductionPhotos,
   TrustNumbers,
   Warranty,
   WorkshopVsSite,
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/proizvodstvo" },
 };
 
-// «Производство», короткая версия на запуск (ТЗ §0, §7.5). Видео, фото цеха, люди, контроль качества
+// «Производство» (ТЗ §7.5): фото цеха и монтажа — от компании; видео, люди, контроль качества
 // и документы — когда компания пришлёт материалы.
 export default async function ProductionPage() {
   const [settings, slots] = await Promise.all([getSettings(), getDemoSlots()]);
@@ -49,6 +50,9 @@ export default async function ProductionPage() {
         </div>
       </Section>
       <TrustNumbers settings={settings} />
+      <DemoFrame note={settings.demo.productionPhotos}>
+        <ProductionPhotos settings={settings} />
+      </DemoFrame>
       <WorkshopVsSite settings={settings} title="Цех против стройки на участке" />
       <Construction settings={settings} />
       <DemoSlotBlock slot={slots.video} />
@@ -56,7 +60,9 @@ export default async function ProductionPage() {
       <DemoFrame note={settings.demo.productionDetails}>
         <ProductionDetails settings={settings} />
       </DemoFrame>
-      <Delivery settings={settings} />
+      <DemoFrame note={settings.demo.deliveryPhotos}>
+        <Delivery settings={settings} />
+      </DemoFrame>
       <DemoFrame note={settings.demo.warrantyItems}>
         <Warranty settings={settings} />
       </DemoFrame>

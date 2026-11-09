@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
 import { LEAD_ANCHOR } from "@/components/layout/nav";
+import { PhotoGrid } from "@/components/PhotoGrid";
 import { projectPriceFrom } from "@/lib/content";
 import type { Project, Settings } from "@/lib/content/schemas";
 import { formatArea, formatPrice, keepUnits, pluralModules } from "@/lib/format";
@@ -145,25 +146,7 @@ export function Gallery({ project }: { project: Project }) {
   if (!rest.length) return null;
   return (
     <Section title="Фото">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        {rest.map((p) => (
-          <figure key={p.src} className="rounded-control relative overflow-hidden">
-            <Image
-              src={p.src}
-              alt={p.alt}
-              width={p.width}
-              height={p.height}
-              sizes="(min-width: 768px) 33vw, 50vw"
-              className="h-full w-full object-cover"
-            />
-            {p.render && (
-              <figcaption className="bg-ink/70 absolute right-2 bottom-2 rounded-full px-2 py-0.5 text-xs text-white">
-                Визуализация
-              </figcaption>
-            )}
-          </figure>
-        ))}
-      </div>
+      <PhotoGrid photos={rest} />
     </Section>
   );
 }
@@ -359,7 +342,7 @@ export function Steps({ settings }: { settings: Settings }) {
 }
 
 export function Delivery({ settings }: { settings: Settings }) {
-  if (!settings.delivery.length) return null;
+  if (!settings.delivery.length && !settings.deliveryPhotos.length) return null;
   return (
     <Section title="Доставка и монтаж">
       <ul className="flex max-w-3xl flex-col gap-3">
@@ -370,6 +353,7 @@ export function Delivery({ settings }: { settings: Settings }) {
           </li>
         ))}
       </ul>
+      <PhotoGrid photos={settings.deliveryPhotos} className="mt-8" />
     </Section>
   );
 }

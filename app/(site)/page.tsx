@@ -57,7 +57,8 @@ export default async function Home() {
     getDemoSlots(),
   ]);
   const minPrice = siteMinPrice(settings, projects);
-  const hero = projects.find((p) => p.slug === "dom-45")?.photos[0] ?? projects[0]?.photos[0];
+  const hero =
+    settings.heroPhoto ?? projects.find((p) => p.slug === "dom-45")?.photos[0] ?? projects[0]?.photos[0];
 
   return (
     <>

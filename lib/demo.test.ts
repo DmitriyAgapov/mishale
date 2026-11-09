@@ -88,10 +88,12 @@ describe("файлы примеров", () => {
     const s = await parseSettings(read("settings.json"), common.settings);
     expect(s.legal?.name).toContain("Пример");
     expect(s.demo.legal).toBeDefined();
-    // Блоки, закрытые примерами: предложение, кейсы, для бизнеса, рассрочка, производство, как доехать
-    for (const k of ["offer", "cases", "business", "financing", "productionDetails", "directions"])
+    // Блоки, закрытые примерами: предложение, для бизнеса, рассрочка, производство, как доехать
+    for (const k of ["offer", "business", "financing", "productionDetails", "directions"])
       expect(s.demo[k], k).toBeDefined();
-    expect(s.cases[0].photo?.width).toBeGreaterThan(0);
+    // Построенные дома, фото цеха и доставки — настоящие (от компании): примеры не подставляются
+    for (const k of ["cases", "productionPhotos", "deliveryPhotos"]) expect(s.demo[k], k).toBeUndefined();
+    expect(s.cases[0].photos[0].width).toBeGreaterThan(0);
     for (const slot of Object.values(common.slots)) expect(() => demoSlotSchema.parse(slot)).not.toThrow();
   });
 });

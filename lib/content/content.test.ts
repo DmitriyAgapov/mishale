@@ -115,7 +115,7 @@ describe("вариант с баней", () => {
   it("берёт свои планировку и цены, фото — от основного проекта, если своих нет", () => {
     const v = asBanyaVariant({
       ...base,
-      banyaVariant: { ...base.banyaVariant!, published: true, area: 66, priceFrom: 3_000_000 },
+      banyaVariant: { ...base.banyaVariant!, published: true, area: 66, priceFrom: 3_000_000, photos: [] },
     })!;
     expect(v.title).toBe("Модульный дом 60 м² с баней");
     expect(v.params.area).toBe(66);

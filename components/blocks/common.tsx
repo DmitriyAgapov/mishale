@@ -3,7 +3,9 @@ import { Building2, Check, MapPin, Quote, ShieldCheck, Wallet, X } from "lucide-
 import { LeadForm } from "@/components/forms/LeadForm";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
-import type { Settings } from "@/lib/content/schemas";
+import type { Case, Settings } from "@/lib/content/schemas";
+import { cn } from "@/lib/cn";
+import { PhotoGrid } from "@/components/PhotoGrid";
 
 // Блоки, общие для главной, «Производства» и контактов (ТЗ §7.1)
 
@@ -183,46 +185,81 @@ export function Offer({ settings }: { settings: Settings }) {
   );
 }
 
-// Построенные дома и отзывы (02 §6.6)
-export function Cases({ settings }: { settings: Settings }) {
-  if (!settings.cases.length) return null;
+// Построенные дома и отзывы (02 §6.6). На странице проекта — только дома этого проекта
+export function Cases({
+  settings,
+  items = settings.cases,
+  title = "Построенные дома",
+  lead = "Дома, которые мы уже собрали и поставили.",
+}: {
+  settings: Settings;
+  items?: Case[];
+  title?: string;
+  lead?: string;
+}) {
+  if (!items.length) return null;
   return (
-    <Section title="Построенные дома" lead="Дома, которые мы уже собрали и поставили, и отзывы владельцев.">
-      <div className="grid gap-6 md:grid-cols-3">
-        {settings.cases.map((c) => (
-          <article
-            key={`${c.title}-${c.city}`}
-            className="rounded-card bg-surface shadow-card overflow-hidden"
-          >
-            {c.photo && (
-              <Image
-                src={c.photo.src}
-                alt={c.photo.alt}
-                width={c.photo.width}
-                height={c.photo.height}
-                sizes="(min-width: 768px) 33vw, 100vw"
-                className="aspect-[4/3] w-full object-cover"
-              />
-            )}
-            <div className="p-5">
-              <h3 className="text-h3 font-extrabold">{c.title}</h3>
-              <p className="text-ink-muted mt-1 flex items-center gap-1 text-sm">
-                <MapPin className="size-4" aria-hidden />
-                {c.city}, {c.date}
-              </p>
-              <p className="mt-3">{c.text}</p>
-              {c.review && (
-                <blockquote className="border-brand mt-4 border-l-4 pl-4 italic">
-                  <Quote className="text-brand mb-1 size-5" aria-hidden />
-                  {c.review}
-                  {c.author && (
-                    <footer className="text-ink-muted mt-2 text-sm not-italic">— {c.author}</footer>
-                  )}
-                </blockquote>
+    <Section title={title} lead={lead}>
+      <div
+        className={cn(
+          "grid gap-6",
+          items.length > 1 && "md:grid-cols-2",
+          items.length > 2 && "lg:grid-cols-3",
+        )}
+      >
+        {items.map((c) => {
+          const [main, ...rest] = c.photos;
+          return (
+            <article
+              key={`${c.title}-${c.city}`}
+              className={cn(
+                "rounded-card bg-surface shadow-card overflow-hidden",
+                // Один дом — горизонтальная карточка, иначе фото на всю ширину страницы
+                items.length === 1 && "md:grid md:grid-cols-2",
               )}
-            </div>
-          </article>
-        ))}
+            >
+              <div>
+                {main && (
+                  <div className="relative aspect-[4/3]">
+                    <Image
+                      src={main.src}
+                      alt={main.alt}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                {rest.length > 0 && (
+                  <div className="grid grid-cols-3 gap-1 p-1">
+                    {rest.slice(0, 3).map((p) => (
+                      <div key={p.src} className="relative aspect-[4/3] overflow-hidden rounded">
+                        <Image src={p.src} alt={p.alt} fill sizes="15vw" className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className={cn("p-5", items.length === 1 && "md:p-8")}>
+                <h3 className="text-h3 font-extrabold">{c.title}</h3>
+                <p className="text-ink-muted mt-1 flex items-center gap-1 text-sm">
+                  <MapPin className="size-4" aria-hidden />
+                  {c.city}, {c.date}
+                </p>
+                <p className="mt-3">{c.text}</p>
+                {c.review && (
+                  <blockquote className="border-brand mt-4 border-l-4 pl-4 italic">
+                    <Quote className="text-brand mb-1 size-5" aria-hidden />
+                    {c.review}
+                    {c.author && (
+                      <footer className="text-ink-muted mt-2 text-sm not-italic">— {c.author}</footer>
+                    )}
+                  </blockquote>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </Section>
   );
@@ -269,6 +306,19 @@ export function Financing({ settings }: { settings: Settings }) {
           </article>
         ))}
       </div>
+    </Section>
+  );
+}
+
+// Фото цеха — «Производство»
+export function ProductionPhotos({ settings }: { settings: Settings }) {
+  if (!settings.productionPhotos.length) return null;
+  return (
+    <Section
+      title="Наш цех"
+      lead="Модули собираются под крышей, по одной технологии, и проверяются до отгрузки."
+    >
+      <PhotoGrid photos={settings.productionPhotos} />
     </Section>
   );
 }

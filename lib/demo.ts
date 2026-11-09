@@ -55,6 +55,8 @@ export function applyDemoLayer(target: Record<string, unknown>, layer: DemoLayer
     }
   }
   for (const [key, value] of Object.entries(layer.append ?? {})) {
+    // Пустой список в слое проекта отменяет общий (у проекта уже есть настоящие фото)
+    if (!value.length) continue;
     const current = Array.isArray(target[key]) ? (target[key] as unknown[]) : [];
     target[key] = [...current, ...structuredClone(value)];
     note(key);
