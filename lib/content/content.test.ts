@@ -28,6 +28,10 @@ describe("файлы данных и админка", () => {
     );
     expect(s.phone.href).toMatch(/^tel:/);
     expect(s.legal?.inn).toBe("7415094224");
+    // Готовые дома: адреса страниц не повторяются, у каждого есть фото
+    const slugs = s.inStock.map((x) => x.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const x of s.inStock) expect(x.photos.length, x.slug).toBeGreaterThan(0);
   });
 
   it("размеры картинок читаются из файлов", async () => {

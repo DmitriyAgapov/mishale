@@ -360,6 +360,7 @@
   },
   "inStock": [
     {
+      "slug": "dom-42-s-kuhnei",
       "title": "Дом 42 м² с кухней и сантехникой",
       "size": "30 м² + терраса 12 м²",
       "purpose": "Дача, аренда или постоянное проживание",
@@ -372,9 +373,61 @@
         "Доставка, установка и свайное поле в пределах города"
       ],
       "price": 2240000,
-      "photos": []
+      "photos": [
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7198-0d5033.jpg",
+          "alt": "Готовый модульный дом 42 м² с террасой у цеха МИШАЛЕ",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7202-64c90b.jpg",
+          "alt": "Дом 42 м²: терраса вдоль фасада",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7203-2c06fc.jpg",
+          "alt": "Дом 42 м²: терраса под навесом",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7205-078703.jpg",
+          "alt": "Дом 42 м²: вид сбоку, отделка профлистом и рейкой",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7207-15160a.jpg",
+          "alt": "Дом 42 м²: терраса со ступенями",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7306-1dbceb.jpg",
+          "alt": "Кухня-гостиная в готовом доме 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7310-699b1d.jpg",
+          "alt": "Кухонный гарнитур с плитой в доме 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7308-a5e318.jpg",
+          "alt": "Спальня в доме 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7309-87acf3.jpg",
+          "alt": "Комната с натяжным потолком, дом 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-s-kuhnei/img-7307-9334c2.jpg",
+          "alt": "Санузел с душевой в доме 42 м²",
+          "render": false
+        }
+      ]
     },
     {
+      "slug": "dom-42-bazovyj",
       "title": "Дом 42 м² базовый",
       "size": "30 м² + терраса 12 м²",
       "purpose": "Дача, аренда или постоянное проживание",
@@ -386,9 +439,41 @@
         "Доставка, установка и свайное поле в пределах города"
       ],
       "price": 1820000,
-      "photos": []
+      "photos": [
+        {
+          "src": "/images/stock/dom-42-bazovyj/img-7333-a6c216.jpg",
+          "alt": "Готовый модульный дом 42 м² с террасой у цеха МИШАЛЕ",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-bazovyj/img-7332-604733.jpg",
+          "alt": "Дом 42 м²: вид вдоль террасы",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-bazovyj/img-7334-02a3a4.jpg",
+          "alt": "Терраса и вход в дом 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-bazovyj/img-7335-ff26fe.jpg",
+          "alt": "Комната с отделкой фальшбрусом, дом 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-bazovyj/img-7337-7d2900.jpg",
+          "alt": "Комната с окном, дом 42 м²",
+          "render": false
+        },
+        {
+          "src": "/images/stock/dom-42-bazovyj/img-7338-9a593c.jpg",
+          "alt": "Общая комната и вход в санузел, дом 42 м²",
+          "render": false
+        }
+      ]
     },
     {
+      "slug": "modul-15-s-terrasoj",
       "title": "Модуль 2,5×6 м с террасой",
       "size": "15 м² + терраса глубиной 2 м",
       "purpose": "Офис, ресепшен, охрана, торговля, садовый домик",
@@ -399,7 +484,43 @@
         "Можно пользоваться круглый год"
       ],
       "price": null,
-      "photos": []
+      "photos": [
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7314-049fe1.jpg",
+          "alt": "Готовый модуль 2,5×6 м с террасой",
+          "render": false
+        },
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7315-60930e.jpg",
+          "alt": "Модуль 15 м²: терраса под навесом",
+          "render": false
+        },
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7318-c6c9aa.jpg",
+          "alt": "Модуль 15 м²: терраса с ограждением",
+          "render": false
+        },
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7316-ea52ca.jpg",
+          "alt": "Модуль 15 м²: вид сбоку, профлист",
+          "render": false
+        },
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7323-69d5da.jpg",
+          "alt": "Модуль 15 м² у цеха МИШАЛЕ",
+          "render": false
+        },
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7319-165388.jpg",
+          "alt": "Модуль 15 м² внутри: окна и кондиционер",
+          "render": false
+        },
+        {
+          "src": "/images/stock/modul-15-s-terrasoj/img-7321-ac1c13.jpg",
+          "alt": "Модуль 15 м²: стеклянная дверь на террасу",
+          "render": false
+        }
+      ]
     }
   ]
 }

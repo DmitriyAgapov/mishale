@@ -122,3 +122,22 @@ test("готовые дома в наличии: блок на главной и
   const dialog = page.getByRole("dialog", { name: "Дом 42 м² с кухней и сантехникой" });
   await expect(dialog.getByRole("button", { name: "Забронировать" })).toBeVisible();
 });
+
+test("страница готового дома: фото, состав, цена и бронь", async ({ page }) => {
+  await page.goto("/proekty");
+  await page.locator("#v-nalichii").getByRole("link", { name: "Дом 42 м² с кухней и сантехникой" }).click();
+  await expect(page).toHaveURL(/\/v-nalichii\/dom-42-s-kuhnei$/);
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Дом 42 м² с кухней и сантехникой" }),
+  ).toBeVisible();
+  await expect(page.getByText(/2\s240\s000\s₽/).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Что входит" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Фото" })).toBeVisible();
+  // Остальные дома — карточками внизу, сам дом в них не повторяется
+  const others = page
+    .getByRole("heading", { name: "Другие дома в наличии" })
+    .locator("xpath=ancestor::section");
+  await expect(others.getByRole("link", { name: "Дом 42 м² базовый" })).toBeVisible();
+  await expect(others.getByRole("link", { name: "Дом 42 м² с кухней и сантехникой" })).toHaveCount(0);
+  await expect(page.locator("#zayavka").getByRole("button", { name: "Забронировать" })).toBeVisible();
+});

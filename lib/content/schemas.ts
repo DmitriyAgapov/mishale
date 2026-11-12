@@ -192,10 +192,11 @@ export const settingsSchema = z.object({
     )
     .default([]),
   // Готовые дома и модули в наличии — не проекты каталога (ответ менеджера 12.11.2026).
-  // Блок на главной и в каталоге; пустой список — блока нет
+  // Блок на главной и в каталоге, у каждого дома своя страница /v-nalichii/<slug>; пустой список — блока нет
   inStock: z
     .array(
       z.object({
+        slug: z.string().regex(/^[a-z0-9-]+$/, "Адрес страницы — латиница, цифры и дефис"),
         title: z.string(),
         size: z.string(),
         purpose: z.string().nullable().default(null),

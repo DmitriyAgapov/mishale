@@ -125,6 +125,12 @@ export async function getBanyaVariantProjects(): Promise<Project[]> {
   return (await getProjects()).filter((p) => p.banyaVariant?.published);
 }
 
+// Готовый дом в наличии — своя страница (settings.inStock)
+export type StockItem = Settings["inStock"][number];
+export function stockHref(item: StockItem): string {
+  return `/v-nalichii/${item.slug}`;
+}
+
 export function projectHref(p: Project, withBanya = false): string {
   return withBanya ? `/proekty/${p.slug}/s-banei` : `/proekty/${p.slug}`;
 }

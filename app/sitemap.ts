@@ -1,15 +1,16 @@
 import type { MetadataRoute } from "next";
-import { getProjects, projectHref } from "@/lib/content";
+import { getProjects, getSettings, projectHref, stockHref } from "@/lib/content";
 import { site } from "@/lib/site";
 
-// Карта сайта из данных: только опубликованные проекты и варианты с баней.
+// Карта сайта из данных: опубликованные проекты, варианты с баней и готовые дома в наличии.
 // lastModified не указываем: дата сборки не говорит поисковику, менялась ли страница.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = await getProjects();
+  const [projects, settings] = await Promise.all([getProjects(), getSettings()]);
   const pages = ["/", "/proekty", "/proizvodstvo", "/voprosy", "/kontakty"];
   const projectPages = projects.flatMap((p) => [
     projectHref(p),
     ...(p.banyaVariant?.published ? [projectHref(p, true)] : []),
   ]);
-  return [...pages, ...projectPages].map((path) => ({ url: `${site.url}${path}` }));
+  const stockPages = settings.inStock.map(stockHref);
+  return [...pages, ...projectPages, ...stockPages].map((path) => ({ url: `${site.url}${path}` }));
 }

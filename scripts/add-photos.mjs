@@ -2,7 +2,7 @@
 // Берёт файлы из site-assets/from-client (путь — PHOTOS_SRC, по умолчанию ../site-assets/from-client),
 // сжимает (фото проектов — в public/images/projects/<slug>/real/, остальные — в public/images/real/) и записывает в данные по списку scripts/photos/data.mjs:
 // - фото проектов — в начало галереи (перед визуализациями), фото варианта с баней — в banyaVariant.photos;
-// - построенные дома, фото цеха, доставки и первого экрана — в content/settings.json.
+// - построенные дома, фото цеха, доставки, первого экрана и готовых домов в наличии — в content/settings.json.
 // Повторный запуск обновляет картинки и не дублирует записи; чужие фото в галереях не трогает.
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
@@ -81,5 +81,10 @@ settings.productionPhotos = await images(data.productionPhotos);
 settings.deliveryPhotos = await images(data.deliveryPhotos);
 // Условный блок Keystatic: есть фото / нет фото
 settings.heroPhoto = { discriminant: true, value: await image(data.heroPhoto) };
+// Готовые дома: фото — в /images/stock/<адрес>/ (туда же кладёт админка), заменяются целиком
+for (const item of settings.inStock ?? []) {
+  const list = data.stockPhotos[item.slug];
+  if (list) item.photos = await images(list, `/images/stock/${item.slug}/`);
+}
 await writeFile(settingsFile, JSON.stringify(settings, null, 2) + "\n");
 console.log(`content/settings.json; картинок: ${done.size}`);

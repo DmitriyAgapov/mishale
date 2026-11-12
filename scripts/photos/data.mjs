@@ -115,3 +115,37 @@ export const deliveryPhotos = [
 
 // Первый экран главной
 export const heroPhoto = [`${T60B}/fasad/Shine-15.jpg`, "Модульный дом МИШАЛЕ с террасой на участке"];
+
+// Готовые дома в наличии (settings.inStock[].photos, по адресу страницы). Первое фото — на карточке и первом экране
+const STOCK = "v-nalichii";
+export const stockPhotos = {
+  "dom-42-s-kuhnei": [
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7198.jpg`, "Готовый модульный дом 42 м² с террасой у цеха МИШАЛЕ"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7202.jpg`, "Дом 42 м²: терраса вдоль фасада"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7203.jpg`, "Дом 42 м²: терраса под навесом"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7205.jpg`, "Дом 42 м²: вид сбоку, отделка профлистом и рейкой"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7207.jpg`, "Дом 42 м²: терраса со ступенями"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7306.jpg`, "Кухня-гостиная в готовом доме 42 м²"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7310.jpg`, "Кухонный гарнитур с плитой в доме 42 м²"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7308.jpg`, "Спальня в доме 42 м²"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7309.jpg`, "Комната с натяжным потолком, дом 42 м²"],
+    [`${STOCK}/dom-42-s-kuhnei/IMG_7307.jpg`, "Санузел с душевой в доме 42 м²"],
+  ],
+  "dom-42-bazovyj": [
+    [`${STOCK}/dom-42-bazovyj/IMG_7333.jpg`, "Готовый модульный дом 42 м² с террасой у цеха МИШАЛЕ"],
+    [`${STOCK}/dom-42-bazovyj/IMG_7332.jpg`, "Дом 42 м²: вид вдоль террасы"],
+    [`${STOCK}/dom-42-bazovyj/IMG_7334.jpg`, "Терраса и вход в дом 42 м²"],
+    [`${STOCK}/dom-42-bazovyj/IMG_7335.jpg`, "Комната с отделкой фальшбрусом, дом 42 м²"],
+    [`${STOCK}/dom-42-bazovyj/IMG_7337.jpg`, "Комната с окном, дом 42 м²"],
+    [`${STOCK}/dom-42-bazovyj/IMG_7338.jpg`, "Общая комната и вход в санузел, дом 42 м²"],
+  ],
+  "modul-15-s-terrasoj": [
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7314.jpg`, "Готовый модуль 2,5×6 м с террасой"],
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7315.jpg`, "Модуль 15 м²: терраса под навесом"],
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7318.jpg`, "Модуль 15 м²: терраса с ограждением"],
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7316.jpg`, "Модуль 15 м²: вид сбоку, профлист"],
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7323.jpg`, "Модуль 15 м² у цеха МИШАЛЕ"],
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7319.jpg`, "Модуль 15 м² внутри: окна и кондиционер"],
+    [`${STOCK}/modul-15-s-terrasoj/IMG_7321.jpg`, "Модуль 15 м²: стеклянная дверь на террасу"],
+  ],
+};

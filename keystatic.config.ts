@@ -314,6 +314,10 @@ export default config({
         ),
         inStock: fields.array(
           fields.object({
+            slug: text(
+              "Адрес страницы",
+              "Латиница и дефис, например dom-42-s-kuhnei → /v-nalichii/dom-42-s-kuhnei",
+            ),
             title: text("Название", "Например: Дом 42 м² с кухней и сантехникой"),
             size: text("Площадь или размеры", "Например: 30 м² + терраса 12 м²"),
             purpose: text("Для чего подходит", "Необязательно"),
