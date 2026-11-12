@@ -74,7 +74,7 @@ export function SoonCard({ title, purposes, phone }: { title: string; purposes: 
       data-p={purposes.join(" ")}
       className="rounded-card bg-surface shadow-card flex flex-col overflow-hidden"
     >
-      <div className="bg-brand-soft text-brand relative flex aspect-[4/3] items-center justify-center">
+      <div className="bg-brand-soft text-brand relative flex aspect-[16/10] items-center justify-center">
         <Bath className="size-16" aria-hidden />
         <span className="bg-ink absolute top-3 left-3 rounded-full px-3 py-1 text-sm font-semibold text-white">
           Скоро

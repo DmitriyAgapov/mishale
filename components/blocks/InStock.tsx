@@ -18,10 +18,10 @@ export function StockCard({ item, settings }: { item: StockItem; settings: Setti
         href={href}
         tabIndex={-1}
         aria-hidden
-        className="bg-brand-soft text-brand relative flex aspect-[4/3] items-center justify-center overflow-hidden"
+        className="bg-brand-soft text-brand relative flex aspect-[16/10] items-center justify-center overflow-hidden"
       >
         {photo ? (
-          // Фото — поверх рамки 4:3: вертикальные снимки с телефона не растягивают карточку
+          // Фото — поверх рамки 16:10, как у карточек проектов: вертикальные снимки с телефона не растягивают карточку
           <Image
             src={photo.src}
             alt=""

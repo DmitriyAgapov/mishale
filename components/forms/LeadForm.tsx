@@ -18,7 +18,6 @@ const clientSchema = z.object({
   phone: z.string().refine((v) => v.replace(/\D/g, "").length === 11, "Введите номер полностью"),
   messenger: z.enum(["phone", "whatsapp", "telegram", "max"]),
   package: z.string().optional(),
-  options: z.array(z.string()).optional(),
   comment: z.string().max(2000).optional(),
   consent: z.boolean().refine((v) => v, "Нужно ваше согласие"),
   website: z.string().optional(),
@@ -38,7 +37,6 @@ type Props = {
   form: LeadFormType;
   project?: string;
   packages?: string[];
-  options?: string[];
   // Ответы квиза — уходят в заявку как «вопрос: ответ»
   answers?: Record<string, string>;
   submitLabel?: string;
@@ -52,7 +50,6 @@ export function LeadForm({
   form,
   project,
   packages = [],
-  options = [],
   answers,
   submitLabel = "Получить расчёт",
   phone,
@@ -76,7 +73,6 @@ export function LeadForm({
       name: "",
       phone: "",
       messenger: "phone",
-      options: [],
       comment: "",
       consent: false,
       website: "",
@@ -96,7 +92,6 @@ export function LeadForm({
           messenger: v.messenger,
           project,
           package: v.package || undefined,
-          options: v.options?.length ? v.options : undefined,
           answers,
           comment: v.comment || undefined,
           consent: v.consent,
@@ -217,20 +212,6 @@ export function LeadForm({
             <option>Своя комплектация</option>
           </select>
         </div>
-      )}
-
-      {options.length > 0 && (
-        <fieldset>
-          <legend className="font-semibold">Опции</legend>
-          <div className="mt-2 flex flex-col gap-2">
-            {options.map((o) => (
-              <label key={o} className="flex items-center gap-3">
-                <input type="checkbox" value={o} className="accent-brand size-5" {...register("options")} />
-                {o}
-              </label>
-            ))}
-          </div>
-        </fieldset>
       )}
 
       <div>

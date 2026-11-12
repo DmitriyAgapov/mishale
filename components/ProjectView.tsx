@@ -186,7 +186,6 @@ export function ProjectView({ base, project, withBanya, settings, all }: Props) 
             form="project"
             project={project.title}
             packages={project.packages.map((p) => p.name)}
-            options={project.options.map((o) => o.name)}
             phone={settings.phone}
             submitLabel="Получить смету"
           />
