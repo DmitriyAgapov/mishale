@@ -14,8 +14,28 @@
   "summary": "Каркасный дом из 8 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
   "photos": [
     {
-      "src": "/images/projects/dom-120/photos/0/src.jpg",
+      "src": "/images/projects/dom-120/photos/render-front/src.jpg",
       "alt": "Модульный дом 120 м², фасад",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-120/photos/render-back/src.jpg",
+      "alt": "Модульный дом 120 м², фасад, второй ракурс",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-120/photos/render-living/src.jpg",
+      "alt": "Модульный дом 120 м², гостиная",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-120/photos/render-kitchen/src.jpg",
+      "alt": "Модульный дом 120 м², кухня",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-120/photos/render-bedroom/src.jpg",
+      "alt": "Модульный дом 120 м², спальня",
       "render": true
     }
   ],

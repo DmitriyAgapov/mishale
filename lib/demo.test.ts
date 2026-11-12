@@ -86,8 +86,9 @@ describe("файлы примеров", () => {
 
   it("настройки с примерами проходят схему, заглушки блоков заполнены", async () => {
     const s = await parseSettings(read("settings.json"), common.settings);
-    expect(s.legal?.name).toContain("Пример");
-    expect(s.demo.legal).toBeDefined();
+    // Реквизиты настоящие (карточка предприятия от 12.11.2026) — пример не подставляется
+    expect(s.legal?.name).toBe("ООО «МИШАЛЕ»");
+    expect(s.demo.legal).toBeUndefined();
     // Блоки, закрытые примерами: предложение, для бизнеса, рассрочка, производство, как доехать
     for (const k of ["offer", "business", "financing", "productionDetails", "directions"])
       expect(s.demo[k], k).toBeDefined();

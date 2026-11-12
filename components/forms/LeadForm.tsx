@@ -244,13 +244,14 @@ export function LeadForm({
         <label className="flex items-start gap-3 text-sm">
           <input type="checkbox" className="accent-brand mt-0.5 size-5 shrink-0" {...register("consent")} />
           <span>
+            {/* Согласие — отдельно от других документов (152-ФЗ, ч. 1 ст. 9): политику не «принимают», только ссылка */}
             Даю{" "}
             <Link href="/soglasie" className="text-brand underline" target="_blank">
               согласие на обработку персональных данных
-            </Link>{" "}
-            и принимаю{" "}
+            </Link>
+            . Как мы их обрабатываем — в{" "}
             <Link href="/politika" className="text-brand underline" target="_blank">
-              политику
+              политике
             </Link>
           </span>
         </label>

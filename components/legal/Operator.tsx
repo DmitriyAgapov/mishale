@@ -1,8 +1,8 @@
 import { DemoBadge } from "@/components/demo/Demo";
 import type { Settings } from "@/lib/content/schemas";
 
-// Реквизиты оператора персональных данных. Пока компания их не прислала — заметное предупреждение:
-// без реквизитов сайт запускать нельзя (docs/STATUS.md, «Перед запуском»).
+// Реквизиты оператора персональных данных. Без реквизитов — заметное предупреждение:
+// без них сайт запускать нельзя (docs/STATUS.md, «Перед запуском»).
 export function Operator({ settings }: { settings: Settings }) {
   const l = settings.legal;
   if (!l) {
@@ -12,11 +12,13 @@ export function Operator({ settings }: { settings: Settings }) {
       </p>
     );
   }
+  const address = l.address ?? settings.address?.text;
   return (
     <p>
       {l.name}, ИНН {l.inn}, ОГРН {l.ogrn}
-      {settings.address ? `, адрес: ${settings.address.text}` : ""}
-      {settings.email ? `, e-mail: ${settings.email}` : ""}.
+      {address ? `, адрес: ${address}` : ""}
+      {settings.email ? `, e-mail: ${settings.email}` : ""}
+      {settings.phone ? `, телефон: ${settings.phone.display}` : ""}.
       <DemoBadge note={settings.demo.legal} label="пример реквизитов" />
     </p>
   );

@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { createReader } from "@keystatic/core/reader";
+import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 import keystaticConfig from "../../keystatic.config";
 import { asBanyaVariant, parseProject, parseSettings, projectHref } from "./index";
@@ -26,13 +27,15 @@ describe("файлы данных и админка", () => {
       JSON.parse(readFileSync(path.join(process.cwd(), "content", "settings.json"), "utf8")),
     );
     expect(s.phone.href).toMatch(/^tel:/);
-    expect(s.legal).toBeNull();
+    expect(s.legal?.inn).toBe("7415094224");
   });
 
-  it("размеры картинок читаются из файлов", () => {
+  it("размеры картинок читаются из файлов", async () => {
     const p = all.find((x) => x.slug === "dom-45")!;
-    expect(p.photos[0].width).toBe(1600);
-    expect(p.photos[0].height).toBeGreaterThan(0);
+    // Сверяем с самим файлом, а не с числом: картинки меняются при подключении новых визуализаций
+    const meta = await sharp(path.join(process.cwd(), "public", p.photos[0].src)).metadata();
+    expect(p.photos[0].width).toBe(meta.width);
+    expect(p.photos[0].height).toBe(meta.height);
   });
 
   it("форма Keystatic приводится к схеме сайта", () => {

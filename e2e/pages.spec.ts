@@ -58,7 +58,7 @@ test("в форме есть ссылки на согласие и полити�
     "href",
     "/soglasie",
   );
-  await expect(form.getByRole("link", { name: "политику" })).toHaveAttribute("href", "/politika");
+  await expect(form.getByRole("link", { name: "политике" })).toHaveAttribute("href", "/politika");
 });
 
 test("микроразметка организации и вопросов на главной", async ({ page }) => {

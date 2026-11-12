@@ -118,7 +118,7 @@ test.describe("варианты и бани", () => {
       .click();
     await expect(page).toHaveURL(/\/proekty\/dom-60\/s-banei$/);
     await expect(page.getByRole("heading", { level: 1, name: "Модульный дом 60 м² с баней" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Комфорт+", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Комфорт", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Дом 60 м² с баней внутри" })).toBeVisible();
   });
 });

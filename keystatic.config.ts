@@ -218,7 +218,12 @@ export default config({
         }),
         workHours: text("Режим работы"),
         legal: fields.conditional(fields.checkbox({ label: "Указать реквизиты (оператор ПДн)" }), {
-          true: fields.object({ name: text("Юрлицо или ИП"), inn: text("ИНН"), ogrn: text("ОГРН / ОГРНИП") }),
+          true: fields.object({
+            name: text("Юрлицо или ИП"),
+            inn: text("ИНН"),
+            ogrn: text("ОГРН / ОГРНИП"),
+            address: text("Юридический адрес"),
+          }),
           false: fields.empty(),
         }),
         trust: fields.array(fields.object({ value: text("Цифра"), label: text("Подпись") }), {

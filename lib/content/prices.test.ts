@@ -26,7 +26,7 @@ const plan = (rooms: Array<[string, number]>) => [
 const tiers = {
   priceTiers: [
     { name: "Стандарт", pricePerM2: 45000, items: ["Состав"] },
-    { name: "Комфорт", pricePerM2: 48000, items: [] },
+    { name: "Комфорт", pricePerM2: 58000, items: [] },
   ],
   terracePricePerM2: 25000,
 };
@@ -40,7 +40,7 @@ describe("комплектации по ставке за м²", () => {
   it("цена = площадь × ставка + терраса × 25 000, округление до тысяч", () => {
     const [st, cf] = tierPackages(45, plan([["Терраса", 18.03]]), tiers);
     expect(st.price).toBe(2_476_000); // 2 025 000 + 450 750
-    expect(cf.price).toBe(2_611_000); // 2 160 000 + 450 750
+    expect(cf.price).toBe(3_061_000); // 2 610 000 + 450 750
     expect(st.items.map(plain)).toEqual([
       "Дом 45 м² × 45 000 ₽",
       "Терраса и крыльцо 18 м² × 25 000 ₽",
@@ -54,11 +54,11 @@ describe("комплектации по ставке за м²", () => {
     expect(plain(st.items[1])).toBe("Терраса — 25 000 ₽ за м², по проекту");
   });
 
-  it("у всех опубликованных домов три комплектации: Стандарт, Комфорт, Комфорт+", () => {
+  it("у всех опубликованных домов две комплектации: Стандарт и Комфорт", () => {
     for (const p of projects.filter((x) => x.published && x.category !== "banya")) {
-      expect(p.packages.map((x) => x.name)).toEqual(["Стандарт", "Комфорт", "Комфорт+"]);
+      expect(p.packages.map((x) => x.name)).toEqual(["Стандарт", "Комфорт"]);
     }
-    expect(bySlug("dom-45").packages.map((x) => x.price)).toEqual([2_476_000, 2_611_000, 2_791_000]);
+    expect(bySlug("dom-45").packages.map((x) => x.price)).toEqual([2_476_000, 3_061_000]);
   });
 
   it("бани не считаются по ставке домов", () => {
