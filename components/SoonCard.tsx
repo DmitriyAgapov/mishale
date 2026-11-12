@@ -8,19 +8,22 @@ import { reachGoal } from "@/lib/metrika";
 
 type Phone = { display: string; href: string };
 
-// Окно с формой «Узнать цену» на нативном <dialog>: фокус, Esc и затемнение даёт браузер
-function PriceDialog({
+// Окно с формой на нативном <dialog>: фокус, Esc и затемнение даёт браузер.
+// Карточки «Скоро» и блок «Готовые дома в наличии»
+export function PriceDialog({
   title,
   project,
   phone,
   trigger,
   className,
+  submitLabel = "Узнать цену",
 }: {
   title: string;
   project: string;
   phone: Phone;
   trigger: string;
   className?: string;
+  submitLabel?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   return (
@@ -56,7 +59,7 @@ function PriceDialog({
               <X className="size-6" aria-hidden />
             </button>
           </div>
-          <LeadForm form="project" project={project} phone={phone} submitLabel="Узнать цену" />
+          <LeadForm form="project" project={project} phone={phone} submitLabel={submitLabel} />
         </div>
       </dialog>
     </>

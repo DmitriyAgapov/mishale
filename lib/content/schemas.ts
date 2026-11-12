@@ -191,6 +191,20 @@ export const settingsSchema = z.object({
       }),
     )
     .default([]),
+  // Готовые дома и модули в наличии — не проекты каталога (ответ менеджера 12.11.2026).
+  // Блок на главной и в каталоге; пустой список — блока нет
+  inStock: z
+    .array(
+      z.object({
+        title: z.string(),
+        size: z.string(),
+        purpose: z.string().nullable().default(null),
+        items: z.array(z.string()).default([]),
+        price,
+        photos: z.array(image).default([]),
+      }),
+    )
+    .default([]),
   // Главное фото первого экрана; пусто — фото проекта 45 м²
   heroPhoto: image.nullable().default(null),
   // Фото цеха — «Производство»

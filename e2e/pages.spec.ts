@@ -111,3 +111,14 @@ test("админка закрыта на собранном сайте", async (
   expect((await request.post("/api/keystatic/update", { data: {} })).status()).toBe(404);
   expect((await request.get("/api/keystatic/tree", { headers: { "no-cors": "1" } })).status()).toBe(404);
 });
+
+test("готовые дома в наличии: блок на главной и в каталоге, бронь в окне", async ({ page }) => {
+  for (const path of ["/", "/proekty"]) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { name: "Готовые дома в наличии" }), path).toBeVisible();
+  }
+  const block = page.locator("#v-nalichii");
+  await block.getByRole("button", { name: "Забронировать" }).first().click();
+  const dialog = page.getByRole("dialog", { name: "Дом 42 м² с кухней и сантехникой" });
+  await expect(dialog.getByRole("button", { name: "Забронировать" })).toBeVisible();
+});

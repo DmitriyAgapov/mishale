@@ -21,6 +21,7 @@ import {
   WorkshopVsSite,
 } from "@/components/blocks/common";
 import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
+import { InStock } from "@/components/blocks/InStock";
 import { Faq, Steps } from "@/components/blocks/project";
 import { Quiz } from "@/components/forms/Quiz";
 import { JsonLd } from "@/components/JsonLd";
@@ -128,6 +129,7 @@ export default async function Home() {
       <DemoFrame note={settings.demo.offer}>
         <Offer settings={settings} />
       </DemoFrame>
+      <InStock settings={settings} />
 
       <Section
         id="proekty"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LeadSection } from "@/components/blocks/common";
+import { InStock } from "@/components/blocks/InStock";
 import { Quiz } from "@/components/forms/Quiz";
 import { Faq } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -29,6 +30,7 @@ export default async function ProjectsPage() {
         </p>
         <ProjectGroups projects={projects} phone={settings.phone} eagerCount={3} />
       </Section>
+      <InStock settings={settings} />
       {/* Квиз кнопкой (ТЗ §7.3): <details> раскрывается без JavaScript */}
       <Section tone="brand">
         <details className="group">

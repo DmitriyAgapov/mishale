@@ -312,6 +312,20 @@ export default config({
             itemLabel: (p) => `${p.fields.title.value}, ${p.fields.city.value}`,
           },
         ),
+        inStock: fields.array(
+          fields.object({
+            title: text("Название", "Например: Дом 42 м² с кухней и сантехникой"),
+            size: text("Площадь или размеры", "Например: 30 м² + терраса 12 м²"),
+            purpose: text("Для чего подходит", "Необязательно"),
+            items: fields.array(text("Пункт"), { label: "Что входит", itemLabel: (p) => p.value }),
+            price: fields.integer({ label: "Цена, ₽", description: "Пусто — «Цена по запросу»" }),
+            photos: fields.array(projectImage("Фото", "stock"), {
+              label: "Фото",
+              itemLabel: (p) => p.fields.alt.value,
+            }),
+          }),
+          { label: "Готовые дома в наличии", itemLabel: (p) => p.fields.title.value },
+        ),
         heroPhoto: fields.conditional(fields.checkbox({ label: "Своё фото на первом экране главной" }), {
           true: projectImage("Фото", "real"),
           false: fields.empty(),
