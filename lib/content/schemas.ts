@@ -158,20 +158,17 @@ export const settingsSchema = z.object({
   generalFaq: z.array(z.object({ q: z.string(), a: z.string() })),
   // «Цех против стройки на участке» (02 §6.2) — только подтверждённые строки
   workshopVsSite: z.array(z.object({ topic: z.string(), workshop: z.string(), site: z.string() })),
-  // Экскурсия в цех: блок и форма показываются, только когда компания подтвердит формат
-  excursion: z
-    .object({
-      schedule: z.string(),
-      online: z.boolean().default(false),
-      gift: z.string().nullable().default(null),
-    })
-    .nullable()
-    .default(null),
   // Как доехать до цеха — под картой на странице контактов
   directions: z.string().nullable().default(null),
   // Сезонное предложение — главная и страницы проектов
   offer: z
-    .object({ title: z.string(), text: z.string(), until: z.string().nullable().default(null) })
+    .object({
+      title: z.string(),
+      text: z.string(),
+      // Короткие выгоды списком справа (2–4 пункта)
+      points: z.array(z.string()).default([]),
+      until: z.string().nullable().default(null),
+    })
     .nullable()
     .default(null),
   // Построенные дома и отзывы. project + withBanya — к какому проекту относится дом:

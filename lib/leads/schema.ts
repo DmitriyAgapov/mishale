@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Виды форм на сайте (ТЗ §9)
-export const leadForms = ["contact", "project", "quiz", "catalog", "excursion", "business"] as const;
+export const leadForms = ["contact", "project", "quiz", "catalog", "business"] as const;
 export type LeadFormType = (typeof leadForms)[number];
 
 export const formTitles: Record<LeadFormType, string> = {
@@ -9,7 +9,6 @@ export const formTitles: Record<LeadFormType, string> = {
   project: "Заявка по проекту",
   quiz: "Квиз",
   catalog: "Каталог PDF",
-  excursion: "Экскурсия в цех",
   business: "Заявка от бизнеса",
 };
 

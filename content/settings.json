@@ -4,6 +4,7 @@
     "href": "tel:+79822888828"
   },
   "email": "mishale.karkas@gmail.com",
+  "workHours": "Пн–Пт 9:00–18:00",
   "whatsapp": "https://wa.me/79822888828",
   "address": {
     "discriminant": true,
@@ -211,9 +212,6 @@
       "site": "Месяцы стройки, техника, мусор, бытовки"
     }
   ],
-  "excursion": {
-    "discriminant": false
-  },
   "cases": [
     {
       "title": "Дом 60 м² с баней внутри",
@@ -288,83 +286,88 @@
   ],
   "productionPhotos": [
     {
-      "src": "/images/real/shine-3-d445bc.jpg",
-      "alt": "Сборка модулей в крытом цеху МИШАЛЕ",
+      "src": "/images/real/1-31d440.jpg",
+      "alt": "Здание цеха МИШАЛЕ в Миассе",
       "render": false
     },
     {
-      "src": "/images/real/shine-8-ed8d7e.jpg",
-      "alt": "Готовый модуль у ворот цеха",
+      "src": "/images/real/img-20261112-232435-ebaf98.jpg",
+      "alt": "Крытый цех: несколько модулей в работе одновременно",
       "render": false
     },
     {
-      "src": "/images/real/shine-6-7914b8.jpg",
-      "alt": "Заготовка бруса для каркаса",
+      "src": "/images/real/img-20261112-232442-343b38.jpg",
+      "alt": "Модуль с террасой: обшивка стен и каркас навеса",
       "render": false
     },
     {
-      "src": "/images/real/shine-13-eb69b9.jpg",
-      "alt": "Мастер на участке комплектации",
+      "src": "/images/real/img-20261112-232519-bae2fa.jpg",
+      "alt": "Каркасы двух модулей: стены в ветрозащите, рама пола",
       "render": false
     },
     {
-      "src": "/images/real/shine-11-76c448.jpg",
-      "alt": "Завод домов МИШАЛЕ в Миассе",
+      "src": "/images/real/img-20261112-232450-4a515e.jpg",
+      "alt": "Модуль с террасой и ограждением в цеху",
       "render": false
     },
     {
-      "src": "/images/real/shine-29-23ed6c.jpg",
-      "alt": "Финишные работы на модуле у цеха",
+      "src": "/images/real/img-20261112-232456-d68254.jpg",
+      "alt": "Пиломатериалы для каркасов и отделки",
       "render": false
     },
     {
-      "src": "/images/real/shine-14-d93b59.jpg",
-      "alt": "Модули и каркасы в крытом цеху",
+      "src": "/images/real/img-20261112-232445-4cb1c8.jpg",
+      "alt": "Модуль с террасой на финишной отделке",
       "render": false
     },
     {
-      "src": "/images/real/shine-1-9c8bfa.jpg",
-      "alt": "Модуль с отделкой внутри перед отгрузкой",
+      "src": "/images/real/img-20261112-232447-e9c94c.jpg",
+      "alt": "Модуль в обшивке профлистом и рабочее место мастера",
       "render": false
     },
     {
-      "src": "/images/real/shine-17-6a8383.jpg",
-      "alt": "Готовый модуль: фасад из доски, окна и дверь",
+      "src": "/images/real/img-20261112-232423-b732d2.jpg",
+      "alt": "Каркас модуля в ветрозащите и обвязка пола",
       "render": false
     },
     {
-      "src": "/images/real/shine-34-661840.jpg",
-      "alt": "Модули в профлисте на площадке у цеха",
+      "src": "/images/real/img-20261112-232453-91e8fe.jpg",
+      "alt": "Модуль в ветрозащите и раскрой материалов",
       "render": false
     },
     {
-      "src": "/images/real/shine-10-120330.jpg",
-      "alt": "Вывеска завода домов МИШАЛЕ",
+      "src": "/images/real/img-20261112-232459-898e3d.jpg",
+      "alt": "Модуль в тёмной обшивке и рама пола следующего",
       "render": false
     },
     {
-      "src": "/images/real/shine-2-414ac3.jpg",
-      "alt": "Команда МИШАЛЕ на площадке у цеха",
+      "src": "/images/real/img-20261112-232515-656ca1.jpg",
+      "alt": "Банная печь перед установкой в модуль",
       "render": false
     },
     {
-      "src": "/images/real/shine-23-894131.jpg",
-      "alt": "Погрузка модуля-террасы на машину",
+      "src": "/images/real/img-20261112-232523-01d8b7.jpg",
+      "alt": "Дом из нескольких модулей на сборке",
       "render": false
     },
     {
-      "src": "/images/real/shine-24-ff7460.jpg",
-      "alt": "Модуль-терраса над платформой манипулятора",
+      "src": "/images/real/img-20261112-232527-162fb5.jpg",
+      "alt": "Модули с террасами на разных этапах сборки",
       "render": false
     },
     {
-      "src": "/images/real/shine-27-41b80f.jpg",
-      "alt": "Крепление модуля на машине перед отправкой",
+      "src": "/images/real/img-20261112-232534-071b09.jpg",
+      "alt": "Терраса с ограждением на модуле",
       "render": false
     },
     {
-      "src": "/images/real/shine-42-ad69c8.jpg",
-      "alt": "Подъём модуля краном",
+      "src": "/images/real/img-20261112-232543-90afa0.jpg",
+      "alt": "Модуль с террасой: фасад из доски",
+      "render": false
+    },
+    {
+      "src": "/images/real/img-20261112-232556-1c170c.jpg",
+      "alt": "Каркас навеса террасы на модуле",
       "render": false
     }
   ],

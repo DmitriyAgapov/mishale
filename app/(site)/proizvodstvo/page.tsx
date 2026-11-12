@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Excursion,
   LeadSection,
   ProductionDetails,
   ProductionPhotos,
@@ -42,11 +41,6 @@ export default async function ProductionPage() {
           <Link href="/proekty" className={button({ size: "lg" })}>
             Смотреть проекты
           </Link>
-          {settings.excursion && (
-            <a href="#ekskursiya" className={button({ variant: "secondary", size: "lg" })}>
-              Записаться на экскурсию
-            </a>
-          )}
         </div>
       </Section>
       <TrustNumbers settings={settings} />
@@ -65,9 +59,6 @@ export default async function ProductionPage() {
       </DemoFrame>
       <DemoFrame note={settings.demo.warrantyItems}>
         <Warranty settings={settings} />
-      </DemoFrame>
-      <DemoFrame note={settings.demo.excursion}>
-        <Excursion settings={settings} />
       </DemoFrame>
       <LeadSection settings={settings} />
     </>

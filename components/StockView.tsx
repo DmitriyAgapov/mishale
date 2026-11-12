@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 import type { Product } from "schema-dts";
 import { Delivery } from "@/components/blocks/project";
-import { Excursion } from "@/components/blocks/common";
 import { StockCard } from "@/components/blocks/InStock";
 import { DemoFrame } from "@/components/demo/Demo";
 import { LeadForm } from "@/components/forms/LeadForm";
@@ -133,9 +132,6 @@ export function StockView({ item, settings }: { item: StockItem; settings: Setti
 
       <DemoFrame note={settings.demo.deliveryPhotos}>
         <Delivery settings={settings} />
-      </DemoFrame>
-      <DemoFrame note={settings.demo.excursion}>
-        <Excursion settings={settings} />
       </DemoFrame>
 
       {others.length > 0 && (

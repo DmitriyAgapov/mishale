@@ -271,19 +271,15 @@ export default config({
           fields.object({ topic: text("Тема"), workshop: text("Цех"), site: text("Стройка на участке") }),
           { label: "Цех против стройки", itemLabel: (p) => p.fields.topic.value },
         ),
-        excursion: fields.conditional(fields.checkbox({ label: "Показывать экскурсию в цех" }), {
-          true: fields.object({
-            schedule: text("Когда", "Например: по субботам в 11:00, по записи"),
-            online: fields.checkbox({ label: "Есть онлайн-экскурсия", defaultValue: false }),
-            gift: text("Подарок или скидка за визит"),
-          }),
-          false: fields.empty(),
-        }),
         directions: longText("Как доехать до цеха"),
         offer: fields.conditional(fields.checkbox({ label: "Показывать сезонное предложение" }), {
           true: fields.object({
             title: text("Заголовок"),
             text: longText("Условия"),
+            points: fields.array(text("Выгода", "Например: цена фиксируется в договоре"), {
+              label: "Выгоды списком (2–4 коротких пункта)",
+              itemLabel: (p) => p.value,
+            }),
             until: fields.date({ label: "Действует до" }),
           }),
           false: fields.empty(),

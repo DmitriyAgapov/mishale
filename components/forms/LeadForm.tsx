@@ -29,7 +29,6 @@ const goals: Record<LeadFormType, Goal> = {
   project: "lead_submit_project",
   quiz: "lead_submit_quiz",
   catalog: "lead_submit_catalog",
-  excursion: "lead_submit_excursion",
   business: "lead_submit",
 };
 

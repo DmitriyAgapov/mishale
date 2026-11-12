@@ -16,7 +16,7 @@ import {
   SuitableFor,
 } from "@/components/blocks/project";
 import { DemoFrame } from "@/components/demo/Demo";
-import { Cases, Excursion, Financing, Offer } from "@/components/blocks/common";
+import { Cases, Financing, Offer } from "@/components/blocks/common";
 import { BanyaVariantHint } from "@/components/SoonCard";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { JsonLd } from "@/components/JsonLd";
@@ -148,9 +148,6 @@ export function ProjectView({ base, project, withBanya, settings, all }: Props) 
           title="Этот проект уже построен"
           lead="Дома по этому проекту, которые мы собрали и поставили."
         />
-      </DemoFrame>
-      <DemoFrame note={settings.demo.excursion}>
-        <Excursion settings={settings} />
       </DemoFrame>
 
       {similar.length > 0 && (

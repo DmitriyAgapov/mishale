@@ -149,7 +149,7 @@ test("производство: 6 фото цеха сразу, остальны
   const more = section.getByText(/Показать ещё \d+ фото/);
   await expect(section.locator("img:visible")).toHaveCount(6);
   await more.click();
-  await expect(section.locator("img:visible")).toHaveCount(16);
+  await expect(section.locator("img:visible")).toHaveCount(17);
   await section.getByText("Свернуть").click();
   await expect(section.locator("img:visible")).toHaveCount(6);
 });

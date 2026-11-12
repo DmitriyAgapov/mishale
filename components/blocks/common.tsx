@@ -1,5 +1,15 @@
 import Image from "next/image";
-import { Building2, Check, MapPin, Quote, ShieldCheck, Wallet, X } from "lucide-react";
+import {
+  Building2,
+  CalendarClock,
+  Check,
+  MapPin,
+  Quote,
+  ShieldCheck,
+  Snowflake,
+  Wallet,
+  X,
+} from "lucide-react";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
@@ -111,27 +121,6 @@ export function LeadSection({
   );
 }
 
-// Экскурсия в цех (02 §6.5). Показывается, только когда компания подтвердит расписание
-export function Excursion({ settings }: { settings: Settings }) {
-  const e = settings.excursion;
-  if (!e) return null;
-  return (
-    <Section id="ekskursiya" title="Приезжайте в цех" tone="surface">
-      <div className="grid gap-8 md:grid-cols-2 md:items-start">
-        <div className="text-lg">
-          <p>Покажем модули в работе, материалы и готовые дома. {e.schedule}.</p>
-          {e.online && (
-            <p className="text-ink-muted mt-3">Далеко ехать? Проведём онлайн-экскурсию по видеосвязи.</p>
-          )}
-          {e.gift && <p className="mt-3 font-semibold">{e.gift}</p>}
-          {settings.address && <p className="text-ink-muted mt-3">{settings.address.text}</p>}
-        </div>
-        <LeadForm form="excursion" phone={settings.phone} submitLabel="Записаться на экскурсию" />
-      </div>
-    </Section>
-  );
-}
-
 // Гарантия (ТЗ §7.2 блок 13, §7.5). Срок — из настроек; что покрывает — список, когда компания его даст
 export function Warranty({ settings }: { settings: Settings }) {
   return (
@@ -160,26 +149,62 @@ export function Warranty({ settings }: { settings: Settings }) {
   );
 }
 
-// Сезонное предложение (02 §6.4): главная и страницы проектов
+// Сезонное предложение (02 §6.4): главная и страницы проектов.
+// Тёмная карточка выделяется среди светлых блоков: слева условия и срок, справа выгоды списком
 export function Offer({ settings }: { settings: Settings }) {
   const o = settings.offer;
   if (!o) return null;
+  const until = o.until
+    ? new Date(o.until).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })
+    : null;
   return (
-    <Section tone="brand">
-      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div className="max-w-3xl">
-          <p className="text-brand text-sm font-bold tracking-wide uppercase">Предложение сезона</p>
-          <h2 className="text-h2 mt-1 font-extrabold md:text-4xl">{o.title}</h2>
-          <p className="text-ink-muted mt-3 text-lg">{o.text}</p>
-          {o.until && (
-            <p className="mt-3 font-semibold">
-              Действует до {new Date(o.until).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })}
+    <Section>
+      <div className="rounded-card bg-brand relative overflow-hidden px-6 py-10 text-white md:px-12 md:py-14">
+        {/* Декоративные снежинки — только фон */}
+        <Snowflake
+          aria-hidden
+          className="pointer-events-none absolute -top-10 -right-10 size-56 text-white/10 md:size-72"
+          strokeWidth={1}
+        />
+        <Snowflake
+          aria-hidden
+          className="pointer-events-none absolute -bottom-8 left-1/3 hidden size-32 text-white/5 md:block"
+          strokeWidth={1}
+        />
+        <div className="relative grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-center md:gap-12">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-sm font-bold tracking-wide uppercase">
+              <Snowflake className="size-4" aria-hidden />
+              Предложение сезона
             </p>
+            <h2 className="text-h2 mt-4 font-extrabold md:text-4xl">{o.title}</h2>
+            <p className="mt-4 text-lg text-white/85">{o.text}</p>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <a
+                href="#zayavka"
+                className={cn(button({ size: "lg" }), "text-brand bg-white hover:bg-white/90")}
+              >
+                Забронировать место
+              </a>
+              {until && (
+                <p className="flex items-center gap-2 font-semibold text-white/90">
+                  <CalendarClock className="size-5 shrink-0" aria-hidden />
+                  Действует до {until}
+                </p>
+              )}
+            </div>
+          </div>
+          {o.points.length > 0 && (
+            <ul className="flex flex-col gap-3">
+              {o.points.map((p) => (
+                <li key={p} className="rounded-control flex gap-3 bg-white/10 p-4 text-lg">
+                  <Check className="mt-1 size-5 shrink-0" aria-hidden />
+                  {p}
+                </li>
+              ))}
+            </ul>
           )}
         </div>
-        <a href="#zayavka" className={button({ size: "lg" })}>
-          Забронировать место
-        </a>
       </div>
     </Section>
   );

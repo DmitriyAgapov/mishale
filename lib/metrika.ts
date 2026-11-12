@@ -8,7 +8,6 @@ export type Goal =
   | "lead_submit_project"
   | "lead_submit_quiz"
   | "lead_submit_catalog"
-  | "lead_submit_excursion"
   | "lead_error"
   | "filter_purpose"
   | "quiz_start"
