@@ -10,7 +10,7 @@ import {
   WorkshopVsSite,
 } from "@/components/blocks/common";
 import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
-import { Construction, Delivery, Faq, Steps } from "@/components/blocks/project";
+import { Construction, Delivery, Steps } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
@@ -69,7 +69,6 @@ export default async function ProductionPage() {
       <DemoFrame note={settings.demo.excursion}>
         <Excursion settings={settings} />
       </DemoFrame>
-      <Faq items={settings.generalFaq} />
       <LeadSection settings={settings} />
     </>
   );

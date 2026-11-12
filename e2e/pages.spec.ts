@@ -61,11 +61,12 @@ test("в форме есть ссылки на согласие и полити�
   await expect(form.getByRole("link", { name: "политике" })).toHaveAttribute("href", "/politika");
 });
 
-test("микроразметка организации и вопросов на главной", async ({ page }) => {
+test("микроразметка организации на главной, вопросов и ответов на сайте нет", async ({ page }) => {
   await page.goto("/");
   const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join("\n");
   expect(ld).toContain('"@type":"HomeAndConstructionBusiness"');
-  expect(ld).toContain('"@type":"FAQPage"');
+  expect(ld).not.toContain('"@type":"FAQPage"');
+  await expect(page.getByRole("heading", { name: "Вопросы и ответы" })).toHaveCount(0);
 });
 
 test("старые адреса перенаправляются на новые (301)", async ({ request }) => {
@@ -140,4 +141,15 @@ test("страница готового дома: фото, состав, цен
   await expect(others.getByRole("link", { name: "Дом 42 м² базовый" })).toBeVisible();
   await expect(others.getByRole("link", { name: "Дом 42 м² с кухней и сантехникой" })).toHaveCount(0);
   await expect(page.locator("#zayavka").getByRole("button", { name: "Забронировать" })).toBeVisible();
+});
+
+test("производство: 6 фото цеха сразу, остальные — по кнопке", async ({ page }) => {
+  await page.goto("/proizvodstvo");
+  const section = page.getByRole("heading", { name: "Наш цех" }).locator("xpath=ancestor::section");
+  const more = section.getByText(/Показать ещё \d+ фото/);
+  await expect(section.locator("img:visible")).toHaveCount(6);
+  await more.click();
+  await expect(section.locator("img:visible")).toHaveCount(16);
+  await section.getByText("Свернуть").click();
+  await expect(section.locator("img:visible")).toHaveCount(6);
 });

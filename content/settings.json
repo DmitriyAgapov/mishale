@@ -316,6 +316,56 @@
       "src": "/images/real/shine-29-23ed6c.jpg",
       "alt": "Финишные работы на модуле у цеха",
       "render": false
+    },
+    {
+      "src": "/images/real/shine-14-d93b59.jpg",
+      "alt": "Модули и каркасы в крытом цеху",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-1-9c8bfa.jpg",
+      "alt": "Модуль с отделкой внутри перед отгрузкой",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-17-6a8383.jpg",
+      "alt": "Готовый модуль: фасад из доски, окна и дверь",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-34-661840.jpg",
+      "alt": "Модули в профлисте на площадке у цеха",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-10-120330.jpg",
+      "alt": "Вывеска завода домов МИШАЛЕ",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-2-414ac3.jpg",
+      "alt": "Команда МИШАЛЕ на площадке у цеха",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-23-894131.jpg",
+      "alt": "Погрузка модуля-террасы на машину",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-24-ff7460.jpg",
+      "alt": "Модуль-терраса над платформой манипулятора",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-27-41b80f.jpg",
+      "alt": "Крепление модуля на машине перед отправкой",
+      "render": false
+    },
+    {
+      "src": "/images/real/shine-42-ad69c8.jpg",
+      "alt": "Подъём модуля краном",
+      "render": false
     }
   ],
   "deliveryPhotos": [
@@ -375,12 +425,12 @@
       "price": 2240000,
       "photos": [
         {
-          "src": "/images/stock/dom-42-s-kuhnei/img-7198-0d5033.jpg",
+          "src": "/images/stock/dom-42-s-kuhnei/img-7202-64c90b.jpg",
           "alt": "Готовый модульный дом 42 м² с террасой у цеха МИШАЛЕ",
           "render": false
         },
         {
-          "src": "/images/stock/dom-42-s-kuhnei/img-7202-64c90b.jpg",
+          "src": "/images/stock/dom-42-s-kuhnei/img-7198-0d5033.jpg",
           "alt": "Дом 42 м²: терраса вдоль фасада",
           "render": false
         },

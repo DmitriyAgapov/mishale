@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Minus } from "lucide-react";
-import type { FAQPage } from "schema-dts";
 import { DemoBadge } from "@/components/demo/Demo";
-import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
 import { LEAD_ANCHOR } from "@/components/layout/nav";
@@ -362,38 +360,6 @@ export function Delivery({ settings }: { settings: Settings }) {
   );
 }
 
-// Аккордеон на <details>: работает без JavaScript
-export function Faq({
-  items,
-  title = "Вопросы и ответы",
-  jsonLd = true,
-}: {
-  items: { q: string; a: string }[];
-  title?: string;
-  // false — если на странице несколько блоков вопросов: разметка FAQPage одна на страницу (faqJsonLd)
-  jsonLd?: boolean;
-}) {
-  if (!items.length) return null;
-  return (
-    <Section title={title} tone="surface">
-      <div className="divide-line border-line flex max-w-3xl flex-col divide-y border-y">
-        {items.map((f) => (
-          <details key={f.q} className="group py-4">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold [&::-webkit-details-marker]:hidden">
-              {f.q}
-              <span aria-hidden className="text-brand text-2xl transition-transform group-open:rotate-45">
-                +
-              </span>
-            </summary>
-            <p className="text-ink-muted mt-3">{f.a}</p>
-          </details>
-        ))}
-      </div>
-      {jsonLd && <FaqJsonLd items={items} />}
-    </Section>
-  );
-}
-
 export function ProjectPager({ prev, next }: { prev?: Project; next?: Project }) {
   return (
     <div className="mt-8 flex justify-between gap-4">
@@ -418,21 +384,5 @@ export function ProjectPager({ prev, next }: { prev?: Project; next?: Project })
         </Link>
       )}
     </div>
-  );
-}
-
-export function FaqJsonLd({ items }: { items: { q: string; a: string }[] }) {
-  return (
-    <JsonLd<FAQPage>
-      data={{
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: items.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
-      }}
-    />
   );
 }

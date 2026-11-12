@@ -50,7 +50,8 @@ export function StockView({ item, settings }: { item: StockItem; settings: Setti
       />
       <section className="pt-4 pb-10 md:pb-14">
         <div className="mx-auto grid w-full max-w-(--container-site) gap-6 px-4 md:grid-cols-[1.4fr_1fr] md:items-center md:gap-10 md:px-6">
-          <figure className="rounded-card bg-brand-soft relative overflow-hidden">
+          {/* Рамка 4:3: вертикальное фото не вытягивает первый экран */}
+          <figure className="rounded-card bg-brand-soft relative aspect-[4/3] overflow-hidden">
             {photo && (
               <Image
                 src={photo.src}
@@ -60,7 +61,7 @@ export function StockView({ item, settings }: { item: StockItem; settings: Setti
                 fetchPriority="high"
                 loading="eager"
                 sizes="(min-width: 1440px) 742px, (min-width: 1216px) 658px, (min-width: 768px) 55vw, 100vw"
-                className="h-auto w-full"
+                className="absolute inset-0 size-full object-cover"
               />
             )}
           </figure>

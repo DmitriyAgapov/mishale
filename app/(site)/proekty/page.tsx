@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { LeadSection } from "@/components/blocks/common";
 import { InStock } from "@/components/blocks/InStock";
 import { Quiz } from "@/components/forms/Quiz";
-import { Faq } from "@/components/blocks/project";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ProjectGroups } from "@/components/ProjectGroups";
 import { Section } from "@/components/ui/Section";
@@ -50,7 +49,6 @@ export default async function ProjectsPage() {
           </div>
         </details>
       </Section>
-      <Faq items={settings.generalFaq} />
       <LeadSection
         settings={settings}
         title="Не нашли подходящий проект?"

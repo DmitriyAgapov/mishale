@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 // lastModified не указываем: дата сборки не говорит поисковику, менялась ли страница.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [projects, settings] = await Promise.all([getProjects(), getSettings()]);
-  const pages = ["/", "/proekty", "/proizvodstvo", "/voprosy", "/kontakty"];
+  const pages = ["/", "/proekty", "/proizvodstvo", "/kontakty"];
   const projectPages = projects.flatMap((p) => [
     projectHref(p),
     ...(p.banyaVariant?.published ? [projectHref(p, true)] : []),

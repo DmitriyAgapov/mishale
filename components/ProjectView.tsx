@@ -4,7 +4,6 @@ import type { Product } from "schema-dts";
 import {
   CalcExample,
   Delivery,
-  Faq,
   FloorPlans,
   Gallery,
   IncludedExtra,
@@ -153,7 +152,6 @@ export function ProjectView({ base, project, withBanya, settings, all }: Props) 
       <DemoFrame note={settings.demo.excursion}>
         <Excursion settings={settings} />
       </DemoFrame>
-      <Faq items={project.faq.length ? project.faq : settings.projectFaq} title="Вопросы по проекту" />
 
       {similar.length > 0 && (
         <Section title="Похожие проекты">

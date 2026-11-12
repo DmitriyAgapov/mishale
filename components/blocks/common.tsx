@@ -328,7 +328,7 @@ export function ProductionPhotos({ settings }: { settings: Settings }) {
       title="Наш цех"
       lead="Модули собираются под крышей, по одной технологии, и проверяются до отгрузки."
     >
-      <PhotoGrid photos={settings.productionPhotos} />
+      <PhotoGrid photos={settings.productionPhotos} visible={6} />
     </Section>
   );
 }

@@ -3,16 +3,38 @@ import type { SiteImage } from "@/lib/content/schemas";
 import { cn } from "@/lib/cn";
 
 // Сетка фото одного размера (4:3): фото с телефона бывают и вертикальные, и горизонтальные
+// visible — сколько фото показать сразу; остальные — под кнопкой «Показать ещё» (<details>, работает без JavaScript)
 export function PhotoGrid({
   photos,
   cols = 3,
+  visible,
   className,
 }: {
   photos: SiteImage[];
   cols?: 2 | 3 | 4;
+  visible?: number;
   className?: string;
 }) {
   if (!photos.length) return null;
+  if (visible && photos.length > visible) {
+    const more = photos.length - visible;
+    return (
+      <div className={className}>
+        <Grid photos={photos.slice(0, visible)} cols={cols} />
+        <details className="group mt-3">
+          <summary className="rounded-control border-line hover:border-brand hover:text-brand mx-auto flex min-h-11 w-fit cursor-pointer list-none items-center gap-2 border px-5 font-semibold group-open:mb-3 [&::-webkit-details-marker]:hidden">
+            <span className="group-open:hidden">Показать ещё {more} фото</span>
+            <span className="hidden group-open:inline">Свернуть</span>
+          </summary>
+          <Grid photos={photos.slice(visible)} cols={cols} />
+        </details>
+      </div>
+    );
+  }
+  return <Grid photos={photos} cols={cols} className={className} />;
+}
+
+function Grid({ photos, cols, className }: { photos: SiteImage[]; cols: 2 | 3 | 4; className?: string }) {
   // Ширина фото при контенте заданной ширины: промежутки между колонками — 12 px (gap-3)
   const photoWidth = (content: number) => Math.ceil((content - 12 * (cols - 1)) / cols);
   return (

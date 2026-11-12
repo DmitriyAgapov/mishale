@@ -22,7 +22,7 @@ import {
 } from "@/components/blocks/common";
 import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { InStock } from "@/components/blocks/InStock";
-import { Faq, Steps } from "@/components/blocks/project";
+import { Steps } from "@/components/blocks/project";
 import { Quiz } from "@/components/forms/Quiz";
 import { JsonLd } from "@/components/JsonLd";
 import { ProjectGroups } from "@/components/ProjectGroups";
@@ -201,7 +201,6 @@ export default async function Home() {
       <DemoFrame note={settings.demo.warrantyItems}>
         <Warranty settings={settings} />
       </DemoFrame>
-      <Faq items={[...settings.generalFaq, ...settings.projectFaq]} />
       <LeadSection settings={settings} />
 
       <JsonLd<HomeAndConstructionBusiness>

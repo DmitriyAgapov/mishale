@@ -18,16 +18,17 @@ export function StockCard({ item, settings }: { item: StockItem; settings: Setti
         href={href}
         tabIndex={-1}
         aria-hidden
-        className="bg-brand-soft text-brand relative flex aspect-[4/3] items-center justify-center"
+        className="bg-brand-soft text-brand relative flex aspect-[4/3] items-center justify-center overflow-hidden"
       >
         {photo ? (
+          // Фото — поверх рамки 4:3: вертикальные снимки с телефона не растягивают карточку
           <Image
             src={photo.src}
             alt=""
             width={photo.width}
             height={photo.height}
             sizes="(min-width: 768px) 33vw, 100vw"
-            className="size-full object-cover"
+            className="absolute inset-0 size-full object-cover"
           />
         ) : (
           <House className="size-16" />

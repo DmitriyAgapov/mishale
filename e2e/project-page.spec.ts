@@ -124,11 +124,8 @@ test.describe("варианты и бани", () => {
 });
 
 test.describe("новые страницы", () => {
-  test("вопросы: страница, одна разметка FAQPage", async ({ page }) => {
-    await page.goto("/voprosy");
-    await expect(page.getByRole("heading", { level: 1, name: "Вопросы и ответы" })).toBeVisible();
-    const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
-    expect(ld.filter((t) => t.includes('"FAQPage"'))).toHaveLength(1);
+  test("страницы вопросов нет (решение пользователя от 12.11.2026)", async ({ request }) => {
+    expect((await request.get("/voprosy")).status()).toBe(404);
   });
 
   test("404 показывает проекты и телефон", async ({ page }) => {
