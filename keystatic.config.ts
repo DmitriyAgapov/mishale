@@ -271,7 +271,14 @@ export default config({
           fields.object({ topic: text("Тема"), workshop: text("Цех"), site: text("Стройка на участке") }),
           { label: "Цех против стройки", itemLabel: (p) => p.fields.topic.value },
         ),
-        directions: longText("Как доехать до цеха"),
+        video: fields.conditional(fields.checkbox({ label: "Показывать видео цеха и монтажа" }), {
+          true: fields.object({
+            file: text("Файл видео (MP4)", "Например: /video/montazh.mp4 — файл кладёт исполнитель"),
+            poster: text("Обложка", "Например: /video/montazh-poster.jpg"),
+            caption: text("Подпись под видео"),
+          }),
+          false: fields.empty(),
+        }),
         offer: fields.conditional(fields.checkbox({ label: "Показывать сезонное предложение" }), {
           true: fields.object({
             title: text("Заголовок"),
@@ -346,10 +353,6 @@ export default config({
           label: "Ипотека и рассрочка",
           itemLabel: (p) => p.fields.title.value,
         }),
-        productionDetails: fields.array(
-          fields.object({ title: text("Раздел"), items: strings("Пункты", "Пункт") }),
-          { label: "Производство подробно", itemLabel: (p) => p.fields.title.value },
-        ),
       },
     }),
   },

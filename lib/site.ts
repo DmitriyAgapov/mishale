@@ -5,8 +5,9 @@
 export const site = {
   name: "МИШАЛЕ",
   url: "https://mishale74.ru",
-  // ID счётчика Яндекс Метрики — заполнить, когда компания выдаст доступ.
-  metrikaId: null as number | null,
+  // ID счётчика Яндекс Метрики (код от компании 13.11.2026). Счётчик грузится только на mishale.vercel.app
+  // и доменах сайта (components/Metrika.tsx): localhost и автотесты в статистику не попадают.
+  metrikaId: 114223473 as number | null,
   // Индексация поисковиками. false — технический адрес до запуска.
   // В день запуска переключить на true отдельным коммитом (ТЗ §16).
   indexable: false,

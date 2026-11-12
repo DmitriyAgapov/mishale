@@ -153,3 +153,15 @@ test("производство: 6 фото цеха сразу, остальны
   await section.getByText("Свернуть").click();
   await expect(section.locator("img:visible")).toHaveCount(6);
 });
+
+test("видео монтажа на главной и «Производстве»: обложка, файл грузится по нажатию", async ({ page, request }) => {
+  for (const path of ["/", "/proizvodstvo"]) {
+    await page.goto(path);
+    const video = page.locator("video");
+    await expect(video, path).toHaveCount(1);
+    await expect(video, path).toHaveAttribute("preload", "none");
+    await expect(video, path).toHaveAttribute("poster", "/video/montazh-poster.jpg");
+  }
+  const res = await request.get("/video/montazh.mp4", { headers: { range: "bytes=0-99" } });
+  expect([200, 206]).toContain(res.status());
+});

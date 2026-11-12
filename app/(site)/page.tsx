@@ -19,6 +19,7 @@ import {
   TrustNumbers,
   Warranty,
   WorkshopVsSite,
+  Video,
 } from "@/components/blocks/common";
 import { DemoFrame, DemoSlotBlock } from "@/components/demo/Demo";
 import { InStock } from "@/components/blocks/InStock";
@@ -190,7 +191,7 @@ export default async function Home() {
         </Link>
       </Section>
 
-      <DemoSlotBlock slot={slots.video} />
+      <Video settings={settings} />
       <DemoFrame note={settings.demo.cases}>
         <Cases settings={settings} />
       </DemoFrame>

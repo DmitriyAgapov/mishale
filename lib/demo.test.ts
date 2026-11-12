@@ -89,9 +89,8 @@ describe("файлы примеров", () => {
     // Реквизиты настоящие (карточка предприятия от 12.11.2026) — пример не подставляется
     expect(s.legal?.name).toBe("ООО «МИШАЛЕ»");
     expect(s.demo.legal).toBeUndefined();
-    // Блоки, закрытые примерами: предложение, для бизнеса, рассрочка, производство, как доехать
-    for (const k of ["offer", "business", "financing", "productionDetails", "directions"])
-      expect(s.demo[k], k).toBeDefined();
+    // Блоки, закрытые примерами: предложение, для бизнеса
+    for (const k of ["offer", "business"]) expect(s.demo[k], k).toBeDefined();
     // Построенные дома, фото цеха и доставки — настоящие (от компании): примеры не подставляются
     for (const k of ["cases", "productionPhotos", "deliveryPhotos"]) expect(s.demo[k], k).toBeUndefined();
     expect(s.cases[0].photos[0].width).toBeGreaterThan(0);

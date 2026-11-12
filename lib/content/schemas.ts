@@ -158,9 +158,13 @@ export const settingsSchema = z.object({
   generalFaq: z.array(z.object({ q: z.string(), a: z.string() })),
   // «Цех против стройки на участке» (02 §6.2) — только подтверждённые строки
   workshopVsSite: z.array(z.object({ topic: z.string(), workshop: z.string(), site: z.string() })),
-  // Как доехать до цеха — под картой на странице контактов
-  directions: z.string().nullable().default(null),
   // Сезонное предложение — главная и страницы проектов
+  // Видео цеха и монтажа — главная и «Производство». Файл и обложка — в public/video/.
+  // Поле file, а не src: по src загрузчик ищет размеры картинки (lib/content/images.ts)
+  video: z
+    .object({ file: z.string(), poster: z.string().nullable().default(null), caption: z.string() })
+    .nullable()
+    .default(null),
   offer: z
     .object({
       title: z.string(),
@@ -216,8 +220,6 @@ export const settingsSchema = z.object({
     .default(null),
   // Ипотека и рассрочка — страницы проектов
   financing: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
-  // «Производство» подробно: материалы, контроль качества, команда
-  productionDetails: z.array(z.object({ title: z.string(), items: z.array(z.string()) })).default([]),
   demo: demoNotesSchema,
 });
 export type Settings = z.output<typeof settingsSchema>;

@@ -149,6 +149,33 @@ export function Warranty({ settings }: { settings: Settings }) {
   );
 }
 
+// Видео цеха и монтажа: главная и «Производство». Без звука, грузится только по нажатию (preload="none")
+export function Video({ settings }: { settings: Settings }) {
+  const v = settings.video;
+  if (!v) return null;
+  return (
+    <Section
+      title="Как мы везём и ставим дом"
+      lead="Модули выезжают из цеха готовыми — установка на участке за 1–2 дня."
+    >
+      <figure className="max-w-4xl">
+        <video
+          controls
+          playsInline
+          muted
+          preload="none"
+          poster={v.poster ?? undefined}
+          className="rounded-card bg-ink aspect-video w-full"
+        >
+          <source src={v.file} type="video/mp4" />
+          Видео не поддерживается браузером.
+        </video>
+        <figcaption className="text-ink-muted mt-3 text-sm">{v.caption}</figcaption>
+      </figure>
+    </Section>
+  );
+}
+
 // Сезонное предложение (02 §6.4): главная и страницы проектов.
 // Тёмная карточка выделяется среди светлых блоков: слева условия и срок, справа выгоды списком
 export function Offer({ settings }: { settings: Settings }) {
@@ -354,30 +381,6 @@ export function ProductionPhotos({ settings }: { settings: Settings }) {
       lead="Модули собираются под крышей, по одной технологии, и проверяются до отгрузки."
     >
       <PhotoGrid photos={settings.productionPhotos} visible={6} />
-    </Section>
-  );
-}
-
-// «Производство» подробно: материалы, контроль качества, команда
-export function ProductionDetails({ settings }: { settings: Settings }) {
-  if (!settings.productionDetails.length) return null;
-  return (
-    <Section title="Материалы, контроль и люди" tone="surface">
-      <div className="grid gap-6 md:grid-cols-3">
-        {settings.productionDetails.map((g) => (
-          <div key={g.title}>
-            <h3 className="text-h3 font-extrabold">{g.title}</h3>
-            <ul className="mt-3 flex flex-col gap-2">
-              {g.items.map((i) => (
-                <li key={i} className="flex gap-2">
-                  <Check className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
-                  {i}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
     </Section>
   );
 }
