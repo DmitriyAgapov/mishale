@@ -141,3 +141,27 @@ test.describe("новые страницы", () => {
     await expect(page.getByText("Тестовая версия сайта")).toHaveCount(0);
   });
 });
+
+test("первый экран проекта: вертикальное фото не выше рамки 4:3", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/proekty/dom-35");
+  const box = await page.locator("main figure").first().boundingBox();
+  expect(box!.height).toBeLessThanOrEqual(Math.ceil((box!.width * 3) / 4) + 1);
+});
+
+test("фото открываются крупно и листаются", async ({ page }) => {
+  await page.goto("/proekty/dom-45");
+  await page
+    .getByRole("button", { name: /Открыть фото крупно/ })
+    .first()
+    .click();
+  const box = page.getByRole("dialog", { name: "Просмотр фото" });
+  await expect(box).toBeVisible();
+  await expect(box.getByText(/1 из \d+/)).toBeVisible();
+  await page.keyboard.press("ArrowRight");
+  await expect(box.getByText(/2 из \d+/)).toBeVisible();
+  await box.getByRole("button", { name: "Предыдущее фото" }).click();
+  await expect(box.getByText(/1 из \d+/)).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(box).toBeHidden();
+});

@@ -364,20 +364,13 @@ export function MapBlock({ settings }: { settings: Settings }) {
   const point = `${a.lng},${a.lat}`;
   return (
     <Section title="Как доехать">
-      <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
-        <iframe
-          title={`Карта: ${a.text}`}
-          src={`https://yandex.ru/map-widget/v1/?ll=${point}&z=15&pt=${point},pm2rdm`}
-          loading="lazy"
-          className="rounded-card border-line h-80 w-full border md:h-96"
-        />
-        <div className="text-lg">
-          <p className="font-semibold">{a.text}</p>
-          {settings.directions && (
-            <p className="text-ink-muted mt-3 whitespace-pre-line">{settings.directions}</p>
-          )}
-        </div>
-      </div>
+      {/* Карта на всю ширину контейнера, без адреса и описания проезда рядом (решение пользователя от 12.11.2026) */}
+      <iframe
+        title={`Карта: ${a.text}`}
+        src={`https://yandex.ru/map-widget/v1/?ll=${point}&z=15&pt=${point},pm2rdm`}
+        loading="lazy"
+        className="rounded-card border-line h-[30rem] w-full border md:h-[36rem]"
+      />
     </Section>
   );
 }

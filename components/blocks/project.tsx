@@ -5,6 +5,7 @@ import { DemoBadge } from "@/components/demo/Demo";
 import { Section } from "@/components/ui/Section";
 import { button } from "@/components/ui/button";
 import { LEAD_ANCHOR } from "@/components/layout/nav";
+import { Lightbox, PhotoTrigger } from "@/components/Lightbox";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { projectPriceFrom } from "@/lib/content";
 import type { Project, Settings } from "@/lib/content/schemas";
@@ -24,25 +25,29 @@ export function ProjectHero({ project, settings }: { project: Project; settings:
   return (
     <section className="pt-4 pb-10 md:pb-14">
       <div className="mx-auto grid w-full max-w-(--container-site) gap-6 px-4 md:grid-cols-[1.4fr_1fr] md:items-center md:gap-10 md:px-6">
-        <figure className="rounded-card bg-brand-soft relative overflow-hidden">
-          {photo && (
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              width={photo.width}
-              height={photo.height}
-              fetchPriority="high"
-              loading="eager"
-              sizes="(min-width: 1440px) 742px, (min-width: 1216px) 658px, (min-width: 768px) 55vw, 100vw"
-              className="h-auto w-full"
-            />
-          )}
-          {photo?.render && (
-            <figcaption className="bg-ink/70 absolute right-3 bottom-3 rounded-full px-3 py-1 text-xs text-white">
-              Визуализация
-            </figcaption>
-          )}
-        </figure>
+        {/* Рамка 4:3: вертикальное фото не вытягивает первый экран. По клику — все фото проекта крупно */}
+        <Lightbox photos={project.photos}>
+          <figure className="rounded-card bg-brand-soft relative aspect-[4/3] overflow-hidden">
+            {photo && <PhotoTrigger index={0} alt={photo.alt} />}
+            {photo && (
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                fetchPriority="high"
+                loading="eager"
+                sizes="(min-width: 1440px) 742px, (min-width: 1216px) 658px, (min-width: 768px) 55vw, 100vw"
+                className="absolute inset-0 size-full object-cover"
+              />
+            )}
+            {photo?.render && (
+              <figcaption className="bg-ink/70 absolute right-3 bottom-3 rounded-full px-3 py-1 text-xs text-white">
+                Визуализация
+              </figcaption>
+            )}
+          </figure>
+        </Lightbox>
         <div>
           {project.stock.available && (
             <p className="bg-accent mb-3 inline-block rounded-full px-3 py-1 text-sm font-semibold text-white">

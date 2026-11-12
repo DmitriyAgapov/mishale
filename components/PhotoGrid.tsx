@@ -1,8 +1,10 @@
 import Image from "next/image";
 import type { SiteImage } from "@/lib/content/schemas";
 import { cn } from "@/lib/cn";
+import { Lightbox, PhotoTrigger } from "@/components/Lightbox";
 
 // Сетка фото одного размера (4:3): фото с телефона бывают и вертикальные, и горизонтальные
+// По клику фото открывается крупно (Lightbox), листаются все фото сетки, включая скрытые.
 // visible — сколько фото показать сразу; остальные — под кнопкой «Показать ещё» (<details>, работает без JavaScript)
 export function PhotoGrid({
   photos,
@@ -19,22 +21,39 @@ export function PhotoGrid({
   if (visible && photos.length > visible) {
     const more = photos.length - visible;
     return (
-      <div className={className}>
-        <Grid photos={photos.slice(0, visible)} cols={cols} />
-        <details className="group mt-3">
-          <summary className="rounded-control border-line hover:border-brand hover:text-brand mx-auto flex min-h-11 w-fit cursor-pointer list-none items-center gap-2 border px-5 font-semibold group-open:mb-3 [&::-webkit-details-marker]:hidden">
-            <span className="group-open:hidden">Показать ещё {more} фото</span>
-            <span className="hidden group-open:inline">Свернуть</span>
-          </summary>
-          <Grid photos={photos.slice(visible)} cols={cols} />
-        </details>
-      </div>
+      <Lightbox photos={photos}>
+        <div className={className}>
+          <Grid photos={photos.slice(0, visible)} cols={cols} />
+          <details className="group mt-3">
+            <summary className="rounded-control border-line hover:border-brand hover:text-brand mx-auto flex min-h-11 w-fit cursor-pointer list-none items-center gap-2 border px-5 font-semibold group-open:mb-3 [&::-webkit-details-marker]:hidden">
+              <span className="group-open:hidden">Показать ещё {more} фото</span>
+              <span className="hidden group-open:inline">Свернуть</span>
+            </summary>
+            <Grid photos={photos.slice(visible)} cols={cols} offset={visible} />
+          </details>
+        </div>
+      </Lightbox>
     );
   }
-  return <Grid photos={photos} cols={cols} className={className} />;
+  return (
+    <Lightbox photos={photos}>
+      <Grid photos={photos} cols={cols} className={className} />
+    </Lightbox>
+  );
 }
 
-function Grid({ photos, cols, className }: { photos: SiteImage[]; cols: 2 | 3 | 4; className?: string }) {
+// offset — номер первого фото этой сетки в общем списке Lightbox
+function Grid({
+  photos,
+  cols,
+  offset = 0,
+  className,
+}: {
+  photos: SiteImage[];
+  cols: 2 | 3 | 4;
+  offset?: number;
+  className?: string;
+}) {
   // Ширина фото при контенте заданной ширины: промежутки между колонками — 12 px (gap-3)
   const photoWidth = (content: number) => Math.ceil((content - 12 * (cols - 1)) / cols);
   return (
@@ -46,8 +65,9 @@ function Grid({ photos, cols, className }: { photos: SiteImage[]; cols: 2 | 3 | 
         className,
       )}
     >
-      {photos.map((p) => (
+      {photos.map((p, i) => (
         <figure key={p.src} className="rounded-control bg-surface relative aspect-[4/3] overflow-hidden">
+          <PhotoTrigger index={offset + i} alt={p.alt} />
           <Image
             src={p.src}
             alt={p.alt}

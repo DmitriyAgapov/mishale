@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Excursion, LeadSection, MapBlock } from "@/components/blocks/common";
+import { LeadSection, MapBlock } from "@/components/blocks/common";
 import { DemoBadge, DemoFrame } from "@/components/demo/Demo";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
@@ -107,11 +107,8 @@ export default async function ContactsPage() {
           </div>
         </div>
       </Section>
-      <DemoFrame note={s.demo.address ?? s.demo.directions}>
+      <DemoFrame note={s.demo.address}>
         <MapBlock settings={s} />
-      </DemoFrame>
-      <DemoFrame note={s.demo.excursion}>
-        <Excursion settings={s} />
       </DemoFrame>
       <LeadSection settings={s} title="Оставьте заявку" />
     </>
