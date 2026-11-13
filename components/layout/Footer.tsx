@@ -44,6 +44,11 @@ export async function Footer() {
               Написать в WhatsApp
             </a>
           )}
+          {s.vk && (
+            <a href={s.vk} target="_blank" rel="noopener" className="hover:text-brand">
+              Мы во ВКонтакте
+            </a>
+          )}
           {s.address && <span>{s.address.text}</span>}
           {s.workHours && <span className="text-ink-muted">{s.workHours}</span>}
           {s.legal && (

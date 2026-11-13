@@ -214,6 +214,7 @@ export default async function Home() {
           telephone: settings.phone.href.replace("tel:", ""),
           ...(settings.email ? { email: settings.email } : {}),
           areaServed: "Челябинская область",
+          ...(settings.vk ? { sameAs: [settings.vk] } : {}),
           ...(settings.address
             ? {
                 address: {
