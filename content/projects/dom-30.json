@@ -1,0 +1,111 @@
+{
+  "title": "Модульный дом 30 м²",
+  "published": true,
+  "order": 3,
+  "category": "small",
+  "params": {
+    "area": 30,
+    "modules": 2,
+    "moduleSize": "2,5 × 6 м"
+  },
+  "purposes": [
+    "dacha",
+    "permanent",
+    "rent"
+  ],
+  "summary": "Дом 5 × 6 м из двух модулей с верандой 5 × 2,5 м под продолжением кровли. Кухня-столовая выходит прямо на веранду, спальня на 9 м² отделена от кухни, есть санузел с душем и тамбур с отдельным входом через боковое крыльцо — зимой холод не идёт в комнаты. Подойдёт для круглогодичной жизни одного-двух человек или как просторная дача.",
+  "photos": [
+    {
+      "src": "/images/projects/dom-30/photos/render-front/src.jpg",
+      "alt": "Модульный дом 30 м², фасад",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-30/photos/render-back/src.jpg",
+      "alt": "Модульный дом 30 м², фасад, второй ракурс",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-30/photos/render-kitchen/src.jpg",
+      "alt": "Модульный дом 30 м², кухня",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-30/photos/render-bedroom/src.jpg",
+      "alt": "Модульный дом 30 м², спальня",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-30/photos/render-bathroom/src.jpg",
+      "alt": "Модульный дом 30 м², санузел",
+      "render": true
+    }
+  ],
+  "plans": [
+    {
+      "src": "/images/projects/dom-30/plans/0/src.png",
+      "alt": "Планировка: модульный дом 30 м²",
+      "render": false,
+      "rooms": [
+        {
+          "name": "Кухня",
+          "area": 9.98
+        },
+        {
+          "name": "Спальня",
+          "area": 9.09
+        },
+        {
+          "name": "Санузел",
+          "area": 3.45
+        },
+        {
+          "name": "Тамбур",
+          "area": 1.84
+        },
+        {
+          "name": "Терраса",
+          "area": 11.83
+        },
+        {
+          "name": "Крыльцо",
+          "area": 2.21
+        }
+      ]
+    }
+  ],
+  "packages": [],
+  "included": [],
+  "extra": [],
+  "suitableFor": [
+    {
+      "title": "Дом для пары",
+      "text": "Отдельная спальня 9 м², кухня-столовая с выходом на террасу, санузел с душем."
+    },
+    {
+      "title": "Дача круглый год",
+      "text": "Тамбур с отдельным входом: зимой холод не идёт в комнаты."
+    },
+    {
+      "title": "Для сдачи посуточно",
+      "text": "Небольшой утеплённый дом для глэмпинга или базы отдыха."
+    }
+  ],
+  "options": [],
+  "calcExample": {
+    "discriminant": false
+  },
+  "stock": {
+    "available": false
+  },
+  "specs": [],
+  "faq": [],
+  "similar": [
+    "dom-20",
+    "dom-35"
+  ],
+  "seo": {},
+  "banyaVariant": {
+    "discriminant": false
+  }
+}

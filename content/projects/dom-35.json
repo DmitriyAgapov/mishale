@@ -1,7 +1,7 @@
 {
   "title": "Модульный дом 35 м²",
   "published": true,
-  "order": 2,
+  "order": 4,
   "category": "small",
   "params": {
     "area": 35,
@@ -10,63 +10,77 @@
   },
   "purposes": [
     "dacha",
-    "guest",
+    "permanent",
     "rent"
   ],
-  "summary": "Каркасный дом из 2 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
+  "summary": "Дом из двух модулей с длинной верандой 2 × 8 м вдоль всего бокового фасада. Главное — просторная кухня-гостиная почти на 19 м² с обеденным столом и диваном, из неё выход на веранду. Отдельная спальня с двуспальной кроватью и санузел с душем. Подойдёт паре или небольшой семье для дачи или постоянной жизни.",
   "photos": [
     {
-      "src": "/images/projects/dom-35/real/img-7198-a558ff.jpg",
-      "alt": "Модульный дом 35 м² с террасой у цеха МИШАЛЕ",
-      "render": false
+      "src": "/images/projects/dom-35/photos/render-front/src.jpg",
+      "alt": "Модульный дом 35 м², фасад",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-35/real/img-7202-749625.jpg",
-      "alt": "Модульный дом 35 м²: терраса вдоль фасада",
-      "render": false
+      "src": "/images/projects/dom-35/photos/render-back/src.jpg",
+      "alt": "Модульный дом 35 м², фасад, второй ракурс",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-35/real/img-7206-db4d68.jpg",
-      "alt": "Модульный дом 35 м²: вид сбоку",
-      "render": false
+      "src": "/images/projects/dom-35/photos/render-living/src.jpg",
+      "alt": "Модульный дом 35 м², гостиная",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-35/real/img-7305-1-8b5569.jpg",
-      "alt": "Модульный дом 35 м² перед отгрузкой",
-      "render": false
+      "src": "/images/projects/dom-35/photos/render-kitchen/src.jpg",
+      "alt": "Модульный дом 35 м², кухня",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-35/real/img-7308-40d163.jpg",
-      "alt": "Комната в модульном доме 35 м²",
-      "render": false
-    },
-    {
-      "src": "/images/projects/dom-35/real/img-7309-9c6ce6.jpg",
-      "alt": "Интерьер дома 35 м²: стены из имитации бруса",
-      "render": false
-    },
-    {
-      "src": "/images/projects/dom-35/real/img-7307-2e4c85.jpg",
-      "alt": "Санузел с душевой в доме 35 м²",
-      "render": false
+      "src": "/images/projects/dom-35/photos/render-bedroom/src.jpg",
+      "alt": "Модульный дом 35 м², спальня",
+      "render": true
     }
   ],
-  "plans": [],
+  "plans": [
+    {
+      "src": "/images/projects/dom-35/plans/0/src.png",
+      "alt": "Планировка: модульный дом 35 м²",
+      "render": false,
+      "rooms": [
+        {
+          "name": "Кухня-гостиная",
+          "area": 18.91
+        },
+        {
+          "name": "Спальня",
+          "area": 6.33
+        },
+        {
+          "name": "Санузел",
+          "area": 3.78
+        },
+        {
+          "name": "Терраса",
+          "area": 14.5
+        }
+      ]
+    }
+  ],
   "packages": [],
   "included": [],
   "extra": [],
   "suitableFor": [
     {
-      "title": "Дача на выходные",
-      "text": "Компактный дом для отдыха за городом: заехать в пятницу, уехать в воскресенье."
+      "title": "Дача для семьи",
+      "text": "Кухня-гостиная почти 19 м² и терраса 2 × 8 м вдоль всего фасада."
     },
     {
-      "title": "Гостевой дом",
-      "text": "Отдельный домик для родственников и гостей рядом с основным домом."
+      "title": "Дом для пары",
+      "text": "Отдельная спальня и санузел с душем — можно жить круглый год."
     },
     {
       "title": "Для сдачи посуточно",
-      "text": "Небольшой утеплённый дом для глэмпинга или базы отдыха."
+      "text": "Дом для гостей базы отдыха или глэмпинга."
     }
   ],
   "options": [],
@@ -79,7 +93,7 @@
   "specs": [],
   "faq": [],
   "similar": [
-    "dom-20",
+    "dom-30",
     "dom-45"
   ],
   "seo": {},

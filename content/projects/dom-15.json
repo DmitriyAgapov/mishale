@@ -1,0 +1,98 @@
+{
+  "title": "Модульный дом 15 м²",
+  "published": true,
+  "order": 1,
+  "category": "small",
+  "params": {
+    "area": 15,
+    "modules": 1,
+    "moduleSize": "2,5 × 6 м"
+  },
+  "purposes": [
+    "guest",
+    "dacha",
+    "rent"
+  ],
+  "summary": "Самый компактный дом каталога: один модуль 2,5 × 6 м и крытая веранда такой же длины вдоль него, под общей кровлей. Внутри кухня-гостиная с диваном и столом на двоих и отдельный санузел с душем. Вход с веранды. Подойдёт как гостевой домик, дачный домик на одного-двух человек или первый дом на участке, пока строится основной.",
+  "photos": [
+    {
+      "src": "/images/projects/dom-15/photos/render-front/src.jpg",
+      "alt": "Модульный дом 15 м², фасад",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-15/photos/render-back/src.jpg",
+      "alt": "Модульный дом 15 м², фасад, второй ракурс",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-15/photos/render-living/src.jpg",
+      "alt": "Модульный дом 15 м², гостиная",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-15/photos/render-kitchen/src.jpg",
+      "alt": "Модульный дом 15 м², кухня",
+      "render": true
+    },
+    {
+      "src": "/images/projects/dom-15/photos/render-bathroom/src.jpg",
+      "alt": "Модульный дом 15 м², санузел",
+      "render": true
+    }
+  ],
+  "plans": [
+    {
+      "src": "/images/projects/dom-15/plans/0/src.png",
+      "alt": "Планировка: модульный дом 15 м²",
+      "render": false,
+      "rooms": [
+        {
+          "name": "Кухня-гостиная",
+          "area": 8.97
+        },
+        {
+          "name": "Санузел",
+          "area": 2.52
+        },
+        {
+          "name": "Терраса",
+          "area": 13.28
+        }
+      ]
+    }
+  ],
+  "packages": [],
+  "included": [],
+  "extra": [],
+  "suitableFor": [
+    {
+      "title": "Гостевой домик",
+      "text": "Отдельный домик для родственников и гостей рядом с основным домом."
+    },
+    {
+      "title": "Дача на одного-двух",
+      "text": "Кухня-гостиная, санузел с душем и большая крытая терраса — всё для отдыха за городом."
+    },
+    {
+      "title": "Для сдачи посуточно",
+      "text": "Компактный утеплённый дом для глэмпинга или базы отдыха."
+    }
+  ],
+  "options": [],
+  "calcExample": {
+    "discriminant": false
+  },
+  "stock": {
+    "available": false
+  },
+  "specs": [],
+  "faq": [],
+  "similar": [
+    "dom-20"
+  ],
+  "seo": {},
+  "banyaVariant": {
+    "discriminant": false
+  }
+}

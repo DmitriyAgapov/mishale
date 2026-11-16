@@ -66,7 +66,7 @@ describe("комплектации по ставке за м²", () => {
   });
 
   it("цена «от» на главной — минимальная по домам", () => {
-    expect(siteMinPrice({ ...settings, priceFromAll: null }, projects)).toBe(projectPriceFrom(bySlug("dom-20")));
+    expect(siteMinPrice({ ...settings, priceFromAll: null }, projects)).toBe(projectPriceFrom(bySlug("dom-15")));
     expect(siteMinPrice({ ...settings, priceFromAll: 777_000 }, projects)).toBe(777_000);
   });
 });

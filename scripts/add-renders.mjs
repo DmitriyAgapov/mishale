@@ -28,8 +28,10 @@ for (const slug of await readdir(inbox)) {
   const base = path.join(inbox, slug);
   if (!(await stat(base)).isDirectory()) continue;
   const dir = existsSync(path.join(base, "results")) ? path.join(base, "results") : base;
-  if (!house) {
-    console.warn(`Пропуск ${slug}: нет такого проекта в scripts/renders/data.mjs`);
+  const jsonFile = path.join(root, "content", "projects", `${slug}.json`);
+  // Название — из промптов, а у домов каталога «Модульный дома» (их промпты в site-assets) — из данных проекта
+  if (!house && !existsSync(jsonFile)) {
+    console.warn(`Пропуск ${slug}: нет такого проекта в content/projects`);
     continue;
   }
   const files = (await readdir(dir)).filter((f) => exts.includes(path.extname(f).toLowerCase()));
@@ -37,8 +39,8 @@ for (const slug of await readdir(inbox)) {
   const order = Object.keys(angles);
   files.sort((a, b) => order.indexOf(path.parse(a).name) - order.indexOf(path.parse(b).name));
 
-  const jsonFile = path.join(root, "content", "projects", `${slug}.json`);
   const data = JSON.parse(await readFile(jsonFile, "utf8"));
+  const title = house?.title ?? data.title;
   data.photos ??= [];
 
   for (const f of files) {
@@ -57,7 +59,7 @@ for (const slug of await readdir(inbox)) {
       .jpeg({ quality: 80, mozjpeg: true })
       .toFile(out);
 
-    const alt = `${house.title}, ${angle.alt}`;
+    const alt = `${title}, ${angle.alt}`;
     const existing = data.photos.find((p) => p.src === src);
     if (existing) {
       existing.alt = alt;

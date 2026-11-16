@@ -1,7 +1,7 @@
 {
   "title": "Модульный дом 60 м²",
   "published": true,
-  "order": 4,
+  "order": 6,
   "category": "medium",
   "params": {
     "area": 60,
@@ -9,54 +9,85 @@
     "moduleSize": "2,5 × 6 м"
   },
   "purposes": [
-    "dacha",
     "permanent",
-    "rent"
+    "dacha"
   ],
-  "summary": "Каркасный дом из 4 модулей, собирается в нашем цеху в Миассе и приезжает на участок готовым: с отделкой, окнами и инженерией.",
+  "summary": "Дом из четырёх модулей с двумя одинаковыми спальнями по 11 м² — в одной двуспальная кровать, в другой две односпальные. Гостиная со столовой на 16,6 м² и отдельная кухня, санузел с душем. Г-образная крытая веранда идёт вдоль всего бокового фасада, на неё выходит вход в дом. Подойдёт семье с детьми для постоянной жизни.",
   "photos": [
     {
-      "src": "/images/projects/dom-60/real/shine-89-18f3ad.jpg",
-      "alt": "Модульный дом 60 м² в Теренкуле: фасад и вход",
-      "render": false
+      "src": "/images/projects/dom-60/photos/render-front/src.jpg",
+      "alt": "Модульный дом 60 м², фасад",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-60/real/shine-82-fc6265.jpg",
-      "alt": "Кухня в модульном доме 60 м²",
-      "render": false
+      "src": "/images/projects/dom-60/photos/render-back/src.jpg",
+      "alt": "Модульный дом 60 м², фасад, второй ракурс",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-60/real/shine-76-7a6e67.jpg",
-      "alt": "Гостиная с окном в пол, дом 60 м²",
-      "render": false
+      "src": "/images/projects/dom-60/photos/render-living/src.jpg",
+      "alt": "Модульный дом 60 м², гостиная",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-60/real/shine-79-4ff723.jpg",
-      "alt": "Обеденная зона у окна, дом 60 м²",
-      "render": false
+      "src": "/images/projects/dom-60/photos/render-kitchen/src.jpg",
+      "alt": "Модульный дом 60 м², кухня",
+      "render": true
     },
     {
-      "src": "/images/projects/dom-60/real/shine-75-0c454d.jpg",
-      "alt": "Интерьер дома 60 м²: отделка имитацией бруса",
-      "render": false
+      "src": "/images/projects/dom-60/photos/render-bedroom/src.jpg",
+      "alt": "Модульный дом 60 м², спальня",
+      "render": true
     }
   ],
-  "plans": [],
+  "plans": [
+    {
+      "src": "/images/projects/dom-60/plans/0/src.png",
+      "alt": "Планировка: модульный дом 60 м²",
+      "render": false,
+      "rooms": [
+        {
+          "name": "Кухня",
+          "area": 8.05
+        },
+        {
+          "name": "Гостиная",
+          "area": 16.61
+        },
+        {
+          "name": "Спальня",
+          "area": 11.14
+        },
+        {
+          "name": "Спальня",
+          "area": 11.16
+        },
+        {
+          "name": "Санузел",
+          "area": 4.53
+        },
+        {
+          "name": "Терраса",
+          "area": 21.83
+        }
+      ]
+    }
+  ],
   "packages": [],
   "included": [],
   "extra": [],
   "suitableFor": [
     {
-      "title": "Дача для всей семьи",
-      "text": "Просторный дом для отдыха с семьёй в любой сезон."
+      "title": "Семья с детьми",
+      "text": "Две спальни по 11 м², отдельная кухня и гостиная со столовой."
     },
     {
-      "title": "Дом для пары или семьи из трёх",
-      "text": "Утеплённый дом для постоянного проживания."
+      "title": "Дом для постоянного жилья",
+      "text": "Утеплённый дом для семьи на круглый год."
     },
     {
-      "title": "Для сдачи посуточно",
-      "text": "Дом для гостей базы отдыха или глэмпинга."
+      "title": "Дача для большой семьи",
+      "text": "Г-образная крытая терраса вдоль всего бокового фасада."
     }
   ],
   "options": [],
@@ -76,7 +107,7 @@
   "banyaVariant": {
     "discriminant": true,
     "value": {
-      "published": true,
+      "published": false,
       "title": "Модульный дом 60 м² с баней",
       "summary": "Тот же дом 60 м², но с парной внутри и террасой: баня без отдельной постройки на участке. Такой дом уже стоит в Теренкуле.",
       "photos": [

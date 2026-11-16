@@ -91,7 +91,8 @@ test("sitemap содержит опубликованные страницы и 
   expect(xml).toContain("https://mishale74.ru/proekty/dom-45</loc>");
   expect(xml).toContain("https://mishale74.ru/proizvodstvo</loc>");
   expect(xml).not.toContain("banya-1");
-  expect(xml).toContain("https://mishale74.ru/proekty/dom-60/s-banei</loc>");
+  expect(xml).toContain("https://mishale74.ru/proekty/dom-15</loc>");
+  expect(xml).not.toContain("dom-60/s-banei");
   expect(xml).not.toContain("dom-45/s-banei");
 });
 

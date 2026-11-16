@@ -26,11 +26,11 @@ export const purposeTitles: Record<(typeof purposes)[number], string> = {
 
 const price = z.number().int().positive().nullable().default(null);
 
-// Линейка: 2 малых дома (2 модуля), 4 средних, 2 больших, 2 бани
+// Линейка (каталог от 15.11.2026): 4 малых дома (1–2 модуля), 4 средних, 2 больших, 2 бани
 export const categories = ["small", "medium", "large", "banya"] as const;
 export type Category = (typeof categories)[number];
 export const categoryTitles: Record<Category, string> = {
-  small: "Небольшие дома — 2 модуля",
+  small: "Небольшие дома — 1–2 модуля",
   medium: "Средние дома",
   large: "Большие дома",
   banya: "Бани",

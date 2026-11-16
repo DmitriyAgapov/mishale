@@ -90,14 +90,14 @@ describe("файлы данных и админка", () => {
 });
 
 describe("данные проектов", () => {
-  it("линейка: 2 малых, 4 средних, 2 больших, 2 бани", () => {
+  it("линейка: 4 малых, 4 средних, 2 больших, 2 бани", () => {
     const count = (c: string) => all.filter((p) => p.category === c).length;
-    expect([count("small"), count("medium"), count("large"), count("banya")]).toEqual([2, 4, 2, 2]);
+    expect([count("small"), count("medium"), count("large"), count("banya")]).toEqual([4, 4, 2, 2]);
   });
 
-  it("малые дома — 2 модуля и без варианта с баней", () => {
+  it("малые дома — 1–2 модуля и без варианта с баней", () => {
     for (const p of all.filter((x) => x.category === "small")) {
-      expect(p.params.modules).toBe(2);
+      expect([1, 2]).toContain(p.params.modules);
       expect(p.banyaVariant).toBeNull();
     }
   });
@@ -132,10 +132,8 @@ describe("вариант с баней", () => {
     expect(projectHref(base, true)).toBe("/proekty/dom-45/s-banei");
   });
 
-  it("вариант 60 м² с баней опубликован: свои фото, площадь — от основного проекта", () => {
-    const v = asBanyaVariant(all.find((p) => p.slug === "dom-60")!)!;
-    expect(v).not.toBeNull();
-    expect(v.params.area).toBe(60);
-    expect(v.photos[0].src).toContain("/real/");
+  // Вариант 60 м² с баней был по фото построенного дома другой планировки — скрыт вместе со старой линейкой (15.11.2026)
+  it("у нового каталога опубликованных вариантов с баней нет", () => {
+    for (const p of all) expect(asBanyaVariant(p), p.slug).toBeNull();
   });
 });

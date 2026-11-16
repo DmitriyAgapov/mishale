@@ -46,7 +46,7 @@ export async function Footer() {
           )}
           {s.vk && (
             <a href={s.vk} target="_blank" rel="noopener" className="hover:text-brand">
-              Мы во ВКонтакте
+              Мы ВКонтакте
             </a>
           )}
           {s.address && <span>{s.address.text}</span>}

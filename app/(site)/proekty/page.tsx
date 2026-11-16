@@ -11,7 +11,7 @@ import { getCatalogProjects, getSettings } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Проекты модульных домов и бань — цены и планировки",
   description:
-    "Модульные каркасные дома от 20 до 120 м², варианты с баней внутри и отдельные бани от производителя в Миассе: планировки, комплектации, цены.",
+    "Модульные каркасные дома от 15 до 120 м², варианты с баней внутри и отдельные бани от производителя в Миассе: планировки, комплектации, цены.",
   alternates: { canonical: "/proekty" },
 };
 
@@ -24,7 +24,7 @@ export default async function ProjectsPage() {
       <Section className="pt-6 md:pt-8">
         <h1 className="text-h1 font-extrabold md:text-5xl">Проекты модульных домов</h1>
         <p className="text-ink-muted mt-3 mb-8 max-w-2xl text-lg">
-          Дома от 20 до 120 м², у средних и больших — вариант с баней внутри. Все дома собираются в нашем цеху
+          Дома от 15 до 120 м², у средних и больших — вариант с баней внутри. Все дома собираются в нашем цеху
           в Миассе и приезжают на участок готовыми.
         </p>
         <ProjectGroups projects={projects} phone={settings.phone} eagerCount={3} />

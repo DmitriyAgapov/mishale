@@ -11,11 +11,11 @@ test.describe("страница проекта", () => {
     expect(ld.some((t) => t.includes('"@type":"BreadcrumbList"'))).toBe(true);
   });
 
-  test("у проекта без планировки блок не выводится", async ({ page }) => {
-    await page.goto("/proekty/dom-35");
-    await expect(page.getByRole("heading", { name: "Планировка" })).toHaveCount(0);
-    await page.goto("/proekty/dom-45");
-    await expect(page.getByRole("heading", { name: "Планировка" })).toHaveCount(1);
+  test("у всех домов каталога есть планировка", async ({ page }) => {
+    for (const slug of ["dom-15", "dom-35", "dom-45"]) {
+      await page.goto(`/proekty/${slug}`);
+      await expect(page.getByRole("heading", { name: "Планировка" }), slug).toHaveCount(1);
+    }
   });
 
   test("несуществующий проект — 404", async ({ request }) => {
@@ -75,12 +75,13 @@ test.describe("варианты и бани", () => {
   test("неопубликованный вариант с баней и баня без данных — 404", async ({ request }) => {
     expect((await request.get("/proekty/dom-45/s-banei")).status()).toBe(404);
     expect((await request.get("/proekty/dom-20/s-banei")).status()).toBe(404);
+    expect((await request.get("/proekty/dom-60/s-banei")).status()).toBe(404);
     expect((await request.get("/proekty/banya-1")).status()).toBe(404);
   });
 
   test("каталог разбит на группы", async ({ page }) => {
     await page.goto("/proekty");
-    await expect(page.getByRole("heading", { name: "Небольшие дома — 2 модуля" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Небольшие дома — 1–2 модуля" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Средние дома" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Большие дома", exact: true })).toBeVisible();
     // Бани без данных — карточки «Скоро» с формой «Узнать цену» (ТЗ §0)
@@ -110,16 +111,11 @@ test.describe("варианты и бани", () => {
     await expect(page.getByText("Есть вариант с баней внутри")).toBeVisible();
   });
 
-  test("опубликованный вариант 60 м² с баней: переключатель, цены, построенный дом", async ({ page }) => {
+  // Построенные дома больше не привязаны к проектам нового каталога (15.11.2026) — только на главной
+  test("у дома 60 м² нет переключателя варианта и блока построенного дома", async ({ page }) => {
     await page.goto("/proekty/dom-60");
-    await page
-      .getByRole("navigation", { name: "Вариант дома" })
-      .getByRole("link", { name: "С баней внутри" })
-      .click();
-    await expect(page).toHaveURL(/\/proekty\/dom-60\/s-banei$/);
-    await expect(page.getByRole("heading", { level: 1, name: "Модульный дом 60 м² с баней" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Комфорт", exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Дом 60 м² с баней внутри" })).toBeVisible();
+    await expect(page.getByRole("navigation", { name: "Вариант дома" })).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: "Дом 60 м² с баней внутри" })).toHaveCount(0);
   });
 });
 
