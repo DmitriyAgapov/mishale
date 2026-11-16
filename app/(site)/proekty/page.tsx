@@ -27,7 +27,7 @@ export default async function ProjectsPage() {
           Дома от 15 до 120 м², у средних и больших — вариант с баней внутри. Все дома собираются в нашем цеху
           в Миассе и приезжают на участок готовыми.
         </p>
-        <ProjectGroups projects={projects} phone={settings.phone} eagerCount={3} />
+        <ProjectGroups projects={projects} phone={settings.phone} eagerCount={2} />
       </Section>
       <InStock settings={settings} />
       {/* Квиз кнопкой (ТЗ §7.3): <details> раскрывается без JavaScript */}

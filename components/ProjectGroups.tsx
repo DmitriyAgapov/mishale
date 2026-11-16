@@ -42,7 +42,8 @@ export function ProjectGroups({
         {groups.map(({ c, items }, gi) => (
           <div key={c} data-group={c}>
             <H className="text-h3 font-extrabold md:text-2xl">{categoryTitles[c]}</H>
-            <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {/* 2 в ряд на всех ширинах от sm (решение 16.11.2026: карточки крупнее, визуализации виднее) */}
+            <div className="mt-5 grid gap-6 sm:grid-cols-2">
               {items.map((p, i) =>
                 p.published ? (
                   <ProjectCard
