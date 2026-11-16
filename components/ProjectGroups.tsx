@@ -38,7 +38,7 @@ export function ProjectGroups({
       areas={groups.map((g) => ({ key: g.c, label: areaLabel(g.c, g.items) }))}
       index={projects.map((p) => ({ purposes: p.purposes, group: p.category }))}
     >
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-16">
         {groups.map(({ c, items }, gi) => (
           <div key={c} data-group={c}>
             <H className="text-h3 font-extrabold md:text-2xl">{categoryTitles[c]}</H>
