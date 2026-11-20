@@ -12,6 +12,8 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  // Подтверждение прав в Яндекс Вебмастере (20.11.2026)
+  verification: { yandex: "2411799d1a9ef85f" },
   title: {
     default: "Модульные дома под ключ от производителя в Миассе | МИШАЛЕ",
     template: "%s | МИШАЛЕ",
