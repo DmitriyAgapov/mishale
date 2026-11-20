@@ -103,7 +103,7 @@ test("вне основного домена — X-Robots-Tag noindex, на mish
     const res = await request.get("/proekty", { headers: { "x-forwarded-host": host } });
     expect(res.headers()["x-robots-tag"], host).toBeUndefined();
   }
-  const tech = await request.get("/", { headers: { "x-forwarded-host": "mishale.user.mia0.amvera.tech" } });
+  const tech = await request.get("/", { headers: { "x-forwarded-host": "45.15.252.47" } });
   expect(tech.headers()["x-robots-tag"]).toBe("noindex, nofollow");
 });
 

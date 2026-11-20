@@ -8,7 +8,7 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 | ------------------------ | ------------------------------------------------------- |
 | `npm run dev`            | Разработка на http://localhost:3000                     |
 | `npm run build`          | Сборка                                                  |
-| `npm run start`          | Запуск собранного сайта (так же запускает Amvera)       |
+| `npm run start`          | Запуск собранного сайта (так же запускается на сервере) |
 | `npm run check`          | Линтер + типы + модульные тесты — перед каждым коммитом |
 | `npm run test:e2e`       | Проверки на собранном сайте (сначала `npm run build`)   |
 | `npm run format`         | Prettier                                                |
@@ -20,7 +20,7 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 
 - **`.npmrc`: `legacy-peer-deps=true`.** npm 10 падает на цикле необязательных peer-зависимостей `vite` → `@vitejs/devtools` → `vitest@*`. С этой настройкой npm не ставит peer-зависимости сам, поэтому они указаны явно (`vite`, `react`, `eslint`, `typescript`). Добавляя пакет, проверьте его peer-зависимости.
 - **Версии пакетов закреплены точно** (без `^`). Обновление — отдельным коммитом.
-- **Amvera не передаёт переменные окружения на этапе сборки.** Всё, что нужно при сборке (адрес сайта, ID Метрики, индексация), — в `lib/site.ts`. В `.env.example` — только то, что читается во время работы сервера.
+- **Сборка идёт без переменных сервера** (на компьютере исполнителя, `scripts/deploy.sh`). Всё, что нужно при сборке (адрес сайта, ID Метрики, индексация), — в `lib/site.ts`. В `.env.example` — только то, что читается во время работы сервера.
 - **Индексация** выключена (`site.indexable = false`) до дня запуска.
 - В `next.config.ts` включены `cacheComponents` и `partialPrefetching`: данные, читаемые из файлов, оборачиваются в `'use cache'`. Перед работой с API Next.js читайте документацию в `node_modules/next/dist/docs/` (см. `AGENTS.md`).
 
@@ -38,4 +38,4 @@ Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript. ТЗ — 
 
 ## Деплой
 
-`amvera.yml`: окружение node 22, Amvera выполняет `npm install` и `npm run build`, запускает `npm run start` на порту 3000. Сборка — при пуше в `master` репозитория Amvera или через вебхук GitHub.
+Свой VPS: `bash scripts/deploy.sh` — сборка здесь, на сервере `npm ci --omit=dev` и перезапуск `next start` за nginx. Устройство сервера — [docs/SERVER.md](docs/SERVER.md), запуск на домене — [docs/LAUNCH.md](docs/LAUNCH.md).

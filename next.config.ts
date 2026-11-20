@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     // images.ts читает размеры картинок из public/ при сборке. Предупреждение о трассировке всего проекта
-    // касается только output: "standalone", которого у нас нет (Amvera запускает next start из полной папки)
+    // касается только output: "standalone", которого у нас нет (на VPS next start запускается из полной папки релиза)
     ignoreIssue: [{ path: "**/lib/content/images.ts", title: /Dynamic filesystem access/ }],
     rules: {
       "*.css": {

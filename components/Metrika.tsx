@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 type Ym = (id: number, method: string, ...args: unknown[]) => void;
 
 // Где счётчик собирает статистику (решение пользователя от 13.11.2026): тестовый сайт на Vercel и домены
-// нового сайта. localhost, технический адрес Amvera и автотесты в статистику не попадают
+// нового сайта. localhost, доступ по IP сервера и автотесты в статистику не попадают
 const METRIKA_HOST = /^(mishale\.vercel\.app|(www\.)?mishale174\.ru|(www\.)?mishale74\.ru)$/;
 const noop = () => () => {};
 

@@ -52,13 +52,13 @@ function publishedIndex(): Index {
   return index;
 }
 
-// Любой адрес, кроме основного домена (технический *.amvera.tech, localhost), закрыт от индексации,
+// Любой адрес, кроме основного домена (IP сервера, localhost), закрыт от индексации,
 // чтобы после запуска в поиске не было дубля сайта. Здесь, а не в headers() next.config:
 // в Next 16.4.2 заголовки из конфига попадают в манифест, но не отдаются (проверено 07.11.2026).
 const PRODUCTION_HOST = /^(www\.)?mishale74\.ru$/;
 
 function withRobots(request: NextRequest, response: NextResponse): NextResponse {
-  // За обратным прокси Amvera публичный домен может прийти в x-forwarded-host
+  // nginx передаёт публичный домен в host и x-forwarded-host
   const raw = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   const host = raw.split(",")[0].trim().split(":")[0].toLowerCase();
   if (!PRODUCTION_HOST.test(host)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
