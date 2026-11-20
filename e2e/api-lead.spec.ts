@@ -8,11 +8,14 @@ const valid = {
   startedAt: Date.now() - 10_000,
 };
 
-test("главная отвечает и закрыта от индексации", async ({ request }) => {
+test("главная отвечает, индексация открыта, служебное закрыто", async ({ request }) => {
   const res = await request.get("/");
   expect(res.status()).toBe(200);
-  const robots = await request.get("/robots.txt");
-  expect(await robots.text()).toContain("Disallow: /");
+  const robots = await (await request.get("/robots.txt")).text();
+  expect(robots).toContain("Allow: /");
+  expect(robots).toContain("Disallow: /api/");
+  expect(robots).toContain("Sitemap: https://mishale74.ru/sitemap.xml");
+  expect(robots).not.toMatch(/Disallow: \/\s*$/m);
 });
 
 test("невалидная заявка — 422 с полями", async ({ request }) => {

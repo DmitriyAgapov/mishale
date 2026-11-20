@@ -29,6 +29,12 @@ tar -czf "$TMP/release.tgz" \
 echo "$COMMIT" > "$TMP/REVISION"
 
 echo "== Загрузка на $HOST"
+# Диск сервера 9 ГБ: без запаса релиз распакуется не полностью
+FREE_MB=$(ssh "$HOST" "df -Pm $APP | awk 'NR==2{print \$4}'")
+if [ "$FREE_MB" -lt 1024 ]; then
+  echo "На сервере свободно ${FREE_MB} МБ, нужно не меньше 1024. Освободите место (docs/SERVER.md)." >&2
+  exit 1
+fi
 ssh "$HOST" "mkdir -p $APP/releases/$REL"
 scp -q "$TMP/release.tgz" "$TMP/REVISION" "$HOST:$APP/releases/$REL/"
 
@@ -38,8 +44,15 @@ set -euo pipefail
 APP=$1; REL=$2; KEEP=$3
 cd "$APP/releases/$REL"
 tar -xzf release.tgz && rm release.tgz
-npm ci --omit=dev --no-audit --no-fund --loglevel=error
 PREV=$(readlink -f "$APP/current" 2>/dev/null || true)
+# Пакеты не менялись — node_modules прошлого релиза жёсткими ссылками (~670 МБ не занимают место повторно)
+if [ -n "$PREV" ] && [ -d "$PREV/node_modules" ] && cmp -s "$PREV/package-lock.json" package-lock.json; then
+  cp -al "$PREV/node_modules" node_modules
+  echo "Пакеты из прошлого релиза"
+else
+  npm ci --omit=dev --no-audit --no-fund --loglevel=error
+  npm cache clean --force --loglevel=error
+fi
 ln -sfn "$APP/releases/$REL" "$APP/current"
 sudo -n /usr/bin/systemctl restart mishale
 

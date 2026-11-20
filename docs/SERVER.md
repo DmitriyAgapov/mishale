@@ -23,8 +23,10 @@
 ## Как устроен сайт
 
 ```
-nginx :80/:443  →  127.0.0.1:3000  next start  (systemd: mishale, пользователь deploy)
+nginx :80/:443  →  127.0.0.1:3000  next start -H localhost  (systemd: mishale, пользователь deploy)
 ```
+
+`-H localhost`, не `-H 127.0.0.1`: Next строит адрес для `proxy.ts` на `localhost`, и при `127.0.0.1` rewrite на `/__not-found` считается внешним — по https это давало 500 вместо 404 (найдено 20.11.2026). `localhost` на сервере — только 127.0.0.1, наружу порт не открыт.
 
 | Путь                                  | Что                                                                |
 | ------------------------------------- | ------------------------------------------------------------------ |
@@ -32,9 +34,9 @@ nginx :80/:443  →  127.0.0.1:3000  next start  (systemd: mishale, пользо
 | `/srv/mishale/current`                | ссылка на работающий релиз                                         |
 | `/etc/mishale/mishale.env`            | переменные сайта (`root:deploy`, 640), образец — `.env.example`    |
 | `/etc/systemd/system/mishale.service` | сервис, `MemoryMax=1G`, перезапуск при падении                     |
-| `/etc/nginx/sites-available/mishale`  | `mishale74.ru`, `www` и запросы по IP; кеш `/_next/static/` на год |
+| `/etc/nginx/sites-available/mishale`  | https `mishale74.ru` (и запросы по IP); `www` и http → 301 на `https://mishale74.ru`; кеш `/_next/static/` на год |
 
-По IP сайт открывается, но закрыт от поиска (`X-Robots-Tag` в `proxy.ts` — всё, кроме `mishale74.ru` и `www`).
+По `https://IP` сайт открывается (с предупреждением о сертификате), но закрыт от поиска; по `http://IP` — 404 (`X-Robots-Tag` в `proxy.ts` — всё, кроме `mishale74.ru` и `www`).
 
 ## Выкладка
 
@@ -44,7 +46,7 @@ bash scripts/deploy.sh
 
 Сборка на компьютере исполнителя (на сервере мало памяти для `next build`), архив `.next` + `public` + `content` на сервер, там `npm ci --omit=dev`, переключение `current`, перезапуск, проверка `http://127.0.0.1:3000/`. Если сайт не ответил за 30 секунд — ссылка возвращается на прошлый релиз. Демо-режим собирается выключенным (`DEMO_CONTENT=` перекрывает `.env.local`).
 
-После выкладки: `npm run smoke -- https://mishale74.ru` (или `http://45.15.252.47`, пока нет DNS).
+После выкладки: `npm run smoke -- https://mishale74.ru`.
 
 Откат вручную на прошлый релиз:
 
@@ -62,13 +64,14 @@ nano /etc/mishale/mishale.env      # YOUGILE_API_KEY, YOUGILE_COLUMN_ID и др.
 systemctl restart mishale
 ```
 
-Сейчас заданы только `NODE_ENV=production` и `LEAD_TARGET=yougile` — заявки не доставляются, пока не добавлены ключи YouGile.
+Заданы `NODE_ENV=production`, `LEAD_TARGET=yougile` и ключи YouGile (20.11.2026, тестовая заявка дошла).
 
 ## HTTPS
 
-Let's Encrypt, выпуск автоматический:
+Let's Encrypt. Сертификат выпущен 20.11.2026 на `mishale74.ru` и `www`, действует до 18.02.2027; `certbot renew --dry-run` проходит.
 
-- `mishale-cert.timer` каждые 10 минут запускает `/usr/local/sbin/mishale-cert`: проверяет, что `mishale74.ru` и `www` указывают на `45.15.252.47` (у 8.8.8.8 и 77.88.8.8), и тогда выполняет `certbot --nginx -d mishale74.ru -d www.mishale74.ru --redirect`. certbot прописывает 443 и редирект с http в конфиг nginx. После выпуска таймер отключается сам.
+
+- `mishale-cert.timer` каждые 10 минут запускает `/usr/local/sbin/mishale-cert`: проверяет, что `mishale74.ru` и `www` указывают на `45.15.252.47` (у 8.8.8.8 и 77.88.8.8), и тогда выполняет `certbot --nginx -d mishale74.ru -d www.mishale74.ru --redirect`. certbot прописывает 443 и редирект с http в конфиг nginx. После выпуска таймер отключается сам. После выпуска конфиг nginx переписан вручную (редирект `www` → основной домен); certbot при продлении конфиг не меняет, старая версия — `/root/mishale.nginx.bak-*`.
 - Без почты (`--register-unsafely-without-email`): письма об истечении Let's Encrypt с 2025 года не рассылает, продление автоматическое.
 - Продление — штатный `certbot.timer` (дважды в сутки, продлевает за 30 дней до конца); после продления хук `/etc/letsencrypt/renewal-hooks/deploy/reload-nginx` перезагружает nginx.
 

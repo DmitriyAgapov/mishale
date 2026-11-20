@@ -8,7 +8,7 @@ export const site = {
   // ID счётчика Яндекс Метрики (код от компании 13.11.2026). Счётчик грузится только на mishale.vercel.app
   // и доменах сайта (components/Metrika.tsx): localhost и автотесты в статистику не попадают.
   metrikaId: 114223473 as number | null,
-  // Индексация поисковиками. false — технический адрес до запуска.
-  // В день запуска переключить на true отдельным коммитом (ТЗ §16).
-  indexable: false,
+  // Индексация поисковиками. Открыта 20.11.2026 (решение пользователя): сайт запущен на mishale74.ru.
+  // Адреса кроме mishale74.ru и www (IP сервера, localhost) закрывает X-Robots-Tag в proxy.ts.
+  indexable: true,
 } as const;
